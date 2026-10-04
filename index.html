@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topluluk Merkezi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="topluluk.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+    <div class="page">
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand__logo">
+                    <img src="yazılım_siber_logo.png" alt="Topluluk logosu">
+                </div>
+                <div class="brand__title">
+                    <span>Topluluk Hub</span>
+                    <span>Yazılım ve Siber Güvenlik</span>
+                </div>
+            </div>
+
+            <nav class="nav-links" aria-label="Ana navigasyon">
+                <a class="nav-link" href="sdu.yazilimvesiberguvenliktoplulugu/sdu_yazilimvesiberguvenliktoplulugu/etkinlik.html">Etkinlikler</a>
+                <a class="nav-link" href="iletisim.html">İletişim</a>
+                <a class="nav-link" href="giris.html">Giriş</a>
+                <a class="nav-link" href="syber.html">Siber Güvenlik</a>
+            </nav>
+        </header>
+
+        <div class="layout">
+            <main>
+                <section class="panel" id="program">
+                    <div class="section-header">
+                        <div>
+                            <h1 class="section-title">Takvim</h1>
+                            <p class="section-subtitle">Bu ay için planlanan dersler ve etkinlikler</p>
+                        </div>
+                    </div>
+
+                    <div class="calendar-wrap">
+                        <div class="calendar-header">
+                            <h2 id="takvim-baslik" class="card-title">Takvim Yükleniyor</h2>
+                            <p id="takvim-ayi" class="calendar-month">Ay</p>
+                        </div>
+                        <table class="calendar" aria-label="Etkinlik takvimi">
+                            <thead>
+                                <tr>
+                                    <th>Pzt</th>
+                                    <th>Sal</th>
+                                    <th>Çar</th>
+                                    <th>Per</th>
+                                    <th>Cum</th>
+                                    <th>Cmt</th>
+                                    <th>Paz</th>
+                                </tr>
+                            </thead>
+                            <tbody id="takvim-gunleri"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="panel" id="haberler">
+                    <div class="section-header">
+                        <div>
+                            <h1 class="section-title">Haftalık Haberler</h1>
+                            <p class="section-subtitle">Topluluk etkinlikleri ve duyurularını buradan takip edin.</p>
+                        </div>
+                    </div>
+
+                    <div class="news-grid">
+                        <article class="news-card">
+                            <p class="eyebrow">Yeni Topluluk Projesi Tanıtıldı</p>
+                            <h3>Yeni Topluluk Projemiz sizlerle</h3>
+                            <p>Topluluğumuzun yeni projesi öğrenci katılımını artırmak ve siber güvenlik farkındalığını güçlendirmek için hazırlandı.</p>
+                            <div class="feature">
+                                <img src="Yazılım ve siber güvenlik .png" alt="Proje tanıtım görseli">
+                                <div>
+                                    <strong>Projelerimizi buradan takip edebilirsiniz</strong>
+                                    <span>Topluluğun faaliyetleri ve etkinlikleri için bizi takip edin.</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="panel about-panel" id="topluluk-hakkinda">
+                    <div class="section-header">
+                        <div>
+                            <h1 class="section-title">Topluluk Hakkında</h1>
+                        </div>
+                    </div>
+
+                    <p>Temel amacımız, siber güvenlik alanında farkındalık oluşturarak günümüzün en kritik güvenlik tehditlerine karşı toplumu bilinçlendirmektir. Sunacağımız teknik ve teorik eğitimlerle, siber güvenlik kültürünü benimsemiş ve güçlü bir teknolojik altyapıya sahip bireyler yetiştirmeyi hedefliyoruz.</p>
+
+                    <ul class="about-list">
+                        <li>
+                            <img src="sdu_logo.png" alt="Süleyman Demirel Üniversitesi logosu">
+                            <span>Süleyman Demirel Üniversitesi</span>
+                        </li>
+                        <li>Yer: Amfi arkası topluluk odaları</li>
+                    </ul>
+                </section>
+                <section class="panel social-card">
+                    <div>
+                        <h2 class="card-title">Sosyal Medya Hesapları</h2>
+                        <p class="section-subtitle">Bizi takip edin, son duyuruları kaçırmayın.</p>
+                    </div>
+
+                    <ul class="social-list">
+                        <li>
+                            <i class="fa-brands fa-instagram"></i>
+                            <a href="https://www.instagram.com/sduyzlm" target="_blank" rel="noreferrer">sduyzlm</a>
+                        </li>
+                        <li>
+                            <i class="fa-brands fa-linkedin"></i>
+                            <a href="https://www.linkedin.com/company/sduyaz%C4%B1l%C4%B1m/" target="_blank" rel="noreferrer">Yazılım ve Siber Güvenlik Topluluğu</a>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+
+            <aside class="sidebar">
+                <section class="panel events-history" id="yapilan-etkinlikler">
+                    <div>
+                        <h2 class="card-title">Yapılan Etkinlikler</h2>
+                        <p class="section-subtitle">Afiş ve etkinlik fotoğraflarını görmek için etkinliği seçin.</p>
+                    </div>
+
+                    <div class="past-event-list">
+                        <button class="past-event" type="button" data-title="Baradagini_kap_gel" data-gallery='["01.10.2025.jpeg"]'>
+                            <div class="past-event__thumb">
+                                <img src="01.10.2025.jpeg" alt="ders_calisma">
+                            </div>
+                            <div class="past-event__content">
+                                <span class="past-event__date">1 Ekim 2025</span>
+                                <span class="past-event__title">Bradağını Kap Gel</span>
+                                <span class="past-event__action">Afiş ve fotoğrafları görüntüle</span>
+                            </div>
+                        </button>
+                        <button class="past-event" type="button" data-title="yonetim_tanisma" data-gallery='["11.10.2025.jpeg"]'>
+                            <div class="past-event__thumb">
+                                <img src="11.10.2025.jpeg" alt="ders_calisma">
+                            </div>
+                            <div class="past-event__content">
+                                <span class="past-event__date">11 Ekim 2025</span>
+                                <span class="past-event__title">Yönetim Tanışması</span>
+                                <span class="past-event__action">Afiş ve fotoğrafları görüntüle</span>
+                            </div>
+                        </button>
+                        <button class="past-event" type="button" data-title="yonetim_tanisma" data-gallery='["23.10.2025.jpeg"]'>
+                            <div class="past-event__thumb">
+                                <img src="23.10.2025.jpeg" alt="ders_calisma">
+                            </div>
+                            <div class="past-event__content">
+                                <span class="past-event__date">23 Ekim 2025</span>
+                                <span class="past-event__title">Siber Rehtid İsribaratı 101</span>
+                                <span class="past-event__action">Afiş ve fotoğrafları görüntüle</span>
+                            </div>
+                        </button>
+                        <button class="past-event" type="button" data-title="yonetim_tanisma" data-gallery='["20.12.2025.png"]'>
+                            <div class="past-event__thumb">
+                                <img src="20.12.2025.png" alt="algo1">
+                            </div>
+                            <div class="past-event__content">
+                                <span class="past-event__date">20 Aralık 2025</span>
+                                <span class="past-event__title">Programlama Eğitimi</span>
+                                <span class="past-event__action">Afiş ve fotoğrafları görüntüle</span>
+                            </div>
+                        </button>
+                        <button class="past-event" type="button" data-title="yonetim_tanisma" data-gallery='["04.01.2026.jpeg"]'>
+                            <div class="past-event__thumb">
+                                <img src="04.01.2026.jpeg" alt="algo_final">
+                            </div>
+                            <div class="past-event__content">
+                                <span class="past-event__date">4 Ocak 2026</span>
+                                <span class="past-event__title">Algoritma ve Programlama Final Öncesi Soru Çözümü</span>
+                                <span class="past-event__action">Afiş ve fotoğrafları görüntüle</span>
+                            </div>
+                        </button>
+                        <button class="past-event" type="button" data-title="Cyberrise Woman 2026" data-gallery='["17.01.2026-0.jpeg","17.01.2026-1.jpeg","17.01.2026-2.jpeg"]'>
+                            <div class="past-event__thumb">
+                                <img src="17.01.2026-0.jpeg" alt="Cyberrise Woman afişi">
+                            </div>
+                            <div class="past-event__content">
+                                <span class="past-event__date">17 Ocak 2026</span>
+                                <span class="past-event__title">Cyberrise Woman 2026</span>
+                                <span class="past-event__action">Afiş ve fotoğrafları görüntüle</span>
+                            </div>
+                        </button>
+                        <button class="past-event" type="button" data-title="yonetim_tanisma" data-gallery='["10.03.2026.jpeg"]'>
+                            <div class="past-event__thumb">
+                                <img src="10.03.2026.jpeg" alt="linux101">
+                            </div>
+                            <div class="past-event__content">
+                                <span class="past-event__date">10 Mart 2026</span>
+                                <span class="past-event__title">Linux 101 Eğitimi</span>
+                                <span class="past-event__action">Afiş ve fotoğrafları görüntüle</span>
+                            </div>
+                        </button>
+                        <button class="past-event" type="button" data-title="yonetim_tanisma" data-gallery='["12.03.2026.jpeg"]'>
+                            <div class="past-event__thumb">
+                                <img src="12.03.2026.jpeg" alt="quiz_night">
+                            </div>
+                            <div class="past-event__content">
+                                <span class="past-event__date">12 Mart 2026</span>
+                                <span class="past-event__title">1. Quiz Night</span>
+                                <span class="past-event__action">Afiş ve fotoğrafları görüntüle</span>
+                            </div>
+                        </button>
+                        <button class="past-event" type="button" data-title="1. Quiz Night" data-gallery='["25.03.2026.jpeg"]'>
+                            <div class="past-event__thumb">
+                                <img src="25.03.2026.jpeg" alt="1. Quiz Night afişi">
+                            </div>
+                            <div class="past-event__content">
+                                <span class="past-event__date">25 Mart 2026</span>
+                                <span class="past-event__title">Programlama Dilleri 1 Vize Öncesi Soru Çözümü</span>
+                                <span class="past-event__action">Afiş ve fotoğrafları görüntüle</span>
+                            </div>
+                        </button>
+                        <button class="past-event" type="button" data-title="2. Quiz Night" data-gallery='["16.04.2026.jpeg","1.jpg","2.jpg","Yazılım ve siber güvenlik (2).png","Yazılım ve siber güvenlik (3).png"]'>
+                            <div class="past-event__thumb">
+                                <img src="16.04.2026.jpeg" alt="2. Quiz Night afişi">
+                            </div>
+                            <div class="past-event__content">
+                                <span class="past-event__date">16 Nisan 2026</span>
+                                <span class="past-event__title">2. Quiz Night</span>
+                                <span class="past-event__action">Afiş ve fotoğrafları görüntüle</span>
+                            </div>
+                        </button>
+                        <button class="past-event" type="button" data-title="sinema" data-gallery='["20.04.2026.jpeg"]'>
+                            <div class="past-event__thumb">
+                                <img src="20.04.2026.jpeg" alt="sinema afişi">
+                            </div>
+                            <div class="past-event__content">
+                                <span class="past-event__date">20 Nisan 2026</span>
+                                <span class="past-event__title">Sinema İzleme</span>
+                                <span class="past-event__action">Afiş ve fotoğrafları görüntüle</span>
+                            </div>
+                        </button>
+                        <button class="past-event" type="button" data-title="siber-egitim" data-gallery='["22.04.2026.jpeg"]'>
+                            <div class="past-event__thumb">
+                                <img src="22.04.2026.jpeg" alt="temel siber güvenlik eğitimi afişi">
+                            </div>
+                            <div class="past-event__content">
+                                <span class="past-event__date">22 Nisan 2026</span>
+                                <span class="past-event__title">Temel Siber Güvenlik Eğitimi</span>
+                                <span class="past-event__action">Afiş ve fotoğrafları görüntüle</span>
+                            </div>
+                        </button>
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </div>
+
+    <dialog class="poster-dialog" id="poster-dialog" aria-labelledby="poster-title">
+        <div class="poster-dialog__header">
+            <h2 id="poster-title">Etkinlik</h2>
+            <button class="poster-dialog__close" type="button" aria-label="Kapat">&times;</button>
+        </div>
+
+        <div class="poster-gallery" id="poster-gallery">
+            <button class="poster-gallery__nav" id="poster-previous" type="button" aria-label="Önceki görsel">&lsaquo;</button>
+            <div class="poster-gallery__content">
+                <p class="poster-dialog__message" id="poster-message" role="status"></p>
+                <img class="poster-dialog__image" id="poster-image" alt="Etkinlik görseli">
+                <p class="poster-gallery__counter" id="poster-counter"></p>
+            </div>
+            <button class="poster-gallery__nav" id="poster-next" type="button" aria-label="Sonraki görsel">&rsaquo;</button>
+        </div>
+    </dialog>
+
+    <script src="takvim.js"></script>
+    <script src="yapilanEtkinlikler.js"></script>
+</body>
+
+</html>

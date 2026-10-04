@@ -1,0 +1,16 @@
+{
+    "kullanicilar": [
+        {
+            "isim": "Kaliteli_yap",
+            "email": "ornek@gmail.com",
+            "numara": "5469851456",
+            "sifre": "ZXl1cF95c2d0"
+        },
+        {
+            "isim": "zamani_kurtar",
+            "email": "zamandan_kazan06@gmail.com",
+            "numara": "5760325450",
+            "sifre": "emVocmFfeXNndA=="
+        }
+    ]
+}

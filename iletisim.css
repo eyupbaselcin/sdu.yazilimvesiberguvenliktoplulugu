@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif 'Courier New', Courier, monospace;
+    background: #dbd2d2;
+    padding: 30px;
+}
+
+form {
+    background: rgb(61, 95, 92);
+    max-width: 450px;
+    margin-top: auto; margin-bottom: auto; margin-left: auto; margin-right: auto;
+    padding-bottom: 5%; padding-top: 5%; padding-left: 5%; padding-right: 5%;
+    border-radius: 10%;
+    box-shadow: 20% 20% 10% rgba(118, 43, 43, 0.941);
+}
+
+.satir {
+    margin-bottom: 6px;
+    background: #3a2f2cfb;
+    color: rgb(241, 244, 239);
+    width: auto; height: auto;
+    border: 14px;
+}
+
+label {
+    display: block; /* label'leri blok seviyesinde yapar */
+    margin-bottom: 0%;/* label ile input arasına boşluk bırakır */
+    font-weight: italic;/* label yazısını kalın yapar */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="textarea"]
+{
+    width: 100%;
+    padding: 2%;
+    box-sizing: border-box;
+}
+
+button {
+    width: 60%;
+    padding: 12px;
+    background-color: #0e0f0e;
+    color: rgb(12, 220, 235);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+    text-align: center;
+}
+
+button:hover {
+    background-color: #1f4620;
+}
+
+button:active {
+    background-color: #0f2310;
+}
+
+.error {
+    color: #ff6b6b;
+    font-size: 12px;
+    margin-top: 5px;
+}

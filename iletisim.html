@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim</title>
+    <link rel="stylesheet" href="iletisim.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+
+<body>
+    <form id="form">
+        <div class="satir">
+            <label for="isim">İsim Soyisim</label><br>
+            <input type="text" id="isim">
+            <p id="nameError" class="error"></p>
+        </div>
+
+        <div class="satir">
+            <label for="eposta">E-posta Adresi</label><br>
+            <input type="text" id="eposta">
+            <p id="emailError" class="error"></p>
+        </div>
+
+        <div class="satir">
+            <label for="oneri">Öneri veya Şikayet:</label><br>
+            <textarea id="oneri" rows="4"></textarea>
+            <p id="textError" class="error"></p>
+        </div>
+
+        <div class="button">
+            <button type="submit">Gönder</button>
+        </div>
+    </form>
+
+    <script src="iletisim.js"></script>
+</body>
+
+</html>
