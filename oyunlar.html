@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yazılım & Siber Güvenlik Topluluğu - Etkinlik Oyunları</title>
+  <style>
+    :root {
+      --primary-color: #0d6efd;
+      --secondary-color: #6c757d;
+      --accent-color: #dc3545;
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: #38bdf8;
+      margin-bottom: 8px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+    }
+
+    /* Menu Grid */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .menu-card {
+      background: var(--card-bg);
+      border: 2px solid #334155;
+      border-radius: 16px;
+      padding: 25px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-5px);
+      border-color: #38bdf8;
+      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2);
+    }
+
+    .menu-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #38bdf8;
+    }
+
+    /* Game Screen */
+    .game-screen {
+      display: none;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 10px;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #0b5ed7;
+    }
+
+    .btn-back {
+      background: var(--secondary-color);
+    }
+
+    .btn-back:hover {
+      background: #5c636a;
+    }
+
+    /* Game 1: Meme Grid */
+    .meme-box {
+      width: 100%;
+      max-width: 500px;
+      height: 300px;
+      margin: 20px auto;
+      border: 2px dashed #475569;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #0f172a;
+    }
+
+    .meme-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Game 2 & 3: Word / Question Cards */
+    .card-display {
+      background: #0f172a;
+      border: 1px solid #334155;
+      padding: 30px;
+      border-radius: 12px;
+      margin: 20px 0;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #38bdf8;
+      margin-bottom: 15px;
+    }
+
+    .forbidden-list {
+      list-style: none;
+      color: var(--accent-color);
+      font-size: 1.1rem;
+    }
+
+    .forbidden-list li {
+      margin: 5px 0;
+    }
+
+    /* Game 4: Timer */
+    .timer-display {
+      font-size: 4rem;
+      font-weight: bold;
+      color: var(--accent-color);
+      margin: 15px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Etkinlik & Oyun Portalı</h1>
+    <p>Yazılım ve Siber Güvenlik Topluluğu</p>
+  </header>
+
+  <div class="container">
+    <div id="main-menu" class="menu-grid">
+      <div class="menu-card" onclick="startGame(1)">
+        <h3>1. Meme'i Tamamla</h3>
+        <p>Görseldeki eksik yazıyı tamamla, komik olanı seç!</p>
+      </div>
+      <div class="menu-card" onclick="startGame(2)">
+        <h3>2. Yasaklı Kelime</h3>
+        <p>50 Rastgele Yazılım, Siber Güvenlik ve Genel Kültür kartı.</p>
+      </div>
+      <div class="menu-card" onclick="startGame(3)">
+        <h3>3. Arkadaşını Ne KadarTanıyorsun</h3>
+        <p>İki arkadaş için 10 özel arkadaşlık sorusu.</p>
+      </div>
+      <div class="menu-card" onclick="startGame(4)">
+        <h3>4. 20 Saniyede Soruları Cevapla</h3>
+        <p>Zamana karşı hızlı cevaplama meydan okuması!</p>
+      </div>
+    </div>
+    <div id="game-screen" class="game-screen">
+      <h2 id="game-title">Oyun Başlığı</h2>
+      <div id="game-content"></div>
+
+      <div>
+        <button id="next-btn" class="btn" onclick="nextAction()">Rastgele Getir / Sonraki</button>
+        <button class="btn btn-back" onclick="showMenu()">Ana Menüye Dön</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const memeImages = [
+      "memes0.jpg", "memes1.jpg", "memes2.jpg", "memes3.jpg", "memes4.png",
+      "memes7.jpg", "memes8jpg.jpg", "memes9.jpg"
+    ];
+    const tabooCards = [
+      { word: "Python", forbidden: ["Dil", "Yılan", "Kod", "Veri"] },
+      { word: "Siber Güvenlik", forbidden: ["Hacker", "Koruma", "Virüs", "Saldırı"] },
+      { word: "Guvenlik Duvari (Firewall)", forbidden: ["Ağ", "Trafik", "Engelleme", "koruma"] },
+      { word: "Veritabanı", forbidden: ["SQL", "Data", "Tablo", "Kayıt"] },
+      { word: "Algoritma", forbidden: ["Adım", "Mantık", "Kod", "Problem"] },
+      { word: "Linux", forbidden: ["Penguen", "İşletim Sistemi", "Açık Kaynak", "Terminal"] },
+      { word: "Phishing (Oltalama)", forbidden: ["E-posta", "Tuzak", "Şifre", "Kandırma"] },
+      { word: "RAM", forbidden: ["Bellek", "Geçici", "Bilgisayar", "Hız"] },
+      { word: "Yazılım", forbidden: ["Kod", "Program", "Geliştirici", "Donanım"] },
+      { word: "Malware", forbidden: ["Zararlı", "Yazılım", "Virüs", "Truva Atı"] },
+      { word: "Yapay Zekâ", forbidden: ["Model", "Robot", "Öğrenme", "ChatGPT"] },
+      { word: "GitHub", forbidden: ["Depo", "Commit", "Git", "Proje"] },
+      { word: "Frontend", forbidden: ["Arayüz", "HTML", "CSS", "Tasarım"] },
+      { word: "Backend", forbidden: ["Sunucu", "Veritabanı", "API", "Arka Plan"] },
+      { word: "Şifreleme (Encryption)", forbidden: ["Kripto", "Gizli", "Anahtar", "Hash"] },
+      { word: "DDoS", forbidden: ["Saldırı", "Trafik", "Sunucu", "Çökertme"] },
+      { word: "Sızma Testi (Penetrasyon)", forbidden: ["Pentest", "Açık", "Rapor", "Saldırı"] },
+      { word: "Cloud (Bulut)", forbidden: ["Depolama", "AWS", "Sunucu", "İnternet"] },
+      { word: "IP Adresi", forbidden: ["Numara", "Ağ", "Cihaz", "Konum"] },
+      { word: "Bug", forbidden: ["Hata", "Kod", "Düzeltme", "Yazılım"] },
+      { word: "Derleyici (Compiler)", forbidden: ["Makine", "Kod", "Çevirmek", "C++"] },
+      { word: "Sanal Makine", forbidden: ["VirtualBox", "VMware", "İşletim Sistemi", "Kurulum"] },
+      { word: "Kullanıcı Adı", forbidden: ["Hesap", "Giriş", "Profil", "Şifre"] },
+      { word: "Docker", forbidden: ["Konteyner", "Dağıtım", "Uygulama", "Geliştirme"] },
+      { word: "Wi-Fi", forbidden: ["Kablosuz", "İnternet", "Ağ", "Şifre"] },
+      { word: "Klavye", forbidden: ["Tuş", "Yazı", "Donanım", "QWERTY"] },
+      { word: "Ana Kart", forbidden: ["Donanım", "Parça", "Bileşen", "İşlemci"] },
+      { word: "Bluetooth", forbidden: ["Kablosuz", "Bağlantı", "Mesafe", "Kulaklık"] },
+      { word: "Arama Motoru", forbidden: ["Google", "Arama", "Site", "Web"] },
+      { word: "Açık Kaynak", forbidden: ["Ücretsiz", "Topluluk", "Kod", "Özgür"] },
+      { word: "Sinema", forbidden: ["Film", "Oyuncu", "Perde", "Bilet"] },
+      { word: "Kahve", forbidden: ["İçecek", "Kafein", "Sıcak", "Fincan"] },
+      { word: "Güneş", forbidden: ["Gündüz", "Sıcak", "Yıldız", "Uzay"] },
+      { word: "Futbol", forbidden: ["Top", "Kale", "Takım", "Maç"] },
+      { word: "Gitar", forbidden: ["Müzik", "Enstrüman", "Tel", "Çalmak"] },
+      { word: "Kitap", forbidden: ["Okumak", "Sayfa", "Yazar", "Kütüphane"] },
+      { word: "Uçak", forbidden: ["Hava", "Pilot", "Kanat", "Yolculuk"] },
+      { word: "Pizzalar", forbidden: ["Hamur", "Peynir", "İtalyan", "Dilim"] },
+      { word: "Kış", forbidden: ["Soğuk", "Kar", "Mevsim", "Mont"] },
+      { word: "Saat", forbidden: ["Zaman", "Dakika", "Karakter", "Kol"] },
+      { word: "Araba", forbidden: ["Tekerlek", "Sürüş", "Motor", "Direksiyon"] },
+      { word: "Deniz", forbidden: ["Su", "Mavi", "Yüzmek", "Dalga"] },
+      { word: "Telefon", forbidden: ["Arama", "Akıllı", "Ekran", "Mobil"] },
+      { word: "Uzay", forbidden: ["Gezegen", "Yıldız", "Astronot", "Roket"] },
+      { word: "Televizyon", forbidden: ["Ekran", "Kanal", "Dizi", "Kumanda"] },
+      { word: "Şehir", forbidden: ["Nüfus", "Bina", "Sokak", "Belediye"] },
+      { word: "Çikolata", forbidden: ["Tatlı", "Kakao", "Sütlü", "Siyah"] },
+      { word: "Radyo", forbidden: ["Müzik", "Frekans", "Dinlemek", "Yayın"] },
+      { word: "Müze", forbidden: ["Tarih", "Eser", "Sergi", "Gezmek"] },
+      { word: "Okyanus", forbidden: ["Büyük", "Su", "Derin", "Kıta"] }
+    ];
+
+    const friendshipQuestions = [
+      "En sevdiği hayvan hangisidir?",
+      "En çok kullandığı kelime/söz grubu nedir?",
+      "Güne başlarken ilk yaptığı şey nedir?",
+      "En sevdiği ders hangisi?",
+      "En çok vakit geçirdiği sosyal medya platformu hangisidir?",
+      "Boş zamanlarında yapmaktan en keyif aldığı aktivite nedir?",
+      "En sevdiği yemek veya içecek nedir?",
+      "Teknolojiye dair en büyük hayali nedir?",
+      "Gece kuşu mu yoksa sabah insanı mıdır?",
+      "Asla tahammül edemediği şey nedir?"
+    ];
+    const speedChallenges = [
+      "20 sn'de 3 programlama dili say!",
+      "20 sn'de 5 sosyal medya uygulaması say!",
+      "20 sn'de 5 bilgisayar parçası say!",
+      "20 sn'de 3 işletim sistemi say!",
+      "20 sn'de İnternetsiz yapamayacağın 3 şey say!",
+      "20 sn'de İnternette paylaşmaman gereken 3 bilgi say!"
+    ];
+    let currentGame = 0;
+    let timerInterval = null;
+    let memeIndex = 0;
+
+    function showMenu() {
+      document.getElementById('main-menu').style.display = 'grid';
+      document.getElementById('game-screen').style.display = 'none';
+      if (timerInterval) clearInterval(timerInterval);
+      memeIndex = 0;
+    }
+
+    function startGame(gameId) {
+      currentGame = gameId;
+      document.getElementById('main-menu').style.display = 'none';
+      document.getElementById('game-screen').style.display = 'block';
+      nextAction();
+    }
+
+    function nextAction() {
+      const content = document.getElementById('game-content');
+      const title = document.getElementById('game-title');
+      if (timerInterval) clearInterval(timerInterval);
+
+      if (currentGame === 1) {
+        title.innerText = "Meme'i Tamamla";
+        const memeImage = memeImages[memeIndex % memeImages.length];
+        content.innerHTML = `
+          <div class="meme-box">
+            <img src="${memeImage}" alt="Meme Görseli">
+          </div>
+          <p>Görseldeki boşluğu en komik şekilde tamamlayın!</p>
+        `;
+        memeIndex++;
+      }
+      else if (currentGame === 2) {
+        title.innerText = "Yasaklı Kelime (Tabu)";
+        const randomCard = tabooCards[Math.floor(Math.random() * tabooCards.length)];
+        content.innerHTML = `
+          <div class="card-display">
+            <div class="card-title">${randomCard.word}</div>
+            <p style="margin-bottom:8px; color:#aaa;">Yasaklı Kelimeler:</p>
+            <ul class="forbidden-list">
+              ${randomCard.forbidden.map(w => `<li>❌ ${w}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+      }
+      else if (currentGame === 3) {
+        title.innerText = "Arkadaşını Ne Kadar Tanıyorsun?";
+        const randomQ = friendshipQuestions[Math.floor(Math.random() * friendshipQuestions.length)];
+        content.innerHTML = `
+          <div class="card-display">
+            <div class="card-title" style="font-size:1.4rem;">${randomQ}</div>
+          </div>
+          <p>Sahnedeki iki arkadaş aynı anda veya sırayla yanıtlasın!</p>
+        `;
+      }
+      else if (currentGame === 4) {
+        title.innerText = "20 Saniyede Cevapla";
+        const randomChallenge = speedChallenges[Math.floor(Math.random() * speedChallenges.length)];
+        content.innerHTML = `
+          <div class="card-display">
+            <div class="card-title" style="font-size:1.4rem;">${randomChallenge}</div>
+            <div id="timer" class="timer-display">20</div>
+            <button class="btn" onclick="startTimer()">Süreyi Başlat ⏱️</button>
+          </div>
+        `;
+      }
+    }
+
+    function startTimer() {
+      let timeLeft = 20;
+      const timerEl = document.getElementById('timer');
+      if (!timerEl) return;
+
+      timerEl.innerText = timeLeft;
+      if (timerInterval) clearInterval(timerInterval);
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerEl.innerText = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          timerEl.innerText = "Süre Doldu! 🔔";
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
