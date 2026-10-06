@@ -4,35 +4,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İletişim</title>
+    <meta name="description" content="SDÜ Yazılım ve Siber Güvenlik Topluluğu ile iletişime geçin.">
+    <title>İletişim | SDÜ Yazılım ve Siber Güvenlik Topluluğu</title>
     <link rel="stylesheet" href="iletisim.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 
 <body>
-    <form id="form">
-        <div class="satir">
-            <label for="isim">İsim Soyisim</label><br>
-            <input type="text" id="isim">
-            <p id="nameError" class="error"></p>
-        </div>
+    <main class="contact-page">
+        <section class="contact-card" aria-labelledby="contact-title">
+            <div class="contact-info">
+                <span class="eyebrow">SDÜ Yazılım ve Siber Güvenlik Topluluğu</span>
+                <h1 id="contact-title">Bize Ulaşın</h1>
+                <p class="contact-description">
+                    Öneri, şikayet veya sorularınızı bizimle paylaşın. Görüşleriniz topluluğumuzu geliştirmemize
+                    yardımcı olur.
+                </p>
 
-        <div class="satir">
-            <label for="eposta">E-posta Adresi</label><br>
-            <input type="text" id="eposta">
-            <p id="emailError" class="error"></p>
-        </div>
+                <div class="social-links" aria-label="Sosyal medya hesaplarımız">
+                    <a href="https://www.instagram.com/sduyzlm" target="_blank" rel="noopener noreferrer"
+                        aria-label="Instagram hesabı: sduyzlm">
+                        <span class="social-links__label">sduyzlm</span>
+                        <span class="social-links__icon">
+                            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    <a href="https://www.linkedin.com/company/sduyaz%C4%B1l%C4%B1m/" target="_blank"
+                        rel="noopener noreferrer" aria-label="LinkedIn: Yazılım ve Siber Güvenlik Topluluğu">
+                        <span class="social-links__label">YSGT</span>
+                        <span class="social-links__icon">
+                            <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
 
-        <div class="satir">
-            <label for="oneri">Öneri veya Şikayet:</label><br>
-            <textarea id="oneri" rows="4"></textarea>
-            <p id="textError" class="error"></p>
-        </div>
+            <div class="contact-form-area">
+                <p class="form-intro">Harika işler, birlikte çalışan harika insanlarla mümkün. Mesajınızı bekliyoruz.
+                </p>
 
-        <div class="button">
-            <button type="submit">Gönder</button>
-        </div>
-    </form>
+                <form id="form">
+                    <div class="satir">
+                        <label for="isim">İsim Soyisim</label>
+                        <input type="text" id="isim" name="isim" autocomplete="name"
+                            placeholder="Adınızı ve soyadınızı girin" required>
+                        <p id="nameError" class="error" aria-live="polite"></p>
+                    </div>
+
+                    <div class="satir">
+                        <label for="eposta">E-posta Adresi</label>
+                        <input type="email" id="eposta" name="eposta" autocomplete="email"
+                            placeholder="ornek@eposta.com" required>
+                        <p id="emailError" class="error" aria-live="polite"></p>
+                    </div>
+
+                    <div class="satir">
+                        <label for="oneri">Öneri veya Şikayet</label>
+                        <textarea id="oneri" name="oneri" rows="5" placeholder="Mesajınızı buraya yazın"
+                            required></textarea>
+                        <p id="textError" class="error" aria-live="polite"></p>
+                    </div>
+
+                    <button type="submit">Mesajı Gönder</button>
+                </form>
+            </div>
+        </section>
+    </main>
 
     <script src="iletisim.js"></script>
 </body>
