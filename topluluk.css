@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     --bg: #f4fbfb;
     --card: #ffffff;
     --primary: #0a6670;
@@ -393,8 +393,115 @@ a {
 }
 
 @media (max-width: 980px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .brand {
+        width: 100%;
+    }
+
+    .nav-links {
+        width: 100%;
+    }
+
+    .nav-link {
+        flex: 1 1 calc(50% - 12px);
+        text-align: center;
+    }
+
     .past-event__thumb img {
         height: 110px;
+    }
+}
+
+@media (max-width: 640px) {
+    .page {
+        padding: 18px 14px 36px;
+    }
+
+    .panel {
+        padding: 18px 14px;
+        border-radius: 20px;
+    }
+
+    .brand {
+        align-items: flex-start;
+    }
+
+    .brand__logo {
+        width: 46px;
+        height: 46px;
+    }
+
+    .brand__title span:first-child {
+        font-size: 0.96rem;
+    }
+
+    .brand__title span:last-child {
+        font-size: 0.8rem;
+    }
+
+    .section-header,
+    .calendar-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .nav-link {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 58px;
+        padding: 16px 18px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, rgba(59, 185, 171, 0.16), rgba(10, 102, 112, 0.08));
+        border: 1px solid rgba(10, 102, 112, 0.12);
+        box-shadow: 0 8px 20px rgba(10, 102, 112, 0.08);
+        font-size: 1.05rem;
+        font-weight: 700;
+        text-align: center;
+        color: var(--primary);
+    }
+
+    .calendar-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .calendar {
+        min-width: 520px;
+    }
+
+    .feature {
+        grid-template-columns: 1fr;
+    }
+
+    .feature img {
+        max-height: 200px;
+        object-fit: cover;
+    }
+
+    .social-list li,
+    .about-list li {
+        padding: 11px 12px;
+    }
+
+    .past-event {
+        gap: 8px;
     }
 }
 
