@@ -113,7 +113,7 @@ a {
 
 .layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     gap: 22px;
     align-items: start;
 }
@@ -170,69 +170,54 @@ a {
     font-weight: 600;
 }
 
-.calendar {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+.calendar-events {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 12px;
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
 }
 
-.calendar th,
-.calendar td {
+.calendar-event,
+.calendar-events__empty {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    padding: 14px 16px;
     border: 1px solid var(--border);
-    padding: 10px 8px;
-    text-align: center;
-    font-size: 0.92rem;
+    border-radius: 16px;
+    background: #fff;
 }
 
-.calendar th {
-    background: rgba(11, 109, 117, 0.08);
+.calendar-event__date {
     color: var(--primary);
+    font-size: 0.88rem;
     font-weight: 700;
 }
 
-.calendar td.day {
-    background: #fff;
-    color: var(--text);
-    min-width: 72px;
-    vertical-align: top;
-}
-
-.calendar td.day span {
-    display: inline-flex;
-    width: 100%;
-    min-height: 42px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    padding: 6px 8px;
-    line-height: 1.3;
+.calendar-event__name {
+    overflow-wrap: anywhere;
     font-weight: 600;
 }
 
-.calendar td.day[data-day-type="pink"] {
+.calendar-event[data-day-type="pink"] {
+    border-color: rgba(247, 3, 137, 0.2);
     background: rgba(247, 3, 137, 0.08);
 }
 
-.calendar td.day[data-day-type="green"] {
+.calendar-event[data-day-type="green"] {
+    border-color: rgba(45, 210, 40, 0.25);
     background: rgba(45, 210, 40, 0.08);
 }
 
-.calendar td.day[data-day-type="pink"] span {
-    background: rgba(247, 3, 137, 0.16);
-    color: #8b065d;
-}
-
-.calendar td.day[data-day-type="green"] span {
-    background: rgba(45, 210, 40, 0.16);
-    color: #1d7e2b;
-}
-
-.calendar td.day.today {
+.calendar-event.today {
     box-shadow: inset 0 0 0 2px rgba(11, 109, 117, 0.7);
 }
 
-.calendar td.day.muted {
-    color: #a8b0b3;
+.calendar-events__empty {
+    grid-column: 1 / -1;
+    color: var(--muted);
 }
 
 .news-grid { display: grid; gap: 18px; }
@@ -475,15 +460,6 @@ a {
         font-weight: 700;
         text-align: center;
         color: var(--primary);
-    }
-
-    .calendar-wrap {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .calendar {
-        min-width: 520px;
     }
 
     .feature {
