@@ -1,13 +1,3 @@
-const haftaGunleri = [
-    "Pzt",
-    "Sal",
-    "Çar",
-    "Per",
-    "Cum",
-    "Cmt",
-    "Paz"
-];
-
 const takvim = {
   "yil": 2026,
   "aylar": [
@@ -158,37 +148,6 @@ const takvim = {
   ]
 };
 
-function takvimHucreOlustur(gun, ay, yil, etkinlik) {
-    const hucre = document.createElement("td");
-    hucre.className = "day";
-
-    if (gun === 0) {
-        return hucre;
-    }
-
-    const tarih = new Date(yil, ay - 1, gun);
-    const bugun = new Date();
-    const gunAlani = document.createElement("span");
-    gunAlani.textContent = etkinlik ? `${gun} ${etkinlik}` : gun;
-    hucre.appendChild(gunAlani);
-
-    if (etkinlik?.toLocaleLowerCase().includes("stant")) {
-        hucre.dataset.dayType = "pink";
-    } else if (etkinlik?.toLocaleLowerCase().includes("tanışma")) {
-        hucre.dataset.dayType = "green";
-    }
-
-    if (
-        tarih.getFullYear() === bugun.getFullYear() &&
-        tarih.getMonth() === bugun.getMonth() &&
-        tarih.getDate() === bugun.getDate()
-    ) {
-        hucre.classList.add("today");
-    }
-
-    return hucre;
-}
-
 function takvimiOlustur(takvimVerisi, ay) {
     const takvimBaslik = document.querySelector("#takvim-baslik");
     const takvimAyi = document.querySelector("#takvim-ayi");
@@ -199,64 +158,76 @@ function takvimiOlustur(takvimVerisi, ay) {
     }
 
     if (takvimBaslik) {
-        takvimBaslik.textContent = `${takvimVerisi.yil} Takvimi`;
+        takvimBaslik.textContent = `${takvimVerisi.yil} Etkinlikleri`;
     }
     takvimAyi.textContent = `${ay.ad} ${takvimVerisi.yil}`;
     takvimGunleri.replaceChildren();
 
-    const gunListeleri = haftaGunleri.map((_, index) => {
-        const veriAnahtari = [
-            "pazartesi",
-            "Salı",
-            "Çarşamba",
-            "Perşembe",
-            "Cuma",
-            "Cumartesi",
-            "Pazar"
-        ][index];
-
-        return ay[veriAnahtari] || [];
-    });
-    const etkinlikler = new Map();
-    const gunNumaralari = gunListeleri.flat().map((gunBilgisi) => {
+    const gunListeleri = [
+        ay.pazartesi || [],
+        ay.Salı || [],
+        ay.Çarşamba || [],
+        ay.Perşembe || [],
+        ay.Cuma || [],
+        ay.Cumartesi || [],
+        ay.Pazar || []
+    ];
+    const etkinlikGunleri = [];
+    gunListeleri.flat().forEach((gunBilgisi) => {
         const eslesme = String(gunBilgisi).match(/^(\d+)(?:\s+(.+))?$/);
 
         if (!eslesme) {
             throw new Error(`Geçersiz takvim günü: ${gunBilgisi}`);
         }
 
-        const gunNumarasi = Number(eslesme[1]);
         if (eslesme[2]) {
-            etkinlikler.set(gunNumarasi, eslesme[2]);
+            etkinlikGunleri.push({
+                gun: Number(eslesme[1]),
+                ad: eslesme[2]
+            });
         }
-
-        return gunNumarasi;
     });
-    const toplamGun = ay.toplam_gun || Math.max(...gunNumaralari);
-    const ilkGun = new Date(takvimVerisi.yil, ay.Ayn_no - 1, 1).getDay();
-    const pazartesiBaslangici = (ilkGun + 6) % 7;
-    const haftaSayisi = Math.ceil((pazartesiBaslangici + toplamGun) / 7);
-    let gun = 1;
 
-    for (let hafta = 0; hafta < haftaSayisi; hafta += 1) {
-        const satir = document.createElement("tr");
+    etkinlikGunleri.sort((a, b) => a.gun - b.gun);
 
-        for (let gunIndex = 0; gunIndex < 7; gunIndex += 1) {
-            const hucreSirasi = hafta * 7 + gunIndex;
-            const gunNumarasi =
-                hucreSirasi >= pazartesiBaslangici && gun <= toplamGun ? gun++ : 0;
-            satir.appendChild(
-                takvimHucreOlustur(
-                    gunNumarasi,
-                    ay.Ayn_no,
-                    takvimVerisi.yil,
-                    etkinlikler.get(gunNumarasi)
-                )
-            );
+    if (etkinlikGunleri.length === 0) {
+        const mesaj = document.createElement("li");
+        mesaj.className = "calendar-events__empty";
+        mesaj.textContent = "Bu ay için planlanmış etkinlik bulunmuyor.";
+        takvimGunleri.appendChild(mesaj);
+        return;
+    }
+
+    const bugun = new Date();
+    etkinlikGunleri.forEach(({ gun, ad }) => {
+        const etkinlik = document.createElement("li");
+        etkinlik.className = "calendar-event";
+
+        if (ad.toLocaleLowerCase("tr").includes("stant")) {
+            etkinlik.dataset.dayType = "pink";
+        } else if (ad.toLocaleLowerCase("tr").includes("tanışma")) {
+            etkinlik.dataset.dayType = "green";
         }
 
-        takvimGunleri.appendChild(satir);
-    }
+        if (
+            takvimVerisi.yil === bugun.getFullYear() &&
+            ay.Ayn_no - 1 === bugun.getMonth() &&
+            gun === bugun.getDate()
+        ) {
+            etkinlik.classList.add("today");
+        }
+
+        const tarih = document.createElement("span");
+        tarih.className = "calendar-event__date";
+        tarih.textContent = `${gun} ${ay.ad}`;
+
+        const adAlani = document.createElement("span");
+        adAlani.className = "calendar-event__name";
+        adAlani.textContent = ad;
+
+        etkinlik.append(tarih, adAlani);
+        takvimGunleri.appendChild(etkinlik);
+    });
 }
 
 function takvimVerisiniAl() {
