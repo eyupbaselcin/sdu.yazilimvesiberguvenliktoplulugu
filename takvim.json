@@ -112,8 +112,8 @@
     {
       "Ayn_no": 10,
       "ad": "Ekim",
-      "pazartesi": [ "5 Stant","12","19", "26"],
-      "Salı": [ "6 Stant","13 Tanışma Etkinliği","20","27"],
+      "pazartesi": [ "5 Stant","12 Tanışma Etkinliği","19", "26"],
+      "Salı": [ "6 Stant","13","20","27"],
       "Çarşamba": ["7 Stant", "14","21","28"],
       "Perşembe": [ "1", "8 Stant","15", "22", "29"],
       "Cuma": [ "2","9 Stant","16", "23", "30"],
