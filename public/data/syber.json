@@ -1,0 +1,267 @@
+[
+  {
+    "kategori": "Sistem ve Klavye Ayarları",
+    "komut": "setxkbmap tr",
+    "aciklama": "Klavyeyi Türkçe düzenine çevirir."
+  },
+  {
+    "kategori": "Paket Yönetimi ve Güncelleme",
+    "komut": "apt update / apt-get update",
+    "aciklama": "Paket listelerini günceller."
+  },
+  {
+    "kategori": "Paket Yönetimi ve Güncelleme",
+    "komut": "apt upgrade / apt-get upgrade",
+    "aciklama": "Kurulu paketleri en son sürümlerine yükseltir."
+  },
+  {
+    "kategori": "Paket Yönetimi ve Güncelleme",
+    "komut": "apt-get dist-upgrade",
+    "aciklama": "Bağımlılık değişikliklerini de yöneterek sistemi kapsamlı günceller."
+  },
+  {
+    "kategori": "Paket Yönetimi ve Güncelleme",
+    "komut": "apt-get clean",
+    "aciklama": "İndirilen ve önbellekte kalan paket dosyalarını (.deb) silerek yer açar."
+  },
+  {
+    "kategori": "Paket Yönetimi ve Güncelleme",
+    "komut": "apt search [paket_adi]",
+    "aciklama": "Paket deposunda arama yapar."
+  },
+  {
+    "kategori": "Kullanıcı ve Grup Yönetimi",
+    "komut": "whoami",
+    "aciklama": "Aktif olan kullanıcının adını gösterir."
+  },
+  {
+    "kategori": "Kullanıcı ve Grup Yönetimi",
+    "komut": "sudo passwd root",
+    "aciklama": "Root kullanıcısının parolasını değiştirir."
+  },
+  {
+    "kategori": "Kullanıcı ve Grup Yönetimi",
+    "komut": "passwd",
+    "aciklama": "Mevcut kullanıcının parolasını değiştirir."
+  },
+  {
+    "kategori": "Kullanıcı ve Grup Yönetimi",
+    "komut": "useradd [kullanici_adi]",
+    "aciklama": "Sisteme yeni bir kullanıcı ekler."
+  },
+  {
+    "kategori": "Kullanıcı ve Grup Yönetimi",
+    "komut": "userdel [kullanici_adi]",
+    "aciklama": "Kullanıcıyı sistemden siler."
+  },
+  {
+    "kategori": "Kullanıcı ve Grup Yönetimi",
+    "komut": "groupadd [grup_adi]",
+    "aciklama": "Sisteme yeni bir grup ekler."
+  },
+  {
+    "kategori": "Kullanıcı ve Grup Yönetimi",
+    "komut": "usermod -aG [grup_adi] [kullanici_adi]",
+    "aciklama": "Kullanıcıyı ikincil bir gruba ekler."
+  },
+  {
+    "kategori": "Kullanıcı ve Grup Yönetimi",
+    "komut": "chown [kullanici]:[grup] [dosya]",
+    "aciklama": "Dosya veya dizinin sahibini ve grubunu değiştirir."
+  },
+  {
+    "kategori": "Navigasyon ve Dizin İşlemleri",
+    "komut": "pwd",
+    "aciklama": "Bulunulan aktif dizin yolunu (Print Working Directory) ekrana yazdırır."
+  },
+  {
+    "kategori": "Navigasyon ve Dizin İşlemleri",
+    "komut": "cd [dizin]",
+    "aciklama": "Belirtilen dizine geçiş yapar."
+  },
+  {
+    "kategori": "Navigasyon ve Dizin İşlemleri",
+    "komut": "cd ..",
+    "aciklama": "Bir üst dizine geçer."
+  },
+  {
+    "kategori": "Navigasyon ve Dizin İşlemleri",
+    "komut": "ls",
+    "aciklama": "Aktif dizindeki dosya ve klasörleri listeler."
+  },
+  {
+    "kategori": "Navigasyon ve Dizin İşlemleri",
+    "komut": "ls -l",
+    "aciklama": "Dosya ve klasörleri ayrıntılı (izinler, sahip, boyut, tarih) listeler."
+  },
+  {
+    "kategori": "Navigasyon ve Dizin İşlemleri",
+    "komut": "ls -a / ls -la",
+    "aciklama": "Gizli dosyalar dahil tüm içeriği detaylı listeler."
+  },
+  {
+    "kategori": "Navigasyon ve Dizin İşlemleri",
+    "komut": "mkdir [dizin_adi]",
+    "aciklama": "Yeni bir dizin/klasör oluşturur (-p parametresi alt dizinleri topluca açar)."
+  },
+  {
+    "kategori": "Dosya İşlemleri",
+    "komut": "touch [dosya_adi]",
+    "aciklama": "Yeni ve boş bir dosya oluşturur."
+  },
+  {
+    "kategori": "Dosya İşlemleri",
+    "komut": "cp [kaynak] [hedef]",
+    "aciklama": "Dosya veya klasörü kopyalar."
+  },
+  {
+    "kategori": "Dosya İşlemleri",
+    "komut": "mv [kaynak] [hedef]",
+    "aciklama": "Dosya/klasörü taşır veya adını değiştirir."
+  },
+  {
+    "kategori": "Dosya İşlemleri",
+    "komut": "rm -r [hedef]",
+    "aciklama": "Dosya veya klasörü yinelemeli (recursive) olarak siler."
+  },
+  {
+    "kategori": "Dosya İşlemleri",
+    "komut": "nano [dosya_adi]",
+    "aciklama": "Terminal tabanlı metin düzenleyici ile dosyayı açar."
+  },
+  {
+    "kategori": "Dosya İşlemleri",
+    "komut": "tar -czvf [arsiv.tar.gz] [hedef]",
+    "aciklama": "Dosya ve dizinleri tar.gz formatında sıkıştırıp arşivler."
+  },
+  {
+    "kategori": "Metin Görüntüleme ve Arama",
+    "komut": "cat [dosya_adi]",
+    "aciklama": "Dosyanın tüm içeriğini terminale yazdırır (-n ile satır numarası eklenir)."
+  },
+  {
+    "kategori": "Metin Görüntüleme ve Arama",
+    "komut": "echo \"metin\" > [dosya]",
+    "aciklama": "Metni ekrana yazar veya yönlendirme operatörü (>) ile dosyaya kaydeder."
+  },
+  {
+    "kategori": "Metin Görüntüleme ve Arama",
+    "komut": "more [dosya_adi]",
+    "aciklama": "Uzun metin dosyalarını sayfa sayfa okumayı sağlar (Space ile ilerlenir)."
+  },
+  {
+    "kategori": "Metin Görüntüleme ve Arama",
+    "komut": "head [dosya_adi]",
+    "aciklama": "Dosyanın ilk 10 satırını gösterir (-n [sayı] ile satır adedi belirlenir)."
+  },
+  {
+    "kategori": "Metin Görüntüleme ve Arama",
+    "komut": "tail [dosya_adi]",
+    "aciklama": "Dosyanın son 10 satırını ekrana getirir."
+  },
+  {
+    "kategori": "Metin Görüntüleme ve Arama",
+    "komut": "grep -i [kelime] [dosya]",
+    "aciklama": "Dosya içinde büyük/küçük harf duyarsız kelime araması yapar."
+  },
+  {
+    "kategori": "Metin Görüntüleme ve Arama",
+    "komut": "wc [dosya_adi]",
+    "aciklama": "Dosyadaki satır, kelime ve bayt sayısını hesaplar."
+  },
+  {
+    "kategori": "Sistem Bilgisi ve Terminal Kontrolü",
+    "komut": "man [komut]",
+    "aciklama": "Komutun kılavuz (manuel) sayfasını açar."
+  },
+  {
+    "kategori": "Sistem Bilgisi ve Terminal Kontrolü",
+    "komut": "uname -a",
+    "aciklama": "Çekirdek sürümü, mimari ve işletim sistemi bilgilerini detaylı listeler."
+  },
+  {
+    "kategori": "Sistem Bilgisi ve Terminal Kontrolü",
+    "komut": "hostname",
+    "aciklama": "Cihazın ağ üzerindeki adını görüntüler."
+  },
+  {
+    "kategori": "Sistem Bilgisi ve Terminal Kontrolü",
+    "komut": "history",
+    "aciklama": "Terminalde daha önce çalıştırılan komutların geçmişini gösterir."
+  },
+  {
+    "kategori": "Sistem Bilgisi ve Terminal Kontrolü",
+    "komut": "clear",
+    "aciklama": "Terminal ekranını temizler."
+  },
+  {
+    "kategori": "Sistem Bilgisi ve Terminal Kontrolü",
+    "komut": "ctrl + c",
+    "aciklama": "Çalışan aktif işlemi sonlandırır (SIGINT)."
+  },
+  {
+    "kategori": "Bilgi Toplama ve Ağ Araçları",
+    "komut": "dnsenum -v -w [domain]",
+    "aciklama": "Hedef alan adına ait DNS kayıtlarını ve alt alan adlarını toplar."
+  },
+  {
+    "kategori": "Bilgi Toplama ve Ağ Araçları",
+    "komut": "fierce --domain [domain]",
+    "aciklama": "Hedef alan adı için DNS taraması ve alt alan adı keşfi yapar."
+  },
+  {
+    "kategori": "Bilgi Toplama ve Ağ Araçları",
+    "komut": "enum4linux -a [IP]",
+    "aciklama": "Hedef Windows/Samba sistemlerindeki paylaşımları, kullanıcıları ve grup verilerini numaralandırır."
+  },
+  {
+    "kategori": "Ağ Teşhisi",
+    "komut": "ip addr",
+    "aciklama": "Sistemdeki ağ arayüzlerini ve IP adreslerini görüntüler."
+  },
+  {
+    "kategori": "Ağ Teşhisi",
+    "komut": "ip route",
+    "aciklama": "Sistemin yönlendirme tablosunu gösterir."
+  },
+  {
+    "kategori": "Ağ Teşhisi",
+    "komut": "ping -c 4 [hedef]",
+    "aciklama": "İzinli bir hedefe ağ erişimini ve gecikme süresini kontrol eder."
+  },
+  {
+    "kategori": "Ağ Teşhisi",
+    "komut": "ss -tuln",
+    "aciklama": "Sistemde dinleme yapan TCP ve UDP portlarını listeler."
+  },
+  {
+    "kategori": "Dosya İzinleri ve Güvenlik",
+    "komut": "ls -l [dosya]",
+    "aciklama": "Bir dosyanın sahibi, grubu ve izinlerini görüntüler."
+  },
+  {
+    "kategori": "Dosya İzinleri ve Güvenlik",
+    "komut": "chmod 600 [dosya]",
+    "aciklama": "Dosyayı yalnızca sahibi okuyup yazabilecek şekilde sınırlar."
+  },
+  {
+    "kategori": "Dosya İzinleri ve Güvenlik",
+    "komut": "find [dizin] -perm -002 -type f",
+    "aciklama": "İzinli bir sistemde herkes tarafından yazılabilir dosyaları bulur."
+  },
+  {
+    "kategori": "İşlem ve Günlük Yönetimi",
+    "komut": "ps aux",
+    "aciklama": "Çalışan işlemleri ve kaynak kullanımlarını listeler."
+  },
+  {
+    "kategori": "İşlem ve Günlük Yönetimi",
+    "komut": "top",
+    "aciklama": "İşlemleri ve sistem kaynaklarını canlı olarak izler."
+  },
+  {
+    "kategori": "İşlem ve Günlük Yönetimi",
+    "komut": "journalctl -p warning -b",
+    "aciklama": "Mevcut açılıştan itibaren uyarı ve hata seviyesindeki günlükleri gösterir."
+  }
+]

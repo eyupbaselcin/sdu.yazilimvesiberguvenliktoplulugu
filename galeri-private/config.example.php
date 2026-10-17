@@ -1,0 +1,6 @@
+<?php
+
+// Generate these values using the instructions in GALERI_KURULUM.md.
+const GALERI_SIFRE_SALT = 'TUZ_DEGERINI_BURAYA_YAPISTIRIN';
+const GALERI_SIFRE_HASH = 'HASH_DEGERINI_BURAYA_YAPISTIRIN';
+const GALERI_SIFRE_ITERATIONS = 600000;

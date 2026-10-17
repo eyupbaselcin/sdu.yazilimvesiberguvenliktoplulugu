@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Süleyman Demirel Üniversitesi Yazılım ve Siber Güvenlik Topluluğu etkinlikleri, haberleri ve sosyal medya hesapları.">
+    <title>SDÜ Yazılım ve Siber Güvenlik Topluluğu</title>
+    <link rel="icon" type="image/png" href="../assets/images/yazılım_siber_logo.png">
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" crossorigin href="../assets/home-CBHdEM6_.css">
+    <style>
+        /* Dark mode */
+        html.dark,
+        html.dark body {
+            --bg: #0b171c;
+            --card: #12242b;
+            --primary: #3bb9ab;
+            background: radial-gradient(circle at top, #162c35 0%, #0b171c 45%, #060e11 100%) !important;
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .panel,
+        html.dark .news-card,
+        html.dark .past-event,
+        html.dark .calendar-event,
+        html.dark .about-list li,
+        html.dark .social-list li {
+            background: #12242b !important;
+            color: #f1f8f9 !important;
+            border-color: rgba(59, 185, 171, .2) !important;
+        }
+
+        html.dark .section-title,
+        html.dark .card-title,
+        html.dark .news-card h3,
+        html.dark .past-event__title {
+            color: #f1f8f9 !important;
+        }
+
+        /* Glass */
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, .9);
+        }
+
+        html.dark .glass-effect {
+            background: rgba(11, 23, 28, .92);
+        }
+
+        /* Nav pill */
+        .nav-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 18px;
+            border-radius: 9999px;
+            background-color: rgba(11, 109, 117, .08);
+            color: #0a6670;
+            border: 1px solid transparent;
+            font-weight: 600;
+            font-size: .9rem;
+            text-decoration: none;
+            transition: all .2s ease;
+            white-space: nowrap;
+        }
+
+        .nav-pill:hover,
+        .nav-pill:focus-visible {
+            background-color: rgba(17, 134, 124, .16);
+            border-color: rgba(10, 102, 112, .2);
+            transform: translateY(-1px);
+            outline: none;
+        }
+
+        .nav-pill.active {
+            background-color: #0a6670;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(10, 102, 112, .28);
+        }
+
+        html.dark .nav-pill {
+            background-color: rgba(59, 185, 171, .14);
+            color: #3bb9ab;
+            border-color: rgba(59, 185, 171, .16);
+        }
+
+        html.dark .nav-pill:hover {
+            background-color: rgba(59, 185, 171, .25);
+            color: #5eead4;
+        }
+
+        html.dark .nav-pill.active {
+            background-color: #3bb9ab;
+            color: #0b171c;
+            box-shadow: 0 4px 14px rgba(59, 185, 171, .35);
+        }
+
+        /* Theme toggle */
+        .theme-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 9999px;
+            background: rgba(11, 109, 117, .08);
+            color: #0a6670;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all .2s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background: rgba(17, 134, 124, .18);
+            transform: translateY(-1px);
+        }
+
+        html.dark .theme-toggle-btn {
+            background: rgba(59, 185, 171, .14);
+            color: #3bb9ab;
+        }
+
+        .theme-toggle-btn .light-icon {
+            display: none;
+        }
+
+        .theme-toggle-btn .dark-icon {
+            display: inline-block;
+        }
+
+        html.dark .theme-toggle-btn .light-icon {
+            display: inline-block;
+            color: #f59e0b;
+        }
+
+        html.dark .theme-toggle-btn .dark-icon {
+            display: none;
+        }
+
+        /* Mobile menu */
+        #mobileMenuBtn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 9999px;
+            background: rgba(11, 109, 117, .08);
+            color: #0a6670;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all .2s ease;
+        }
+
+        html.dark #mobileMenuBtn {
+            background: rgba(59, 185, 171, .14);
+            color: #3bb9ab;
+        }
+
+        #mobileMenu {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            padding: 12px 16px;
+            border-top: 1px solid rgba(0, 0, 0, .08);
+            background: rgba(255, 255, 255, .97);
+        }
+
+        #mobileMenu.open {
+            display: flex;
+        }
+
+        html.dark #mobileMenu {
+            background: rgba(11, 23, 28, .97);
+            border-top-color: rgba(59, 185, 171, .15);
+        }
+
+        @media (max-width: 1023px) {
+            #mobileMenuBtn {
+                display: inline-flex;
+            }
+
+            #desktopNav {
+                display: none !important;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #mobileMenu {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header class="glass-effect"
+            style="position:sticky;top:0;z-index:40;width:100%;border-bottom:1px solid rgba(0,0,0,.08);"
+            aria-label="Üst bilgi">
+            <div
+                style="max-width:1280px;margin:0 auto;padding:0 24px;height:72px;display:flex;align-items:center;justify-content:space-between;">
+                <!-- Brand -->
+                <a href="index.html" title="Ana Sayfa"
+                    style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+                    <div
+                        style="width:46px;height:46px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#0d6f7f,#20b2c2);padding:4px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(13,111,127,.3);flex-shrink:0;">
+                        <img src="../assets/images/yazılım_siber_logo.png"
+                            alt="SDÜ Yazılım ve Siber Güvenlik Topluluğu Logosu"
+                            style="width:100%;height:100%;object-fit:contain;">
+                    </div>
+                    <div>
+                        <span
+                            style="font-weight:800;font-size:1rem;letter-spacing:-.02em;display:block;line-height:1.2;color:#111827;">SDÜ
+                            YAZILIM</span>
+                        <span
+                            style="font-size:.7rem;color:#0a6670;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:block;margin-top:1px;">VE
+                            SİBER GÜVENLİK</span>
+                    </div>
+                </a>
+                <!-- Desktop nav -->
+                <nav id="desktopNav" style="display:flex;align-items:center;gap:8px;" aria-label="Ana navigasyon">
+                    <a class="site-nav__link" href="index.html">Ana Sayfa</a>
+                    <a class="nav-pill active" href="index.html">Etkinlikler</a>
+                    <a class="nav-pill" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
+                    <a class="nav-pill" href="iletisim.html">İletişim</a>
+                    <a class="nav-pill" href="giris.html">Giriş</a>
+                    <a class="nav-pill" href="syber.html">Siber Güvenlik</a>
+                </nav>
+                <!-- Controls -->
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <button id="themeToggle" type="button" aria-label="Temayı Değiştir" class="theme-toggle-btn">
+                        <i class="fa-solid fa-moon dark-icon"></i>
+                        <i class="fa-solid fa-sun light-icon"></i>
+                    </button>
+                    <button id="mobileMenuBtn" type="button" aria-label="Menüyü Aç">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobileMenu" aria-label="Mobil navigasyon">
+                <a class="nav-pill active" href="index.html" style="border-radius:10px;">Etkinlikler</a>
+                <a class="nav-pill" href="ToplulukHakkinda.html" style="border-radius:10px;">Yönetim Ekibimiz</a>
+                <a class="nav-pill" href="iletisim.html" style="border-radius:10px;">İletişim</a>
+                <a class="nav-pill" href="giris.html" style="border-radius:10px;">Giriş</a>
+                <a class="nav-pill" href="syber.html" style="border-radius:10px;">Siber Güvenlik</a>
+            </div>
+        </header>
+
+        <div class="layout">
+            <main>
+                <section class="panel" id="program">
+                    <div class="section-header">
+                        <div>
+                            <h1 class="section-title">Aylık Etkinlikler</h1>
+                            <p class="section-subtitle">Bu ay için planlanan etkinlik günleri</p>
+                        </div>
+                    </div>
+
+                    <div class="calendar-wrap">
+                        <div class="calendar-header">
+                            <h2 id="takvim-baslik" class="card-title">Takvim Yükleniyor</h2>
+                            <p id="takvim-ayi" class="calendar-month">Ay</p>
+                        </div>
+                        <ul class="calendar-events" id="takvim-gunleri" aria-label="Bu ayın etkinlikleri"
+                            aria-live="polite"></ul>
+                    </div>
+                </section>
+
+                <section class="panel" id="haberler">
+                    <div class="section-header">
+                        <div>
+                            <h1 class="section-title">Haftalık Haberler</h1>
+                            <p class="section-subtitle">Topluluk etkinlikleri ve duyurularını buradan takip edin.</p>
+                        </div>
+                    </div>
+
+                    <div class="news-grid">
+                        <article class="news-card">
+                            <p class="eyebrow">Yeni Topluluk Projesi Tanıtıldı</p>
+                            <h3>Yeni Topluluk Projemiz sizlerle</h3>
+                            <p>Topluluğumuzun yeni projesi öğrenci katılımını artırmak ve siber güvenlik farkındalığını
+                                güçlendirmek için hazırlandı.</p>
+                            <div class="feature">
+                                <img src="../assets/images/Yazılım ve siber güvenlik .png" alt="Proje tanıtım görseli">
+                                <div>
+                                    <strong>Projelerimizi buradan takip edebilirsiniz</strong>
+                                    <span>Topluluğun faaliyetleri ve etkinlikleri için bizi takip edin.</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="panel about-panel" id="topluluk-hakkinda">
+                    <div class="section-header">
+                        <div>
+                            <h1 class="section-title">Topluluk Hakkında</h1>
+                        </div>
+                    </div>
+
+                    <p>Temel amacımız, siber güvenlik alanında farkındalık oluşturarak günümüzün en kritik güvenlik
+                        tehditlerine karşı toplumu bilinçlendirmektir. Sunacağımız teknik ve teorik eğitimlerle, siber
+                        güvenlik kültürünü benimsemiş ve güçlü bir teknolojik altyapıya sahip bireyler yetiştirmeyi
+                        hedefliyoruz.</p>
+
+                    <ul class="about-list">
+                        <li>
+                            <img src="../assets/images/sdu_logo.png" alt="Süleyman Demirel Üniversitesi logosu">
+                            <span>Süleyman Demirel Üniversitesi</span>
+                        </li>
+                        <li>Yer: Amfi arkası topluluk odaları</li>
+                    </ul>
+                </section>
+                <section class="panel social-card" aria-labelledby="social-title">
+                    <div>
+                        <h2 id="social-title" class="card-title">Sosyal Medya Hesapları</h2>
+                        <p class="section-subtitle">Bizi takip edin, son duyuruları kaçırmayın.</p>
+                    </div>
+
+                    <ul class="social-list" aria-label="Sosyal medya hesapları">
+                        <li>
+                            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                            <a href="https://www.instagram.com/sduyzlm" target="_blank" rel="noopener noreferrer"
+                                aria-label="Instagram hesabını aç">sduyzlm</a>
+                        </li>
+                        <li>
+                            <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                            <a href="https://www.linkedin.com/company/sduyaz%C4%B1l%C4%B1m/" target="_blank"
+                                rel="noopener noreferrer" aria-label="LinkedIn hesabını aç">Yazılım ve Siber Güvenlik
+                                Topluluğu</a>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+
+        </div>
+    </div>
+
+    <dialog class="poster-dialog" id="poster-dialog" aria-labelledby="poster-title">
+        <div class="poster-dialog__header">
+            <h2 id="poster-title">Etkinlik</h2>
+            <button class="poster-dialog__close" type="button" aria-label="Kapat">&times;</button>
+        </div>
+
+        <div class="poster-gallery" id="poster-gallery">
+            <button class="poster-gallery__nav" id="poster-previous" type="button"
+                aria-label="Önceki görsel">&lsaquo;</button>
+            <div class="poster-gallery__content">
+                <p class="poster-dialog__message" id="poster-message" role="status"></p>
+                <img class="poster-dialog__image" id="poster-image" alt="Etkinlik görseli">
+                <p class="poster-gallery__counter" id="poster-counter"></p>
+            </div>
+            <button class="poster-gallery__nav" id="poster-next" type="button"
+                aria-label="Sonraki görsel">&rsaquo;</button>
+        </div>
+    </dialog>
+    <script src="../scripts/takvim.js"></script>
+    <script src="../scripts/yapilanEtkinlikler.js"></script>
+    <script>
+        // Tema toggle
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        }
+        // Mobil menü
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetim Ekibimiz | SDÜ Yazılım ve Siber Güvenlik Topluluğu</title>
+    <link rel="icon" type="image/png" href="../assets/images/yazılım_siber_logo.png">
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles/ToplulukHakkina.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.85);
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .nav-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+            border-radius: 9999px;
+            background-color: rgba(11, 109, 117, 0.08);
+            color: #0a6670;
+            border: 1px solid transparent;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-pill:hover,
+        .nav-pill:focus-visible {
+            background-color: rgba(17, 134, 124, 0.16);
+            border-color: rgba(10, 102, 112, 0.2);
+            transform: translateY(-1px);
+            outline: none;
+        }
+
+        .nav-pill.active {
+            background-color: #0a6670;
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(10, 102, 112, 0.28);
+        }
+
+        .dark .nav-pill {
+            background-color: rgba(59, 185, 171, 0.14);
+            color: #3bb9ab;
+            border-color: rgba(59, 185, 171, 0.16);
+        }
+
+        .dark .nav-pill:hover {
+            background-color: rgba(59, 185, 171, 0.25);
+            color: #5eead4;
+        }
+
+        .dark .nav-pill.active {
+            background-color: #3bb9ab;
+            color: #0b171c;
+            box-shadow: 0 4px 14px rgba(59, 185, 171, 0.35);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-gray-50 text-gray-800 dark:bg-slate-900 dark:text-gray-100 font-sans transition-colors duration-300 min-h-screen flex flex-col justify-between">
+
+    <header class="sticky top-0 z-40 w-full glass-effect border-b border-gray-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand & Official Logo -->
+            <a href="index.html" class="flex items-center space-x-3.5 group" title="Ana Sayfa">
+                <div
+                    class="w-12 h-12 rounded-2xl overflow-hidden bg-gradient-to-tr from-[#0d6f7f] to-[#20b2c2] p-1 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform flex-shrink-0">
+                    <img src="../assets/images/yazılım_siber_logo.png"
+                        alt="SDÜ Yazılım ve Siber Güvenlik Topluluğu Logosu" class="w-full h-full object-contain">
+                </div>
+                <div>
+                    <span
+                        class="font-extrabold text-lg tracking-tight block leading-tight text-gray-900 dark:text-white group-hover:text-[#0a6670] dark:group-hover:text-[#3bb9ab] transition-colors">SDÜ
+                        YAZILIM</span>
+                    <span
+                        class="text-xs text-[#0a6670] dark:text-[#3bb9ab] font-bold tracking-wider uppercase block mt-0.5">VE
+                        SİBER GÜVENLİK</span>
+                </div>
+            </a>
+            <nav class="hidden lg:flex items-center space-x-2.5" aria-label="Ana navigasyon">
+                <a class="nav-pill" href="index.html">Ana Sayfa</a>
+                <a class="nav-pill" href="etkinlik.html">Etkinlikler</a>
+                <a class="nav-pill active" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
+                <a class="nav-pill" href="iletisim.html">İletişim</a>
+                <a class="nav-pill" href="giris.html">Giriş</a>
+                <a class="nav-pill" href="syber.html">Siber Güvenlik</a>
+            </nav>
+
+            <!-- Header Controls -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <button id="themeToggle" type="button" aria-label="Temayı Değiştir"
+                    class="theme-toggle-btn p-2.5 rounded-full bg-[#0b6d7514] dark:bg-[#3bb9ab24] text-[#0a6670] dark:text-[#3bb9ab] hover:bg-[#11867c26] transition-all">
+                    <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+                    <i class="fa-solid fa-sun hidden dark:block text-amber-400 text-lg"></i>
+                </button>
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" type="button" aria-label="Menüyü Aç"
+                    class="lg:hidden p-2.5 rounded-full bg-[#0b6d7514] dark:bg-[#3bb9ab24] text-[#0a6670] dark:text-[#3bb9ab] hover:bg-[#11867c26] transition-all">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu"
+            class="hidden lg:hidden border-t border-gray-200 dark:border-slate-800 px-4 py-3 space-y-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md">
+            <a href="index.html" class="nav-pill w-full">Ana Sayfa</a>
+            <a href="etkinlik.html" class="nav-pill w-full">Etkinlikler</a>
+            <a href="ToplulukHakkinda.html" class="nav-pill active w-full">Yönetim Ekibimiz</a>
+            <a href="iletisim.html" class="nav-pill w-full">İletişim</a>
+            <a href="giris.html" class="nav-pill w-full">Giriş</a>
+            <a href="syber.html" class="nav-pill w-full">Siber Güvenlik</a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-grow">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start mb-12">
+
+            <!-- Advisor Card (Left - 1/5 of the area) -->
+            <div class="lg:col-span-1">
+                <div style="display: flex; margin-bottom: 20px; margin-left: 20px; font-size: medium;">
+                    <a style="width: auto; height: auto; background-color: rgb(5, 189, 235); color: rgb(0, 0, 0);"
+                        href="index.html">Topluluk merkezine
+                        dön</a>
+                </div>
+                <div
+                    class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-gray-200 dark:border-slate-700 shadow-sm card-hover relative group">
+                    <div class="relative overflow-hidden rounded-xl aspect-[4/5] bg-gray-100 dark:bg-slate-700 mb-4">
+                        <img src="https://w3.sdu.edu.tr/foto.aspx?sicil_no=01980" alt="Danışman Hocamız"
+                            class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                            onerror="this.src='https://placehold.co/400x500/3b82f6/white?text=Dan%C4%B1%C5%9Fman+Hoca'">
+                        <span
+                            class="absolute top-3 left-3 bg-blue-600 text-white text-xs px-2.5 py-1 rounded-full font-semibold shadow">
+                            Danışman
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-wide">DANIŞMAN HOCAMIZ
+                    </h3>
+                    <p class="text-sm font-medium text-blue-600 dark:text-blue-400 mt-1">Prof. Dr. Ecir Uğur KÜÇÜKSİLLE
+                    </p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 line-clamp-2">SDÜ Bilgisayar Mühendisliği
+                        Bölümü Öğretim Üyesi</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 flex flex-col justify-center lg:pl-6 pt-4">
+                <span
+                    class="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-lg text-xs font-bold tracking-widest uppercase mb-3 self-start">
+                    SDÜ YAZILIM VE SİBER GÜVENLİK TOPLULUĞU
+                </span>
+                <h1
+                    class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white tracking-tight leading-none mb-6">
+                    Yönetim <br class="hidden sm:inline" /><span
+                        class="text-blue-600 dark:text-blue-500">Ekibimiz</span>
+                </h1>
+                <p class="text-gray-600 dark:text-gray-300 text-base sm:text-lg max-w-2xl font-normal leading-relaxed">
+                    Süleyman Demirel Üniversitesi çatısı altında teknoloji, yazılım geliştirme ve siber güvenlik
+                    alanlarında projeler üreten, etkinlikler düzenleyen dinamik yönetim kadromuz.
+                </p>
+
+                <!-- Search and Filter Bar -->
+                <div
+                    class="mt-8 pt-6 border-t border-gray-200 dark:border-slate-800 flex flex-col sm:flex-row gap-4 justify-between items-center">
+                    <!-- Search input -->
+                    <div class="relative w-full sm:w-72">
+                        <i
+                            class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="searchInput" placeholder="Ekipte ara (İsim, Unvan)..."
+                            class="w-full pl-10 pr-4 py-2.5 text-sm bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    </div>
+
+                    <!-- Category Filters -->
+                    <div class="flex flex-wrap gap-2 w-full sm:w-auto" id="filterContainer">
+                        <button
+                            class="filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white transition shadow-sm"
+                            data-filter="all">Tümü</button>
+                        <button
+                            class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-700 transition"
+                            data-filter="yonetim">Başkanlık</button>
+                        <button
+                            class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-700 transition"
+                            data-filter="proje">Proje Koordinatörlüğü</button>
+                        <button
+                            class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-700 transition"
+                            data-filter="sponsorluk">Sponsorluk Koordinatörlüğü</button>
+                        <button
+                            class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-700 transition"
+                            data-filter="etkinlik">Etkinlik & Organizasyon Koordinatörlüğü</button>
+                        <button
+                            class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-700 transition"
+                            data-filter="sosyal-medya">Sosyal Medya & İletişim Koordinatörlüğü</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Grid (4 Columns matching layout structure from image) -->
+        <div id="teamGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Cards will be populated dynamically or static fallback -->
+        </div>
+
+        <div id="noResults" class="hidden text-center py-16">
+            <i class="fa-solid fa-user-slash text-4xl text-gray-400 mb-3"></i>
+            <p class="text-gray-500 dark:text-gray-400 font-medium">Aramanıza uygun ekip üyesi bulunamadı.</p>
+        </div>
+    </main>
+
+    <!-- Bottom Callout Section (Blue background matching bottom part of image) -->
+    <section class="bg-blue-600 dark:bg-blue-700 text-white py-16 px-4 sm:px-6 lg:px-8 mt-12">
+        <div class="max-w-4xl mx-auto text-left">
+            <span class="text-blue-200 font-semibold text-sm tracking-wider uppercase block mb-2">Geleceği Birlikte İnşa
+                Ediyoruz</span>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold tracking-tight mb-4">
+                This is where we keep our family adventures.
+            </h2>
+            <p class="text-blue-100 text-lg leading-relaxed max-w-2xl font-light">
+                From weekend getaways to big trips abroad, this is our space to remember the places we've explored.
+                Yazılım ve siber güvenlik alanında birlikte gelişiyor, projeler üretiyor ve topluluk ruhunu yaşatıyoruz.
+            </p>
+
+            <div class="mt-8 flex flex-wrap items-center gap-4 pt-4 border-t border-blue-500/50">
+                <a href="#"
+                    class="px-5 py-2.5 rounded-xl bg-white text-blue-700 font-bold hover:bg-blue-50 transition shadow">
+                    Aramıza Katıl
+                </a>
+                <div class="flex items-center space-x-4 text-xl pl-4">
+                    <a href="#" class="hover:text-blue-200 transition" title="Instagram"><i
+                            class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-blue-200 transition" title="LinkedIn"><i
+                            class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-blue-200 transition" title="GitHub"><i
+                            class="fa-brands fa-github"></i></a>
+                    <a href="#" class="hover:text-blue-200 transition" title="X (Twitter)"><i
+                            class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-200 transition" title="Discord"><i
+                            class="fa-brands fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-slate-950 text-gray-400 py-8 px-4 text-center text-sm border-t border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 SDÜ Yazılım ve Siber Güvenlik Topluluğu. Tüm Hakları Saklıdır.</p>
+            <p class="text-xs text-gray-500">Isparta Süleyman Demirel Üniversitesi</p>
+        </div>
+    </footer>
+
+    <!-- Member Modal -->
+    <div id="memberModal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl transform scale-95 transition-transform duration-300 relative"
+            id="modalContent">
+            <button id="closeModal"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalBody">
+                <!-- Dynamically filled -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Team Members Dataset matching layout images and community needs
+        const teamData = [
+            {
+                id: 1,
+                name: "BAŞKANIMIZ",
+                realName: "Eyüp Başelçin",
+                role: "Topluluk Başkanı",
+                category: "yonetim",
+                image: "https://media.licdn.com/dms/image/v2/D4D03AQGuzaQ1YKBklg/profile-displayphoto-scale_400_400/B4DaC4yPlgJEAg-/0/1789806575219?e=1793836800&v=beta&t=VFZlI9_MgWDWK8asbH0HFFFFr-2R3J1zTGRWdtdyBpQ",
+                bio: "Bilgisayar Mühendisliği 3. Sınıf. Siber güvenlik alanında araştırmacı.",
+                socials: { linkedin: "#", github: "#", instagram: "#" }
+            },
+            {
+                id: 2,
+                name: "BAŞKAN YARDIMCISI",
+                realName: "Caner Çakır",
+                role: "Başkan Yardımcısı",
+                category: "yonetim",
+                image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600",
+                bio: "Bilgisayar Mühendisliği 2. Sınıf. Siber güvenlik alanında araştırmacı.",
+                socials: { linkedin: "#", github: "#", instagram: "#" }
+            },
+            {
+                id: 3,
+                name: "DENETİM KURULU BAŞKANI",
+                realName: "Muhammed Kerim Şahin",
+                role: "Denetim Kurulu Başkanı",
+                category: "yonetim",
+                image: "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?auto=format&fit=crop&q=80&w=600",
+                bio: "Topluluk içi etkinlik koordinesi ve Uygulama Geliştiricisi.",
+                socials: { linkedin: "#", github: "#" }
+            },
+            {
+                id: 4,
+                name: "DENETİM KURULU BAŞKAN YARDIMCISI",
+                realName: "Elif Nur Özek",
+                role: "Denetim Kurulu Başkan Yardımcısı",
+                category: "yonetim",
+                image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=600",
+                bio: "Mobil Uygulama Geliştiricisi.",
+                socials: { linkedin: "#", github: "#" }
+            },
+            {
+                id: 5,
+                name: "SOSYAL MEDYA & İLETİŞİM KOORDİNATÖRÜ",
+                realName: "Selin Şahin",
+                role: "Sosyal Medya ve İletişim Koordinatörü",
+                category: "sosyal-medya",
+                image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=600",
+                bio: "Sosyal medya stratejileri, grafik tasarım ve topluluk iletişimi yöneticisi.",
+                socials: { linkedin: "#", instagram: "#" }
+            },
+            {
+                id: 6,
+                name: "PROJE KOORDİNATÖRÜ",
+                realName: "Burak Arslan",
+                role: "Proje Koordinatörü",
+                category: "proje",
+                image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=600",
+                bio: "Topluluk bünyesindeki yazılım projeleri, AR-GE ve TEKNOFEST takımları koordinasyonu.",
+                socials: { linkedin: "#", github: "#" }
+            },
+            {
+                id: 7,
+                name: "ETKİNLİK & ORGANİZASYON KOORDİNATÖRÜ",
+                realName: "Deniz Kovan",
+                role: "Etkinlik & Organizasyon Koordinatörü",
+                category: "etkinlik",
+                image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=600",
+                bio: "Workshop, seminer, hackathon ve sosyal etkinliklerin planlama ve icra sorumlusu.",
+                socials: { linkedin: "#", github: "#" }
+            },
+            {
+                id: 8,
+                name: "SPONSORLUK KOORDİNATÖRÜ",
+                realName: "Fatma Yıldız",
+                role: "Sponsorluk Koordinatörü",
+                category: "sponsorluk",
+                image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=600",
+                bio: "Sektörel iş birlikleri, sponsorluk anlaşmaları ve dış ilişkiler yönetimi.",
+                socials: { linkedin: "#", instagram: "#" }
+            },
+            {
+                id: 9,
+                name: "PROJE KOORDİNATÖR YARDIMCISI",
+                realName: "Gizem Çelik",
+                role: "Proje Koordinatör Yardımcısı",
+                category: "proje",
+                image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600",
+                bio: "Yazılım proje takımları takibi ve teknik dokümantasyon sorumlusu.",
+                socials: { linkedin: "#", github: "#" }
+            },
+            {
+                id: 10,
+                name: "ETKİNLİK & ORGANİZASYON SORUMLUSU",
+                realName: "Emre Öztürk",
+                role: "Etkinlik & Organizasyon Sorumlusu",
+                category: "etkinlik",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600",
+                bio: "Teknik atölye organizasyonları ve salon lojistik koordinasyonu.",
+                socials: { linkedin: "#", github: "#" }
+            },
+            {
+                id: 11,
+                name: "SPONSORLUK SORUMLUSU",
+                realName: "Kaan Aksoy",
+                role: "Sponsorluk Sorumlusu",
+                category: "sponsorluk",
+                image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600",
+                bio: "Şirket görüşmeleri ve etkinlik sponsorluk paketleri hazırlığı.",
+                socials: { linkedin: "#", github: "#" }
+            },
+            {
+                id: 12,
+                name: "SOSYAL MEDYA & İÇERİK SORUMLUSU",
+                realName: "Merve Koç",
+                role: "Sosyal Medya & İçerik Sorumlusu",
+                category: "sosyal-medya",
+                image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80&w=600",
+                bio: "Görsel tasarım, video prodüksiyon ve sosyal medya paylaşımları.",
+                socials: { linkedin: "#", instagram: "#" }
+            }
+        ];
+
+        // Render Cards
+        const grid = document.getElementById('teamGrid');
+        const noResults = document.getElementById('noResults');
+
+        function renderTeam(items) {
+            grid.innerHTML = '';
+            if (items.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            }
+            noResults.classList.add('hidden');
+
+            items.forEach(member => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-800 rounded-2xl p-4 border border-gray-200 dark:border-slate-700/80 shadow-sm card-hover cursor-pointer group flex flex-col justify-between";
+                card.onclick = () => openModal(member);
+
+                card.innerHTML = `
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl aspect-square bg-gray-100 dark:bg-slate-700 mb-3">
+                            <img src="${member.image}" alt="${member.name}" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                                 onerror="this.src='https://placehold.co/400x400/1e293b/white?text=${encodeURIComponent(member.name)}'">
+                        </div>
+                        <h3 class="font-bold text-gray-900 dark:text-white text-base leading-tight">${member.name}</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">${member.role}</p>
+                    </div>
+                    <div class="pt-3 mt-3 border-t border-gray-100 dark:border-slate-700/50 flex justify-between items-center text-xs text-blue-600 dark:text-blue-400 font-semibold">
+                        <span>${member.realName}</span>
+                        <i class="fa-solid fa-arrow-right opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Search & Filter Logic
+        let currentFilter = 'all';
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        function filterData() {
+            const query = searchInput.value.toLowerCase().trim();
+            const filtered = teamData.filter(m => {
+                const matchesFilter = currentFilter === 'all' || m.category === currentFilter;
+                const matchesSearch = m.name.toLowerCase().includes(query) ||
+                    m.role.toLowerCase().includes(query) ||
+                    m.realName.toLowerCase().includes(query);
+                return matchesFilter && matchesSearch;
+            });
+            renderTeam(filtered);
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-blue-600', 'text-white');
+                    b.classList.add('bg-white', 'dark:bg-slate-800', 'text-gray-600', 'dark:text-gray-300');
+                });
+                btn.classList.remove('bg-white', 'dark:bg-slate-800', 'text-gray-600', 'dark:text-gray-300');
+                btn.classList.add('bg-blue-600', 'text-white');
+
+                currentFilter = btn.dataset.filter;
+                filterData();
+            });
+        });
+
+        searchInput.addEventListener('input', filterData);
+
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('themeToggle');
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+
+        // Modal Logic
+        const modal = document.getElementById('memberModal');
+        const modalBody = document.getElementById('modalBody');
+        const closeModal = document.getElementById('closeModal');
+
+        function openModal(member) {
+            modalBody.innerHTML = `
+                <div class="text-center">
+                    <img src="${member.image}" alt="${member.name}" class="w-24 h-24 rounded-full mx-auto object-cover mb-4 ring-4 ring-blue-500/20">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">${member.name}</h3>
+                    <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">${member.role}</p>
+                    <p class="text-xs text-gray-400 mt-0.5">${member.realName}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-4 leading-relaxed">${member.bio}</p>
+                    <div class="flex justify-center space-x-4 mt-6 text-gray-600 dark:text-gray-300 text-lg">
+                        ${member.socials.linkedin ? `<a href="${member.socials.linkedin}" class="hover:text-blue-600"><i class="fa-brands fa-linkedin"></i></a>` : ''}
+                        ${member.socials.github ? `<a href="${member.socials.github}" class="hover:text-gray-900 dark:hover:text-white"><i class="fa-brands fa-github"></i></a>` : ''}
+                        ${member.socials.instagram ? `<a href="${member.socials.instagram}" class="hover:text-pink-600"><i class="fa-brands fa-instagram"></i></a>` : ''}
+                    </div>
+                </div>
+            `;
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            document.getElementById('modalContent').classList.remove('scale-95');
+            document.getElementById('modalContent').classList.add('scale-100');
+        }
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('modalContent').classList.remove('scale-100');
+            document.getElementById('modalContent').classList.add('scale-95');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal.click();
+            }
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            themeToggle.addEventListener('click', () => {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Initial render
+        renderTeam(teamData);
+    </script>
+</body>
+
+</html>

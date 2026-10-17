@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SDÜ Yazılım ve Siber Güvenlik Topluluğu yönetim giriş ekranı.">
+    <link rel="icon" type="image/png" href="../assets/images/yazılım_siber_logo.png">
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Giriş & Etkinlik Paneli | SDÜ Yazılım ve Siber Güvenlik Topluluğu</title>
+    <link rel="stylesheet" crossorigin href="../assets/login-BMR9NiEu.css">
+    <link rel="stylesheet" crossorigin href="../assets/community-D8jnM6IE.css">
+    <style>
+        body {
+            background: radial-gradient(circle at top, #ffffff, #f4fbfb 45%, #eaf5f6);
+            color: #1f2d34;
+            min-height: 100vh;
+            margin: 0;
+            padding: 24px 20px 48px;
+            font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .login-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 140px);
+            padding: 20px 14px;
+        }
+
+        .back-link-wrapper {
+            width: min(100%, 604px);
+            margin-bottom: 12px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #0a6670;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #084e56;
+            transform: translateX(-3px);
+        }
+
+        .theme-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            background: #0b6d7514;
+            color: #0a6670;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 1.15rem;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background: #11867c26;
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle-btn .light-icon {
+            display: none;
+        }
+
+        .theme-toggle-btn .dark-icon {
+            display: inline-block;
+        }
+
+        /* Nav Pill styling */
+        .site-nav__link.active {
+            background-color: #0a6670 !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px rgba(10, 102, 112, 0.28);
+        }
+
+        /* DARK THEME */
+        html.dark,
+        html.dark body {
+            background: radial-gradient(circle at top, #162c35 0%, #0b171c 45%, #060e11 100%) !important;
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .back-link {
+            color: #3bb9ab !important;
+        }
+
+        html.dark .back-link:hover {
+            color: #5eead4 !important;
+        }
+
+        html.dark .site-header {
+            background: rgba(18, 36, 43, 0.92) !important;
+            border-color: rgba(59, 185, 171, 0.2) !important;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        html.dark .site-brand__title span:first-child {
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .site-brand__title span:last-child {
+            color: #3bb9ab !important;
+        }
+
+        html.dark .site-nav__link {
+            background-color: rgba(59, 185, 171, 0.14) !important;
+            color: #3bb9ab !important;
+            border-color: rgba(59, 185, 171, 0.16) !important;
+        }
+
+        html.dark .site-nav__link:hover {
+            background-color: rgba(59, 185, 171, 0.25) !important;
+            color: #5eead4 !important;
+        }
+
+        html.dark .site-nav__link.active {
+            background-color: #3bb9ab !important;
+            color: #0b171c !important;
+            box-shadow: 0 4px 14px rgba(59, 185, 171, 0.35) !important;
+        }
+
+        html.dark .theme-toggle-btn {
+            background-color: rgba(59, 185, 171, 0.15) !important;
+            color: #3bb9ab !important;
+            border-color: rgba(59, 185, 171, 0.2) !important;
+        }
+
+        html.dark .theme-toggle-btn:hover {
+            background-color: rgba(59, 185, 171, 0.28) !important;
+            color: #5eead4 !important;
+        }
+
+        html.dark .theme-toggle-btn .light-icon {
+            display: inline-block !important;
+            color: #f59e0b !important;
+        }
+
+        html.dark .theme-toggle-btn .dark-icon {
+            display: none !important;
+        }
+
+        html.dark .login-form,
+        html.dark .admin-panel {
+            background: #12242b !important;
+            border-color: rgba(59, 185, 171, 0.2) !important;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55) !important;
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .form-header h1 {
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .form-header p {
+            color: #8ba5ac !important;
+        }
+
+        html.dark .field label {
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .field label i {
+            color: #3bb9ab !important;
+        }
+
+        html.dark .field input,
+        html.dark .field textarea,
+        html.dark .field select {
+            background: #162c35 !important;
+            border-color: rgba(59, 185, 171, 0.25) !important;
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .field input::placeholder,
+        html.dark .field textarea::placeholder {
+            color: #64828a !important;
+        }
+
+        html.dark .field input:focus,
+        html.dark .field textarea:focus,
+        html.dark .field select:focus {
+            border-color: #3bb9ab !important;
+            box-shadow: 0 0 0 3px rgba(59, 185, 171, 0.2) !important;
+        }
+
+        html.dark .login-form button,
+        html.dark .btn-primary {
+            background: linear-gradient(135deg, #0a6670, #3bb9ab) !important;
+            color: #ffffff !important;
+            box-shadow: 0 9px 20px rgba(10, 102, 112, 0.4) !important;
+        }
+
+        html.dark .login-form button:hover,
+        html.dark .btn-primary:hover {
+            background: linear-gradient(135deg, #084e56, #2fa396) !important;
+        }
+
+        /* ADMIN PANEL STYLES */
+        .admin-panel {
+            width: min(100%, 820px);
+            padding: 36px 36px 42px;
+            border: 1px solid rgba(10, 102, 112, 0.15);
+            border-radius: 28px;
+            background: #ffffff;
+            box-shadow: 0 20px 48px rgba(14, 57, 63, 0.08);
+            margin-top: 10px;
+        }
+
+        .admin-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding-bottom: 24px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid rgba(10, 102, 112, 0.12);
+        }
+
+        .admin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            background: rgba(10, 102, 112, 0.12);
+            color: #0a6670;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        html.dark .admin-badge {
+            background: rgba(59, 185, 171, 0.18);
+            color: #3bb9ab;
+        }
+
+        .admin-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            background: rgba(10, 102, 112, 0.08);
+            color: #0a6670;
+            border: 1px solid rgba(10, 102, 112, 0.15);
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(10, 102, 112, 0.16);
+            transform: translateY(-1px);
+        }
+
+        html.dark .btn-secondary {
+            background: rgba(59, 185, 171, 0.12);
+            color: #5eead4;
+            border-color: rgba(59, 185, 171, 0.25);
+        }
+
+        .btn-logout {
+            background: #ef444415;
+            color: #dc2626;
+            border: 1px solid #ef444430;
+        }
+
+        .btn-logout:hover {
+            background: #ef444425;
+            color: #b91c1c;
+        }
+
+        html.dark .btn-logout {
+            background: #ef444425;
+            color: #f87171;
+            border-color: #ef444445;
+        }
+
+        /* UPLOAD ZONES */
+        .upload-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            border: 2px dashed rgba(10, 102, 112, 0.28);
+            border-radius: 16px;
+            background: rgba(10, 102, 112, 0.03);
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .upload-zone:hover {
+            border-color: #0a6670;
+            background: rgba(10, 102, 112, 0.06);
+        }
+
+        html.dark .upload-zone {
+            border-color: rgba(59, 185, 171, 0.35);
+            background: rgba(59, 185, 171, 0.04);
+        }
+
+        html.dark .upload-zone:hover {
+            border-color: #3bb9ab;
+            background: rgba(59, 185, 171, 0.08);
+        }
+
+        .upload-icon {
+            font-size: 2rem;
+            color: #0a6670;
+            margin-bottom: 8px;
+        }
+
+        html.dark .upload-icon {
+            color: #3bb9ab;
+        }
+
+        .poster-preview-box {
+            position: relative;
+            margin-top: 14px;
+            max-width: 240px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(10, 102, 112, 0.2);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        .poster-preview-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .gallery-grid-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .gallery-thumb {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(10, 102, 112, 0.2);
+        }
+
+        .gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-thumb-btn {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 22px;
+            height: 22px;
+            background: rgba(220, 38, 38, 0.85);
+            color: #fff;
+            border: 0;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .remove-thumb-btn:hover {
+            background: #b91c1c;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .form-grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .admin-panel {
+                padding: 24px 18px;
+            }
+        }
+
+        .btn-submit-event {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            min-height: 52px;
+            margin-top: 20px;
+            border: 0;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #0a6670, #0d8390);
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 24px rgba(10, 102, 112, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit-event:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(10, 102, 112, 0.4);
+            background: linear-gradient(135deg, #084e56, #0a6670);
+        }
+
+        /* RECENT EVENTS LIST IN ADMIN */
+        .event-card-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(10, 102, 112, 0.15);
+            background: rgba(10, 102, 112, 0.03);
+            margin-bottom: 12px;
+        }
+
+        html.dark .event-card-item {
+            background: rgba(59, 185, 171, 0.05);
+            border-color: rgba(59, 185, 171, 0.2);
+        }
+
+        .event-card-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .event-card-item-details {
+            flex: 1;
+        }
+
+        .event-card-item-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 0 0 4px;
+        }
+
+        .event-card-item-meta {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        html.dark .event-card-item-meta {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body class="community-body">
+    <div class="site-page">
+        <header class="site-header" aria-label="Üst bilgi">
+            <a class="site-brand" href="index.html" aria-label="Topluluk ana sayfası">
+                <span class="site-brand__logo">
+                    <img src="../assets/images/yazılım_siber_logo.png"
+                        alt="SDÜ Yazılım ve Siber Güvenlik Topluluğu Logosu">
+                </span>
+                <span class="site-brand__title">
+                    <span>Topluluk Hub</span>
+                    <span>Yazılım ve Siber Güvenlik</span>
+                </span>
+            </a>
+            <nav class="site-nav" aria-label="Ana navigasyon">
+                <a class="site-nav__link" href="index.html">Ana Sayfa</a>
+                <a class="site-nav__link" href="etkinlik.html">Etkinlikler</a>
+                <a class="site-nav__link" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
+                <a class="site-nav__link" href="iletisim.html">İletişim</a>
+                <a class="site-nav__link active" href="giris.html" aria-current="page">Giriş</a>
+                <a class="site-nav__link" href="syber.html">Siber Güvenlik</a>
+            </nav>
+            <div class="site-header-actions">
+                <button id="themeToggle" type="button" aria-label="Temayı Değiştir" class="theme-toggle-btn">
+                    <i class="fa-solid fa-moon dark-icon"></i>
+                    <i class="fa-solid fa-sun light-icon"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="login-page">
+            <!-- 1. GİRİŞ BÖLÜMÜ -->
+            <div id="loginSection" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <div class="back-link-wrapper">
+                    <a class="back-link" href="index.html">&larr; Topluluk merkezine dön</a>
+                </div>
+
+                <form id="form" class="login-form" method="post" onsubmit="event.preventDefault(); handleLogin();">
+                    <div class="form-header">
+                        <h1>Hoş Geldiniz</h1>
+                        <p>Topluluk yönetim giriş ekranı</p>
+                    </div>
+
+                    <div class="field">
+                        <label for="kullaniciAdi">
+                            <i class="fa-solid fa-user" aria-hidden="true"></i>
+                            Kullanıcı Adı
+                        </label>
+                        <input id="kullaniciAdi" name="username" type="text" autocomplete="username"
+                            placeholder="Kullanıcı adınızı girin" required>
+                        <p id="nameError" class="error" aria-live="polite"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="eposta">
+                            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                            Email
+                        </label>
+                        <input id="eposta" name="email" type="email" autocomplete="email" placeholder="isim@ornek.com"
+                            required>
+                        <p id="emailError" class="error" aria-live="polite"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="numara">
+                            <i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i>
+                            Numara
+                        </label>
+                        <input id="numara" name="phone" class="phone" type="tel" autocomplete="tel" inputmode="tel"
+                            placeholder="(5##) ### ## ##" required>
+                        <p id="phoneError" class="error" aria-live="polite"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="sifre">
+                            <i class="fa-solid fa-key" aria-hidden="true"></i>
+                            Şifre
+                        </label>
+                        <input id="sifre" name="password" type="password" autocomplete="current-password"
+                            placeholder="********" required>
+                        <p id="passwordError" class="error" aria-live="polite"></p>
+                    </div>
+
+                    <button type="submit" id="loginBtn">
+                        <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+                        Giriş Yap
+                    </button>
+                </form>
+            </div>
+
+            <!-- 2. ETKİNLİK YÖNETİM & YÜKLEME PANELİ (GİRİŞ BAŞARILI OLUNCA GÖRÜNÜR) -->
+            <div id="adminSection" class="admin-panel" style="display: none;">
+                <div class="admin-top-bar">
+                    <div>
+                        <div class="admin-badge">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            Yönetici Paneli
+                        </div>
+                        <h2 style="margin: 8px 0 0; font-size: 1.4rem;">Hoş Geldin, <span id="adminGreetingName" style="color: #0a6670;">Yönetici</span> 👋</h2>
+                        <p style="margin: 4px 0 0; font-size: 0.9rem; color: #64748b;">Yeni bir etkinlik afişi, tarihi ve görsellerini buradan ekleyip yayınlayabilirsiniz.</p>
+                    </div>
+                    <div class="admin-actions">
+                        <a href="etkinlik.html" class="btn-secondary" title="Etkinlikler sayfasına git">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            Etkinlikler Sayfası
+                        </a>
+                        <button type="button" class="btn-secondary btn-logout" onclick="handleLogout()">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            Çıkış Yap
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Yeni Etkinlik Ekleme Formu -->
+                <form id="eventUploadForm" onsubmit="event.preventDefault(); handlePublishEvent();">
+                    <h3 style="font-size: 1.15rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-plus-circle" style="color: #0a6670;"></i>
+                        Yeni Etkinlik Paylaşımı
+                    </h3>
+
+                    <!-- 1. Etkinlik Adı & Türü -->
+                    <div class="form-grid-2">
+                        <div class="field">
+                            <label for="eventTitle">
+                                <i class="fa-solid fa-heading"></i>
+                                Etkinlik Adı *
+                            </label>
+                            <input id="eventTitle" type="text" placeholder="Örn: Siber Güvenlik ve Ağ Güvenliği Kampı" required>
+                        </div>
+                        <div class="field">
+                            <label for="eventType">
+                                <i class="fa-solid fa-tag"></i>
+                                Etkinlik Kategorisi
+                            </label>
+                            <select id="eventType" style="width: 100%; height: 52px; padding: 0 14px; border: 1px solid #dce0e8; border-radius: 12px; font: inherit;">
+                                <option value="Atölye & Workshop">Atölye & Workshop</option>
+                                <option value="Seminer & Konferans">Seminer & Konferans</option>
+                                <option value="CTF & Siber Güvenlik">CTF & Siber Güvenlik</option>
+                                <option value="Tanışma Etkinliği">Tanışma Etkinliği</option>
+                                <option value="Hackathon">Hackathon</option>
+                                <option value="Sosyal Etkinlik">Sosyal Etkinlik</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 2. Tarih ve Konum -->
+                    <div class="form-grid-2">
+                        <div class="field">
+                            <label for="eventDate">
+                                <i class="fa-solid fa-calendar-day"></i>
+                                Etkinlik Tarihi & Saati *
+                            </label>
+                            <input id="eventDate" type="datetime-local" required>
+                        </div>
+                        <div class="field">
+                            <label for="eventLocation">
+                                <i class="fa-solid fa-location-dot"></i>
+                                Etkinlik Yeri / Konumu
+                            </label>
+                            <input id="eventLocation" type="text" placeholder="Örn: Mühendislik Fakültesi Konferans Salonu" required>
+                        </div>
+                    </div>
+
+                    <!-- 3. Açıklama -->
+                    <div class="field">
+                        <label for="eventDesc">
+                            <i class="fa-solid fa-align-left"></i>
+                            Etkinlik Açıklaması
+                        </label>
+                        <textarea id="eventDesc" rows="3" placeholder="Etkinliğin detayları, katılım koşulları ve hedefleri..." style="width: 100%; padding: 12px 16px; border: 1px solid #dce0e8; border-radius: 12px; font: inherit; resize: vertical;"></textarea>
+                    </div>
+
+                    <!-- 4. AFİŞ YÜKLEME (Tekil Kapak Resmi) -->
+                    <div class="field" style="margin-top: 20px;">
+                        <label style="font-weight: 700;">
+                            <i class="fa-solid fa-image"></i>
+                            Etkinlik Afişi Yükle *
+                        </label>
+                        <div class="upload-zone" onclick="document.getElementById('eventPosterInput').click()">
+                            <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                            <strong style="font-size: 0.98rem;">Afiş Görselini Seçin veya Sürükleyin</strong>
+                            <span style="font-size: 0.82rem; color: #64748b; margin-top: 4px;">PNG, JPG, JPEG veya WEBP (Maksimum 5MB)</span>
+                        </div>
+                        <input id="eventPosterInput" type="file" accept="image/*" style="display: none;" onchange="handlePosterSelect(event)">
+                        
+                        <!-- Afiş Önizleme Alanı -->
+                        <div id="posterPreviewContainer" style="display: none; margin-top: 10px;">
+                            <div class="poster-preview-box">
+                                <img id="posterPreviewImg" src="" alt="Seçilen Afiş Önizlemesi">
+                                <button type="button" class="remove-thumb-btn" onclick="removePoster()" title="Afişi Kaldır">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                            <span style="display: block; font-size: 0.82rem; color: #0a6670; font-weight: 600; margin-top: 6px;">✓ Afiş başarıyla yüklendi</span>
+                        </div>
+                    </div>
+
+                    <!-- 5. ETKİNLİK GÖRSELLERİ (Çoklu Galeri Fotoğrafları) -->
+                    <div class="field" style="margin-top: 20px;">
+                        <label style="font-weight: 700;">
+                            <i class="fa-solid fa-images"></i>
+                            Etkinlik Görselleri (Galeri / Çoklu Fotoğraf)
+                        </label>
+                        <div class="upload-zone" onclick="document.getElementById('eventGalleryInput').click()">
+                            <i class="fa-solid fa-photo-film upload-icon"></i>
+                            <strong style="font-size: 0.98rem;">Birden Fazla Etkinlik Fotoğrafı Seçin</strong>
+                            <span style="font-size: 0.82rem; color: #64748b; margin-top: 4px;">Etkinlik esnasında çekilen fotoğrafları topluca yükleyebilirsiniz</span>
+                        </div>
+                        <input id="eventGalleryInput" type="file" accept="image/*" multiple style="display: none;" onchange="handleGallerySelect(event)">
+
+                        <!-- Galeri Görselleri Önizleme Alanı -->
+                        <div id="galleryPreviewContainer" style="display: none; margin-top: 10px;">
+                            <span id="galleryCountBadge" style="font-size: 0.85rem; font-weight: 600; color: #0a6670;">0 görsel seçildi</span>
+                            <div id="galleryPreviewGrid" class="gallery-grid-preview"></div>
+                        </div>
+                    </div>
+
+                    <!-- Durum Mesajı -->
+                    <div id="publishStatus" style="display: none; padding: 12px 16px; border-radius: 10px; margin-top: 16px; font-weight: 600; font-size: 0.92rem;"></div>
+
+                    <!-- Yayınla Butonu -->
+                    <button type="submit" class="btn-submit-event">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Etkinliği Yayınla & Sisteme Kaydet
+                    </button>
+                </form>
+
+                <!-- 6. DAHA ÖNCE YAYINLANAN ETKİNLİKLER LİSTESİ -->
+                <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(10, 102, 112, 0.15);">
+                    <h3 style="font-size: 1.15rem; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+                        <span>
+                            <i class="fa-solid fa-list-check" style="color: #0a6670;"></i>
+                            Yayınlanan Etkinlikler
+                        </span>
+                        <span id="eventCountLabel" style="font-size: 0.85rem; color: #64748b; font-weight: normal;"></span>
+                    </h3>
+                    <div id="publishedEventsList">
+                        <!-- JS ile doldurulacak -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MANTIK & ETKİNLİK YÖNETİM SCRİPTİ -->
+    <script>
+        // --- 1. TEMA DEĞİŞTİRİCİ ---
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.toggle('dark');
+                document.body?.classList.toggle('dark', isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        }
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.body?.classList.add('dark');
+        }
+
+        // --- 2. DEĞİŞKENLER VE DURUMLAR ---
+        let currentPosterBase64 = '';
+        let currentGalleryBase64 = [];
+
+        // Sayfa yüklendiğinde oturum kontrolü
+        window.addEventListener('DOMContentLoaded', () => {
+            checkAuthSession();
+            renderPublishedEvents();
+        });
+
+        function checkAuthSession() {
+            const userSession = sessionStorage.getItem('ysgt_logged_user');
+            const loginSection = document.getElementById('loginSection');
+            const adminSection = document.getElementById('adminSection');
+
+            if (userSession) {
+                const user = JSON.parse(userSession);
+                document.getElementById('adminGreetingName').textContent = user.name || 'Yönetici';
+                loginSection.style.display = 'none';
+                adminSection.style.display = 'block';
+            } else {
+                loginSection.style.display = 'flex';
+                adminSection.style.display = 'none';
+            }
+        }
+
+        // --- 3. KULLANICI GİRİŞİ ---
+        async function handleLogin() {
+            const usernameInput = document.getElementById('kullaniciAdi').value.trim();
+            const emailInput = document.getElementById('eposta').value.trim();
+            const phoneInput = document.getElementById('numara').value.trim();
+            const passwordInput = document.getElementById('sifre').value.trim();
+
+            const nameError = document.getElementById('nameError');
+            const passwordError = document.getElementById('passwordError');
+            nameError.textContent = '';
+            passwordError.textContent = '';
+
+            let authenticated = false;
+
+            try {
+                // dist/data/giris.json dosyasından kullanıcıları almayı dene
+                const res = await fetch('../data/giris.json');
+                if (res.ok) {
+                    const data = await res.json();
+                    const foundUser = data.kullanicilar.find(u => {
+                        let decodedPass = '';
+                        try { decodedPass = atob(u.sifre); } catch (e) { decodedPass = u.sifre; }
+                        return (u.isim.toLowerCase() === usernameInput.toLowerCase() || u.email.toLowerCase() === emailInput.toLowerCase()) &&
+                               (passwordInput === decodedPass || passwordInput === u.sifre);
+                    });
+
+                    if (foundUser) {
+                        authenticated = true;
+                    }
+                }
+            } catch (err) {
+                console.warn('giris.json kontrolü yapılamadı, yerel doğrulama yapılıyor.', err);
+            }
+
+            // Yedek kontrol (3yupb, Kaliteli_yap, zamani_kurtar veya şifre eşleşmeleri)
+            if (!authenticated) {
+                if ((usernameInput.toLowerCase() === '3yupb' && passwordInput === 'sdu_ysgt_baskani') ||
+                    (usernameInput.toLowerCase() === 'kaliteli_yap' && passwordInput === 'eyup_ysgt') ||
+                    (usernameInput.toLowerCase() === 'zamani_kurtar' && passwordInput === 'zehra_ysgt') ||
+                    (emailInput.toLowerCase() === 'eyehan1321@gmail.com' && passwordInput === 'sdu_ysgt_baskani')) {
+                    authenticated = true;
+                }
+            }
+
+            if (authenticated) {
+                sessionStorage.setItem('ysgt_logged_user', JSON.stringify({
+                    name: usernameInput,
+                    email: emailInput,
+                    phone: phoneInput
+                }));
+                checkAuthSession();
+            } else {
+                passwordError.textContent = 'Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyin.';
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('ysgt_logged_user');
+            checkAuthSession();
+        }
+
+        // --- 4. AFİŞ YÜKLEME VE ÖNİZLEME ---
+        function handlePosterSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                currentPosterBase64 = e.target.result;
+                document.getElementById('posterPreviewImg').src = currentPosterBase64;
+                document.getElementById('posterPreviewContainer').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removePoster() {
+            currentPosterBase64 = '';
+            document.getElementById('eventPosterInput').value = '';
+            document.getElementById('posterPreviewContainer').style.display = 'none';
+        }
+
+        // --- 5. ETKİNLİK GÖRSELLERİ (GALERİ) YÜKLEME VE ÖNİZLEME ---
+        function handleGallerySelect(event) {
+            const files = Array.from(event.target.files);
+            if (!files.length) return;
+
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    currentGalleryBase64.push(e.target.result);
+                    renderGalleryPreviews();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderGalleryPreviews() {
+            const container = document.getElementById('galleryPreviewContainer');
+            const grid = document.getElementById('galleryPreviewGrid');
+            const badge = document.getElementById('galleryCountBadge');
+
+            if (currentGalleryBase64.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'block';
+            badge.textContent = `${currentGalleryBase64.length} adet görsel seçildi`;
+            grid.innerHTML = '';
+
+            currentGalleryBase64.forEach((imgBase64, index) => {
+                const thumb = document.createElement('div');
+                thumb.className = 'gallery-thumb';
+                thumb.innerHTML = `
+                    <img src="${imgBase64}" alt="Galeri görseli ${index + 1}">
+                    <button type="button" class="remove-thumb-btn" onclick="removeGalleryImage(${index})" title="Kaldır">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                `;
+                grid.appendChild(thumb);
+            });
+        }
+
+        function removeGalleryImage(index) {
+            currentGalleryBase64.splice(index, 1);
+            renderGalleryPreviews();
+        }
+
+        // --- 6. ETKİNLİĞİ YAYINLAMA / KAYDETME ---
+        function handlePublishEvent() {
+            const title = document.getElementById('eventTitle').value.trim();
+            const type = document.getElementById('eventType').value;
+            const date = document.getElementById('eventDate').value;
+            const location = document.getElementById('eventLocation').value.trim();
+            const desc = document.getElementById('eventDesc').value.trim();
+            const statusEl = document.getElementById('publishStatus');
+
+            if (!title || !date) {
+                showStatus('Lütfen etkinlik adı ve tarihini doldurun.', 'error');
+                return;
+            }
+
+            if (!currentPosterBase64) {
+                showStatus('Lütfen bir etkinlik afişi yükleyin!', 'error');
+                return;
+            }
+
+            // Yeni Etkinlik Nesnesi
+            const newEvent = {
+                id: 'event_' + Date.now(),
+                title: title,
+                type: type,
+                date: date,
+                location: location,
+                description: desc,
+                poster: currentPosterBase64,
+                gallery: [...currentGalleryBase64],
+                createdAt: new Date().toISOString()
+            };
+
+            // localStorage'a kaydet
+            let savedEvents = [];
+            try {
+                savedEvents = JSON.parse(localStorage.getItem('topluluk_etkinlikler') || '[]');
+            } catch (e) {
+                savedEvents = [];
+            }
+
+            savedEvents.unshift(newEvent);
+            localStorage.setItem('topluluk_etkinlikler', JSON.stringify(savedEvents));
+
+            showStatus('🎉 Etkinlik afişi, tarihi ve görselleriyle birlikte başarıyla yayınlandı!', 'success');
+
+            // Formu temizle
+            document.getElementById('eventUploadForm').reset();
+            removePoster();
+            currentGalleryBase64 = [];
+            renderGalleryPreviews();
+
+            // Listeyi yenile
+            renderPublishedEvents();
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('publishStatus');
+            statusEl.style.display = 'block';
+            statusEl.textContent = message;
+            if (type === 'success') {
+                statusEl.style.background = 'rgba(16, 185, 129, 0.15)';
+                statusEl.style.color = '#059669';
+                statusEl.style.border = '1px solid rgba(16, 185, 129, 0.3)';
+            } else {
+                statusEl.style.background = 'rgba(239, 68, 68, 0.15)';
+                statusEl.style.color = '#dc2626';
+                statusEl.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+            }
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 5000);
+        }
+
+        // --- 7. YAYINLANAN ETKİNLİKLERİ LİSTELEME VE SİLME ---
+        function renderPublishedEvents() {
+            const listContainer = document.getElementById('publishedEventsList');
+            const countLabel = document.getElementById('eventCountLabel');
+            if (!listContainer) return;
+
+            let events = [];
+            try {
+                events = JSON.parse(localStorage.getItem('topluluk_etkinlikler') || '[]');
+            } catch (e) {
+                events = [];
+            }
+
+            if (countLabel) {
+                countLabel.textContent = `${events.length} etkinlik kayıtlı`;
+            }
+
+            if (events.length === 0) {
+                listContainer.innerHTML = `
+                    <div style="text-align: center; padding: 24px; color: #64748b; font-size: 0.95rem;">
+                        <i class="fa-regular fa-calendar-xmark" style="font-size: 1.8rem; margin-bottom: 8px; display: block; color: #94a3b8;"></i>
+                        Henüz sisteme eklenmiş yeni bir etkinlik bulunmuyor. Yukarıdaki formu kullanarak ilk etkinliğinizi yayınlayabilirsiniz.
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = events.map(evt => {
+                const formattedDate = new Date(evt.date).toLocaleString('tr-TR', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                return `
+                    <div class="event-card-item">
+                        <img src="${evt.poster || '../assets/images/yazılım_siber_logo.png'}" alt="${evt.title}">
+                        <div class="event-card-item-details">
+                            <h4 class="event-card-item-title">${evt.title}</h4>
+                            <div class="event-card-item-meta">
+                                <span><i class="fa-solid fa-calendar"></i> ${formattedDate}</span> &bull; 
+                                <span><i class="fa-solid fa-location-dot"></i> ${evt.location || 'SDÜ Kampüsü'}</span> &bull; 
+                                <span><i class="fa-solid fa-images"></i> ${evt.gallery ? evt.gallery.length : 0} fotoğraf</span>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-secondary btn-logout" onclick="deleteEvent('${evt.id}')" title="Etkinliği Sil">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function deleteEvent(id) {
+            if (!confirm('Bu etkinliği silmek istediğinize emin misiniz?')) return;
+
+            let events = JSON.parse(localStorage.getItem('topluluk_etkinlikler') || '[]');
+            events = events.filter(e => e.id !== id);
+            localStorage.setItem('topluluk_etkinlikler', JSON.stringify(events));
+            renderPublishedEvents();
+        }
+    </script>
+</body>
+
+</html>

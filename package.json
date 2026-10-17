@@ -1,0 +1,19 @@
+{
+  "name": "sdu-yazilim-siber-guvenlik-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --open /pages/iletisim.html",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.4.1",
+    "vite": "^6.3.5"
+  }
+}
