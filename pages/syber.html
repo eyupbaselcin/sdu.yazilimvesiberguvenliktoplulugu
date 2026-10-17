@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../assets/images/yazılım_siber_logo.png">
+    <title>Siber Güvenlik Komutları | SDÜ Yazılım ve Siber Güvenlik Topluluğu</title>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" crossorigin href="../assets/security-Csf-bCze.css">
+    <link rel="stylesheet" crossorigin href="../assets/community-D8jnM6IE.css">
+    <style>
+        body {
+            background: radial-gradient(circle at top, #ffffff, #f4fbfb 45%, #eaf5f6);
+            color: #1f2d34;
+            min-height: 100vh;
+            margin: 0;
+            padding: 24px 20px 48px;
+            font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            background: #0b6d7514;
+            color: #0a6670;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 1.15rem;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background: #11867c26;
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle-btn .light-icon {
+            display: none;
+        }
+
+        .theme-toggle-btn .dark-icon {
+            display: inline-block;
+        }
+
+        .site-nav__link.active {
+            background-color: #0a6670 !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px rgba(10, 102, 112, 0.28);
+        }
+
+        .hero-image {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 20px;
+            padding: 8px;
+            border: 1px solid rgba(10, 102, 112, 0.15);
+            border-radius: 24px;
+            background: #ffffff;
+            object-fit: contain;
+            display: block;
+            box-shadow: 0 10px 24px rgba(10, 102, 112, 0.1);
+        }
+
+        .panel {
+            background: #fffffff0;
+            border: 1px solid rgba(10, 102, 112, 0.12);
+            border-radius: 28px;
+            box-shadow: 0 20px 45px rgba(14, 57, 63, 0.08);
+            padding: clamp(24px, 5vw, 48px);
+        }
+
+        .back-link {
+            color: #0a6670;
+            font-weight: 600;
+        }
+
+        .eyebrow {
+            color: #0a6670;
+        }
+
+        .section-title {
+            color: #1f2d34;
+        }
+
+        .section-subtitle {
+            color: #60757d;
+        }
+
+        #komut-listesi section {
+            background: #ffffff;
+            border: 1px solid rgba(10, 102, 112, 0.12);
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(14, 57, 63, 0.05);
+            padding: 22px;
+        }
+
+        .card-title {
+            color: #0a6670;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .news-list li {
+            background: #f0fbfb;
+            border-left: 3px solid #3bb9ab;
+            border-radius: 8px;
+            padding: 10px 14px;
+        }
+
+        .news-list strong {
+            color: #0a6670;
+            font-family: SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+            font-size: 0.95rem;
+        }
+
+        .news-list span {
+            color: #60757d;
+            font-size: 0.9rem;
+        }
+
+        /* DARK THEME */
+        html.dark,
+        html.dark body {
+            background: radial-gradient(circle at top, #162c35 0%, #0b171c 45%, #060e11 100%) !important;
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .site-header {
+            background: rgba(18, 36, 43, 0.92) !important;
+            border-color: rgba(59, 185, 171, 0.2) !important;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        html.dark .site-brand__title span:first-child {
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .site-brand__title span:last-child {
+            color: #3bb9ab !important;
+        }
+
+        html.dark .site-nav__link {
+            background-color: rgba(59, 185, 171, 0.14) !important;
+            color: #3bb9ab !important;
+            border-color: rgba(59, 185, 171, 0.16) !important;
+        }
+
+        html.dark .site-nav__link:hover {
+            background-color: rgba(59, 185, 171, 0.25) !important;
+            color: #5eead4 !important;
+        }
+
+        html.dark .site-nav__link.active {
+            background-color: #3bb9ab !important;
+            color: #0b171c !important;
+            box-shadow: 0 4px 14px rgba(59, 185, 171, 0.35) !important;
+        }
+
+        html.dark .theme-toggle-btn {
+            background-color: rgba(59, 185, 171, 0.15) !important;
+            color: #3bb9ab !important;
+            border-color: rgba(59, 185, 171, 0.2) !important;
+        }
+
+        html.dark .theme-toggle-btn:hover {
+            background-color: rgba(59, 185, 171, 0.28) !important;
+            color: #5eead4 !important;
+        }
+
+        html.dark .theme-toggle-btn .light-icon {
+            display: inline-block !important;
+            color: #f59e0b !important;
+        }
+
+        html.dark .theme-toggle-btn .dark-icon {
+            display: none !important;
+        }
+
+        html.dark .hero-image {
+            background: #12242b !important;
+            border-color: rgba(59, 185, 171, 0.25) !important;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        html.dark .panel {
+            background: #12242b !important;
+            border-color: rgba(59, 185, 171, 0.2) !important;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55) !important;
+        }
+
+        html.dark .back-link {
+            color: #3bb9ab !important;
+        }
+
+        html.dark .eyebrow {
+            color: #3bb9ab !important;
+        }
+
+        html.dark .section-title {
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .section-subtitle {
+            color: #8ba5ac !important;
+        }
+
+        html.dark .section-header {
+            border-color: rgba(59, 185, 171, 0.2) !important;
+        }
+
+        html.dark #komut-listesi section {
+            background: #162c35 !important;
+            border-color: rgba(59, 185, 171, 0.2) !important;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        html.dark .card-title {
+            color: #3bb9ab !important;
+        }
+
+        html.dark .news-list li {
+            background: #11232a !important;
+            border-left: 3px solid #3bb9ab !important;
+        }
+
+        html.dark .news-list strong {
+            color: #5eead4 !important;
+        }
+
+        html.dark .news-list span {
+            color: #94a3b8 !important;
+        }
+    </style>
+</head>
+
+<body class="community-body">
+    <div class="site-page">
+        <header class="site-header" aria-label="Üst bilgi">
+            <a class="site-brand" href="index.html" aria-label="Topluluk ana sayfası">
+                <span class="site-brand__logo">
+                    <img src="../assets/images/yazılım_siber_logo.png"
+                        alt="SDÜ Yazılım ve Siber Güvenlik Topluluğu Logosu">
+                </span>
+                <span class="site-brand__title">
+                    <span>Topluluk Hub</span>
+                    <span>Yazılım ve Siber Güvenlik</span>
+                </span>
+            </a>
+            <nav class="site-nav" aria-label="Ana navigasyon">
+                <a class="site-nav__link" href="index.html">Ana Sayfa</a>
+                <a class="site-nav__link" href="etkinlik.html">Etkinlikler</a>
+                <a class="site-nav__link" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
+                <a class="site-nav__link" href="iletisim.html">İletişim</a>
+                <a class="site-nav__link" href="giris.html">Giriş</a>
+                <a class="site-nav__link active" href="syber.html" aria-current="page">Siber Güvenlik</a>
+            </nav>
+            <div class="site-header-actions">
+                <button id="themeToggle" type="button" aria-label="Temayı Değiştir" class="theme-toggle-btn">
+                    <i class="fa-solid fa-moon dark-icon"></i>
+                    <i class="fa-solid fa-sun light-icon"></i>
+                </button>
+            </div>
+        </header>
+        <main class="page-shell">
+            <img class="hero-image" src="../assets/images/yazılım_siber_logo.png"
+                alt="SDÜ Yazılım ve Siber Güvenlik Topluluğu logosu">
+            <section class="panel" id="siber-komutlar">
+                <a class="back-link" href="index.html">&larr; Topluluk merkezine dön</a>
+                <div class="section-header">
+                    <div>
+                        <p class="eyebrow">Terminal rehberi</p>
+                        <h1 class="section-title">Siber Güvenlik Komutları</h1>
+                        <p class="section-subtitle">Temel terminal komutları ve kısa açıklamaları</p>
+                    </div>
+                </div>
+                <div id="komut-listesi" aria-live="polite"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../scripts/syber.js"></script>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.toggle('dark');
+                document.body?.classList.toggle('dark', isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        }
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.body?.classList.add('dark');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDÜ Yazılım ve Siber Güvenlik Topluluğu</title>
+    <link rel="icon" type="image/png" href="../assets/images/yazılım_siber_logo.png">
+
+
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" crossorigin href="../assets/events-BtUHBfh9.css">
+    <link rel="stylesheet" crossorigin href="../assets/community-D8jnM6IE.css">
+    <style>
+        .theme-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            background: #0b6d7514;
+            color: #0a6670;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 1.15rem;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background: #11867c26;
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle-btn .light-icon {
+            display: none;
+        }
+
+        .theme-toggle-btn .dark-icon {
+            display: inline-block;
+        }
+
+        .site-nav__link.active {
+            background-color: #0a6670 !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px rgba(10, 102, 112, 0.28);
+        }
+
+        /* DARK MODE */
+        html.dark,
+        html.dark body {
+            background: radial-gradient(circle at top, #162c35 0%, #0b171c 45%, #060e11 100%) !important;
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .site-header {
+            background: rgba(18, 36, 43, 0.92) !important;
+            border-color: rgba(59, 185, 171, 0.2) !important;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        html.dark .site-brand__title span:first-child {
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .site-brand__title span:last-child {
+            color: #3bb9ab !important;
+        }
+
+        html.dark .site-nav__link {
+            background-color: rgba(59, 185, 171, 0.14) !important;
+            color: #3bb9ab !important;
+            border-color: rgba(59, 185, 171, 0.16) !important;
+        }
+
+        html.dark .site-nav__link:hover {
+            background-color: rgba(59, 185, 171, 0.25) !important;
+            color: #5eead4 !important;
+        }
+
+        html.dark .site-nav__link.active,
+        html.dark .site-nav__link[aria-current="page"] {
+            background-color: #3bb9ab !important;
+            color: #0b171c !important;
+            box-shadow: 0 4px 14px rgba(59, 185, 171, 0.35) !important;
+        }
+
+        html.dark .theme-toggle-btn {
+            background-color: rgba(59, 185, 171, 0.15) !important;
+            color: #3bb9ab !important;
+            border-color: rgba(59, 185, 171, 0.2) !important;
+        }
+
+        html.dark .theme-toggle-btn:hover {
+            background-color: rgba(59, 185, 171, 0.28) !important;
+            color: #5eead4 !important;
+        }
+
+        html.dark .theme-toggle-btn .light-icon {
+            display: inline-block !important;
+            color: #f59e0b !important;
+        }
+
+        html.dark .theme-toggle-btn .dark-icon {
+            display: none !important;
+        }
+
+        html.dark .calendar-card {
+            background: #12242b !important;
+            border-color: rgba(59, 185, 171, 0.2) !important;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55) !important;
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .section-title,
+        html.dark .card-title,
+        html.dark .event-month__title {
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .section-subtitle {
+            color: #8ba5ac !important;
+        }
+
+        html.dark .news-panel {
+            background: #162c35 !important;
+            border-color: rgba(59, 185, 171, 0.2) !important;
+        }
+
+        html.dark .news-header,
+        html.dark .news-title {
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .news-badge {
+            background: rgba(59, 185, 171, 0.18) !important;
+            color: #3bb9ab !important;
+        }
+
+        html.dark .calendar th {
+            color: #8ba5ac !important;
+        }
+
+        html.dark .calendar td {
+            background: #162c35 !important;
+            color: #f1f8f9 !important;
+            border-color: rgba(59, 185, 171, 0.12) !important;
+        }
+
+        html.dark .calendar td.muted {
+            opacity: 0.35 !important;
+        }
+
+        html.dark .event-card {
+            background: #162c35 !important;
+            border-color: rgba(59, 185, 171, 0.2) !important;
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .event-card__title {
+            color: #f1f8f9 !important;
+        }
+
+        html.dark .event-card__tag {
+            background: rgba(59, 185, 171, 0.18) !important;
+            color: #3bb9ab !important;
+        }
+
+        html.dark .event-card__date {
+            color: #8ba5ac !important;
+        }
+    </style>
+</head>
+
+<body class="community-body">
+    <div class="site-page">
+        <header class="site-header" aria-label="Üst bilgi">
+            <a class="site-brand" href="index.html" aria-label="Topluluk ana sayfası">
+                <span class="site-brand__logo">
+                    <img src="../assets/images/yazılım_siber_logo.png" alt="">
+                </span>
+                <span class="site-brand__title">
+                    <span>Topluluk Hub</span>
+                    <span>Yazılım ve Siber Güvenlik</span>
+                </span>
+            </a>
+            <nav class="site-nav" aria-label="Ana navigasyon">
+                <a class="site-nav__link" href="index.html">Ana Sayfa</a>
+                <a class="site-nav__link" href="etkinlik.html" aria-current="page">Etkinlikler</a>
+                <a class="site-nav__link" href="ToplulukHakkinda.html">Yönetim Ekbimiz</a>
+                <a class="site-nav__link" href="iletisim.html">İletişim</a>
+                <a class="site-nav__link" href="giris.html">Giriş</a>
+                <a class="site-nav__link" href="syber.html">Siber Güvenlik</a>
+            </nav>
+        </header>
+        <main class="page-shell">
+            <div class="calendar-card">
+                <div class="section-header">
+                    <div style="width: min(100%, 604px); margin-bottom: 8px;">
+                        <a class="back-link" href="index.html">&larr; Topluluk merkezine dön</a>
+                    </div>
+                    <div>
+                        <h1 class="section-title">Aylık Etkinlik Takip Sistemi</h1>
+                        <p class="section-subtitle">Topluluk etkinlikleri ve duyurularını buradan takip edebilirsiniz.
+                        </p>
+                    </div>
+                </div>
+                <div class="news-wrap">
+                    <div class="news-panel">
+                        <div class="news-header">Topluluğumuzun Ekim ayı etkinlikleri</div>
+                        <h2 class="news-title">Bu ayki etkinlikler sizlerle-</h2>
+
+                        <div class="news-meta">
+                            <div class="news-thumb">
+                                <img src="../assets/images/yazılım_siber_logo.png" alt="Etkinlik Resmi" width="100%"
+                                    height="100%">
+                            </div>
+                            <div class="news-badge">Yazılım ve Siber Güvenlik farkıyla</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="calendar-block">
+                    <h2 class="card-title">Ekim ayı</h2>
+                    <table class="calendar">
+                        <thead>
+                            <tr>
+                                <th>Sal</th>
+                                <th>Çar</th>
+                                <th>Per</th>
+                                <th>Cum</th>
+                                <th>Cmt</th>
+                                <th>Paz</th>
+                                <th>Pzt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="day"><span>30</span></td>
+                                <td class="day"><span>31</span></td>
+                                <td class="day"><span>1</span></td>
+                                <td class="day"><span>2</span></td>
+                                <td class="day"><span>3</span></td>
+                                <td class="day"><span>4</span></td>
+                                <td class="day" data-day-type="pink"><span>5 Stant</span></td>
+                            </tr>
+                            <tr>
+                                <td class="day" data-day-type="pink"><span>6 Stant</span></td>
+                                <td class="day" data-day-type="pink"><span>7 Stant</span></td>
+                                <td class="day" data-day-type="pink"><span>8 Stant</span></td>
+                                <td class="day" data-day-type="pink"><span>9 Stant</span></td>
+                                <td class="day"><span>10</span></td>
+                                <td class="day"><span>11</span></td>
+                                <td class="day"><span>12</span></td>
+                            </tr>
+                            <tr>
+                                <td class="day" data-day-type="green"><span>13 Tanışma Etkinliği</span></td>
+                                <td class="day"><span>14</span></td>
+                                <td class="day"><span>15</span></td>
+                                <td class="day"><span>16</span></td>
+                                <td class="day"><span>17</span></td>
+                                <td class="day"><span>18</span></td>
+                                <td class="day"><span>19</span></td>
+                            </tr>
+                            <tr>
+                                <td class="day"><span>20</span></td>
+                                <td class="day"><span>21</span></td>
+                                <td class="day"><span>22</span></td>
+                                <td class="day"><span>23</span></td>
+                                <td class="day"><span>24</span></td>
+                                <td class="day"><span>25</span></td>
+                                <td class="day"><span>26</span></td>
+                            </tr>
+                            <tr>
+                                <td class="day"><span>27</span></td>
+                                <td class="day"><span>28</span></td>
+                                <td class="day"><span>29</span></td>
+                                <td class="day"><span>30</span></td>
+                                <td class="day"><span>31</span></td>
+                                <td class="day muted"><span>1</span></td>
+                                <td class="day muted"><span>2</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <section class="event-month-list" aria-label="Etkinlikler aya göre">
+                    <!-- Yönetici Paneli Üzerinden Eklenen Yeni Etkinlikler -->
+                    <section class="event-month" id="customEventsSection" style="display: none;">
+                        <h2 class="event-month__title" style="color: #0a6670;">Yeni Eklenen Etkinlikler</h2>
+                        <div class="event-list" id="customEventList"></div>
+                    </section>
+
+                    <section class="event-month" aria-labelledby="events-october-2025">
+                        <h2 class="event-month__title" id="events-october-2025">Ekim 2025</h2>
+                        <div class="event-list">
+                            <article class="event-card">
+                                <div class="event-card__image">
+                                    <img src="../assets/events/01.10.2025.jpeg" alt="bardagini kap gel etkinliği">
+                                </div>
+                                <div class="event-card__body">
+                                    <span class="event-card__tag">SDÜ</span>
+                                    <h3 class="event-card__title">Bardağını Kap Gel</h3>
+                                    <div class="event-card__date">1 Ekim 2025</div>
+                                </div>
+                            </article>
+
+                            <article class="event-card">
+                                <div class="event-card__image placeholder-image">
+                                    <img src="../assets/events/11.10.2025.jpeg" alt="tanişma">
+                                </div>
+                                <div class="event-card__body">
+                                    <span class="event-card__tag">TNIŞMA</span>
+                                    <h3 class="event-card__title">Yönetim Tanışması</h3>
+                                    <div class="event-card__date">11 Ekim 2025</div>
+                                </div>
+                            </article>
+
+                            <article class="event-card">
+                                <div class="event-card__image">
+                                    <img src="../assets/events/23.10.2025.jpeg" alt="siber">
+                                </div>
+                                <div class="event-card__body">
+                                    <span class="event-card__tag">RED TEAM</span>
+                                    <h3 class="event-card__title">Siber Tehtid İstihbaratı</h3>
+                                    <div class="event-card__date">23 Ekim 2025</div>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="event-month" aria-labelledby="events-december-2025">
+                        <h2 class="event-month__title" id="events-december-2025">Aralık 2025</h2>
+                        <div class="event-list">
+                            <article class="event-card">
+                                <div class="event-card__image">
+                                    <img src="../assets/events/20.12.2025.png" alt="programlama">
+                                </div>
+                                <div class="event-card__body">
+                                    <span class="event-card__tag">EĞİTİM</span>
+                                    <h3 class="event-card__title">Programlama Eğitimi</h3>
+                                    <div class="event-card__date">20 Aralık 2025</div>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="event-month" aria-labelledby="events-january-2026">
+                        <h2 class="event-month__title" id="events-january-2026">Ocak 2026</h2>
+                        <div class="event-list">
+                            <article class="event-card">
+                                <div class="event-card__image">
+                                    <img src="../assets/events/04.01.2026.jpeg" alt="algoritma">
+                                </div>
+                                <div class="event-card__body">
+                                    <span class="event-card__tag">EĞİTİM</span>
+                                    <h3 class="event-card__title">Algoritma ve Programlama Final Öncesi Soru Çözümü</h3>
+                                    <div class="event-card__date">4 Ocak 2026</div>
+                                </div>
+                            </article>
+                            <article class="event-card">
+                                <div class="event-card__image">
+                                    <img src="../assets/events/17.01.2026-0.jpeg" alt="cisco">
+                                </div>
+                                <div class="event-card__body">
+                                    <span class="event-card__tag">SERTİFİKA</span>
+                                    <h3 class="event-card__title">Cyberrise Woman 2026</h3>
+                                    <div class="event-card__date">17 Ocak 2026</div>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="event-month" aria-labelledby="events-march-2026">
+                        <h2 class="event-month__title" id="events-march-2026">Mart 2026</h2>
+                        <div class="event-list">
+                            <article class="event-card">
+                                <div class="event-card__image">
+                                    <img src="../assets/events/10.03.2026.jpeg" alt="Linux101">
+                                </div>
+                                <div class="event-card__body">
+                                    <span class="event-card__tag">EĞİTİM</span>
+                                    <h3 class="event-card__title">Linux 101 Eğitimi</h3>
+                                    <div class="event-card__date">10 MART 2026</div>
+                                </div>
+                            </article>
+                            <article class="event-card">
+                                <div class="event-card__image">
+                                    <img src="../assets/events/12.03.2026.jpeg" alt="quiznight1">
+                                </div>
+                                <div class="event-card__body">
+                                    <span class="event-card__tag">SOSYAL</span>
+                                    <h3 class="event-card__title">QUIZ NIGHT 1</h3>
+                                    <div class="event-card__date">12 MART 2026</div>
+                                </div>
+                            </article>
+                            <article class="event-card">
+                                <div class="event-card__image">
+                                    <img src="../assets/events/25.03.2026.jpeg" alt="quiznight1">
+                                </div>
+                                <div class="event-card__body">
+                                    <span class="event-card__tag">EĞİTİM</span>
+                                    <h3 class="event-card__title">Programlama Dilleri 1 Vize Öncesi Soru Çözümü</h3>
+                                    <div class="event-card__date">25 MART 2026</div>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="event-month" aria-labelledby="events-april-2026">
+                        <h2 class="event-month__title" id="events-april-2026">Nisan 2026</h2>
+                        <div class="event-list">
+                            <article class="event-card">
+                                <div class="event-card__image">
+                                    <img src="../assets/events/16.04.2026.jpeg" alt="quiznight1">
+                                </div>
+                                <div class="event-card__body">
+                                    <span class="event-card__tag">SOSYAL</span>
+                                    <h3 class="event-card__title">Quiz Night 2</h3>
+                                    <div class="event-card__date">16 NİSAN 2026</div>
+                                </div>
+                            </article>
+                            <article class="event-card">
+                                <div class="event-card__image">
+                                    <img src="../assets/events/20.04.2026.jpeg" alt="sienema">
+                                </div>
+                                <div class="event-card__body">
+                                    <span class="event-card__tag">SOSYAL</span>
+                                    <h3 class="event-card__title">Sinema İzleme Etkinliği</h3>
+                                    <div class="event-card__date">20 NİSAN 2026</div>
+                                </div>
+                            </article>
+                            <article class="event-card">
+                                <div class="event-card__image">
+                                    <img src="../assets/events/22.04.2026.jpeg" alt="sienema">
+                                </div>
+                                <div class="event-card__body">
+                                    <span class="event-card__tag">EĞİTİM</span>
+                                    <h3 class="event-card__title">Temel Siber Güvenlik Eğitimi</h3>
+                                    <div class="event-card__date">22 NİSAN 2026</div>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Tema Değiştirici
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.toggle('dark');
+                document.body?.classList.toggle('dark', isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        }
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.body?.classList.add('dark');
+        }
+
+        // Yönetim Paneli Üzerinden Eklenen Etkinlikleri Yükleme
+        function loadCustomEvents() {
+            const list = document.getElementById('customEventList');
+            const section = document.getElementById('customEventsSection');
+            if (!list || !section) return;
+
+            let events = [];
+            try {
+                events = JSON.parse(localStorage.getItem('topluluk_etkinlikler') || '[]');
+            } catch (e) { events = []; }
+
+            if (events.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+            list.innerHTML = events.map(evt => {
+                const formattedDate = new Date(evt.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+                return `
+                    <article class="event-card">
+                        <div class="event-card__image">
+                            <img src="${evt.poster || '../assets/images/yazılım_siber_logo.png'}" alt="${evt.title}">
+                        </div>
+                        <div class="event-card__body">
+                            <span class="event-card__tag">${evt.type || 'ETKİNLİK'}</span>
+                            <h3 class="event-card__title">${evt.title}</h3>
+                            <div class="event-card__date">${formattedDate} &bull; ${evt.location || 'SDÜ'}</div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+        window.addEventListener('DOMContentLoaded', loadCustomEvents);
+    </script>
+</body>
+
+</html>
