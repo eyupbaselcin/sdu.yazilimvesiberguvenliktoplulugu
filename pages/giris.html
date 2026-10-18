@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SDÜ Yazılım ve Siber Güvenlik Topluluğu yönetim giriş ekranı.">
     <link rel="icon" type="image/png" href="../assets/images/yazılım_siber_logo.png">
+
     <script>
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
@@ -13,11 +14,21 @@
             document.documentElement.classList.remove('dark');
         }
     </script>
+
+    <!-- Tailwind CSS Kütüphanesi -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer">
     <title>Giriş & Etkinlik Paneli | SDÜ Yazılım ve Siber Güvenlik Topluluğu</title>
     <link rel="stylesheet" crossorigin href="../assets/login-BMR9NiEu.css">
     <link rel="stylesheet" crossorigin href="../assets/community-D8jnM6IE.css">
+
     <style>
         body {
             background: radial-gradient(circle at top, #ffffff, #f4fbfb 45%, #eaf5f6);
@@ -34,7 +45,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: calc(100vh - 140px);
             padding: 20px 14px;
         }
 
@@ -79,16 +89,22 @@
             transform: translateY(-1px);
         }
 
-        .theme-toggle-btn .light-icon {
-            display: none;
+        .nav-pill {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1f2d34;
+            text-decoration: none;
+            transition: all 0.2s ease;
         }
 
-        .theme-toggle-btn .dark-icon {
-            display: inline-block;
+        .nav-pill:hover {
+            background-color: #0b6d7514;
+            color: #0a6670;
         }
 
-        /* Nav Pill styling */
-        .site-nav__link.active {
+        .nav-pill.active {
             background-color: #0a6670 !important;
             color: #ffffff !important;
             box-shadow: 0 4px 14px rgba(10, 102, 112, 0.28);
@@ -101,43 +117,27 @@
             color: #f1f8f9 !important;
         }
 
+        html.dark .nav-pill {
+            color: #f1f8f9;
+        }
+
+        html.dark .nav-pill:hover {
+            background-color: rgba(59, 185, 171, 0.25);
+            color: #5eead4;
+        }
+
+        html.dark .nav-pill.active {
+            background-color: #3bb9ab !important;
+            color: #0b171c !important;
+            box-shadow: 0 4px 14px rgba(59, 185, 171, 0.35) !important;
+        }
+
         html.dark .back-link {
             color: #3bb9ab !important;
         }
 
         html.dark .back-link:hover {
             color: #5eead4 !important;
-        }
-
-        html.dark .site-header {
-            background: rgba(18, 36, 43, 0.92) !important;
-            border-color: rgba(59, 185, 171, 0.2) !important;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5) !important;
-        }
-
-        html.dark .site-brand__title span:first-child {
-            color: #f1f8f9 !important;
-        }
-
-        html.dark .site-brand__title span:last-child {
-            color: #3bb9ab !important;
-        }
-
-        html.dark .site-nav__link {
-            background-color: rgba(59, 185, 171, 0.14) !important;
-            color: #3bb9ab !important;
-            border-color: rgba(59, 185, 171, 0.16) !important;
-        }
-
-        html.dark .site-nav__link:hover {
-            background-color: rgba(59, 185, 171, 0.25) !important;
-            color: #5eead4 !important;
-        }
-
-        html.dark .site-nav__link.active {
-            background-color: #3bb9ab !important;
-            color: #0b171c !important;
-            box-shadow: 0 4px 14px rgba(59, 185, 171, 0.35) !important;
         }
 
         html.dark .theme-toggle-btn {
@@ -149,15 +149,6 @@
         html.dark .theme-toggle-btn:hover {
             background-color: rgba(59, 185, 171, 0.28) !important;
             color: #5eead4 !important;
-        }
-
-        html.dark .theme-toggle-btn .light-icon {
-            display: inline-block !important;
-            color: #f59e0b !important;
-        }
-
-        html.dark .theme-toggle-btn .dark-icon {
-            display: none !important;
         }
 
         html.dark .login-form,
@@ -414,6 +405,7 @@
             .form-grid-2 {
                 grid-template-columns: 1fr;
             }
+
             .admin-panel {
                 padding: 24px 18px;
             }
@@ -491,32 +483,65 @@
 
 <body class="community-body">
     <div class="site-page">
-        <header class="site-header" aria-label="Üst bilgi">
-            <a class="site-brand" href="index.html" aria-label="Topluluk ana sayfası">
-                <span class="site-brand__logo">
-                    <img src="../assets/images/yazılım_siber_logo.png"
-                        alt="SDÜ Yazılım ve Siber Güvenlik Topluluğu Logosu">
-                </span>
-                <span class="site-brand__title">
-                    <span>Topluluk Hub</span>
-                    <span>Yazılım ve Siber Güvenlik</span>
-                </span>
-            </a>
-            <nav class="site-nav" aria-label="Ana navigasyon">
-                <a class="site-nav__link" href="index.html">Ana Sayfa</a>
-                <a class="site-nav__link" href="etkinlik.html">Etkinlikler</a>
-                <a class="site-nav__link" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
-                <a class="site-nav__link" href="iletisim.html">İletişim</a>
-                <a class="site-nav__link active" href="giris.html" aria-current="page">Giriş</a>
-                <a class="site-nav__link" href="syber.html">Siber Güvenlik</a>
-            </nav>
-            <div class="site-header-actions">
-                <button id="themeToggle" type="button" aria-label="Temayı Değiştir" class="theme-toggle-btn">
-                    <i class="fa-solid fa-moon dark-icon"></i>
-                    <i class="fa-solid fa-sun light-icon"></i>
-                </button>
+        <!-- HEADER BAŞLANGICI -->
+        <header
+            class="sticky top-0 z-40 w-full bg-white/80 dark:bg-[#12242b]/90 backdrop-blur-md border-b border-gray-200 dark:border-slate-800"
+            aria-label="Üst bilgi">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+
+                <!-- Brand & Official Logo -->
+                <a href="index.html" class="flex items-center space-x-3.5 group" title="Ana Sayfa">
+                    <div
+                        class="w-12 h-12 rounded-2xl overflow-hidden bg-gradient-to-tr from-[#0d6f7f] to-[#20b2c2] p-1 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform flex-shrink-0">
+                        <img src="../assets/images/yazılım_siber_logo.png"
+                            alt="SDÜ Yazılım ve Siber Güvenlik Topluluğu Logosu" class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <span
+                            class="font-extrabold text-lg tracking-tight block leading-tight text-gray-900 dark:text-white group-hover:text-[#0a6670] dark:group-hover:text-[#3bb9ab] transition-colors">SDÜ
+                            YAZILIM</span>
+                        <span
+                            class="text-xs text-[#0a6670] dark:text-[#3bb9ab] font-bold tracking-wider uppercase block mt-0.5">VE
+                            SİBER GÜVENLİK</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav (Masaüstünde görünür, mobilde gizli) -->
+                <nav class="hidden lg:flex items-center space-x-2.5" aria-label="Ana navigasyon">
+                    <a class="nav-pill" href="index.html">Ana Sayfa</a>
+                    <a class="nav-pill" href="etkinlik.html">Etkinlikler</a>
+                    <a class="nav-pill" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
+                    <a class="nav-pill" href="iletisim.html">İletişim</a>
+                    <a class="nav-pill active" href="giris.html" aria-current="page">Giriş</a>
+                    <a class="nav-pill" href="syber.html">Siber Güvenlik</a>
+                </nav>
+
+                <!-- Header Controls -->
+                <div class="flex items-center space-x-2 sm:space-x-3">
+                    <button id="themeToggle" type="button" aria-label="Temayı Değiştir" class="theme-toggle-btn">
+                        <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+                        <i class="fa-solid fa-sun hidden dark:block text-amber-400 text-lg"></i>
+                    </button>
+
+                    <!-- Mobile Menu Button (Masaüstünde gizli, mobilde görünür) -->
+                    <button id="mobileMenuBtn" type="button" aria-label="Menüyü Aç" class="lg:hidden theme-toggle-btn">
+                        <i class="fa-solid fa-bars text-lg" id="menuIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Nav Dropdown (Açılır Mobil Menü) -->
+            <div id="mobileMenu"
+                class="hidden lg:hidden px-4 pt-2 pb-4 space-y-2 border-t border-gray-100 dark:border-slate-800 bg-white dark:bg-[#12242b]">
+                <a class="nav-pill block w-full text-center" href="index.html">Ana Sayfa</a>
+                <a class="nav-pill block w-full text-center" href="etkinlik.html">Etkinlikler</a>
+                <a class="nav-pill block w-full text-center" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
+                <a class="nav-pill block w-full text-center" href="iletisim.html">İletişim</a>
+                <a class="nav-pill active block w-full text-center" href="giris.html" aria-current="page">Giriş</a>
+                <a class="nav-pill block w-full text-center" href="syber.html">Siber Güvenlik</a>
             </div>
         </header>
+        <!-- HEADER BİTİŞİ -->
 
         <main class="login-page">
             <!-- 1. GİRİŞ BÖLÜMÜ -->
@@ -586,8 +611,10 @@
                             <i class="fa-solid fa-shield-halved"></i>
                             Yönetici Paneli
                         </div>
-                        <h2 style="margin: 8px 0 0; font-size: 1.4rem;">Hoş Geldin, <span id="adminGreetingName" style="color: #0a6670;">Yönetici</span> 👋</h2>
-                        <p style="margin: 4px 0 0; font-size: 0.9rem; color: #64748b;">Yeni bir etkinlik afişi, tarihi ve görsellerini buradan ekleyip yayınlayabilirsiniz.</p>
+                        <h2 style="margin: 8px 0 0; font-size: 1.4rem;">Hoş Geldin, <span id="adminGreetingName"
+                                style="color: #0a6670;">Yönetici</span> 👋</h2>
+                        <p style="margin: 4px 0 0; font-size: 0.9rem; color: #64748b;">Yeni bir etkinlik afişi, tarihi
+                            ve görsellerini buradan ekleyip yayınlayabilirsiniz.</p>
                     </div>
                     <div class="admin-actions">
                         <a href="etkinlik.html" class="btn-secondary" title="Etkinlikler sayfasına git">
@@ -615,20 +642,28 @@
                                 <i class="fa-solid fa-heading"></i>
                                 Etkinlik Adı *
                             </label>
-                            <input id="eventTitle" type="text" placeholder="Örn: Siber Güvenlik ve Ağ Güvenliği Kampı" required>
+                            <input id="eventTitle" type="text" placeholder="Örn: Siber Güvenlik ve Ağ Güvenliği Kampı"
+                                required>
                         </div>
                         <div class="field">
                             <label for="eventType">
                                 <i class="fa-solid fa-tag"></i>
                                 Etkinlik Kategorisi
                             </label>
-                            <select id="eventType" style="width: 100%; height: 52px; padding: 0 14px; border: 1px solid #dce0e8; border-radius: 12px; font: inherit;">
+                            <select id="eventType"
+                                style="width: 100%; height: 52px; padding: 0 14px; border: 1px solid #dce0e8; border-radius: 12px; font: inherit;">
                                 <option value="Atölye & Workshop">Atölye & Workshop</option>
                                 <option value="Seminer & Konferans">Seminer & Konferans</option>
                                 <option value="CTF & Siber Güvenlik">CTF & Siber Güvenlik</option>
                                 <option value="Tanışma Etkinliği">Tanışma Etkinliği</option>
                                 <option value="Hackathon">Hackathon</option>
                                 <option value="Sosyal Etkinlik">Sosyal Etkinlik</option>
+                                <option value="Ders"> Ders</option>
+                                <option value="Sosyal Gezi"> Sosyal Gezi</option>
+                                <option value="Teknik Gezi"> Teknik Gezi</option>
+                                <option value="Quiz Time"> Quiz Time</option>
+                                <option value="Teknoloji & Gelecek"> Teknoloji & Gelecek</option>
+                                <option value="Yazılım & Geliştirme"> Yazılım & Geliştirme </option>
                             </select>
                         </div>
                     </div>
@@ -647,7 +682,8 @@
                                 <i class="fa-solid fa-location-dot"></i>
                                 Etkinlik Yeri / Konumu
                             </label>
-                            <input id="eventLocation" type="text" placeholder="Örn: Mühendislik Fakültesi Konferans Salonu" required>
+                            <input id="eventLocation" type="text"
+                                placeholder="Örn: Mühendislik Fakültesi Konferans Salonu" required>
                         </div>
                     </div>
 
@@ -657,7 +693,9 @@
                             <i class="fa-solid fa-align-left"></i>
                             Etkinlik Açıklaması
                         </label>
-                        <textarea id="eventDesc" rows="3" placeholder="Etkinliğin detayları, katılım koşulları ve hedefleri..." style="width: 100%; padding: 12px 16px; border: 1px solid #dce0e8; border-radius: 12px; font: inherit; resize: vertical;"></textarea>
+                        <textarea id="eventDesc" rows="3"
+                            placeholder="Etkinliğin detayları, katılım koşulları ve hedefleri..."
+                            style="width: 100%; padding: 12px 16px; border: 1px solid #dce0e8; border-radius: 12px; font: inherit; resize: vertical;"></textarea>
                     </div>
 
                     <!-- 4. AFİŞ YÜKLEME (Tekil Kapak Resmi) -->
@@ -669,19 +707,24 @@
                         <div class="upload-zone" onclick="document.getElementById('eventPosterInput').click()">
                             <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
                             <strong style="font-size: 0.98rem;">Afiş Görselini Seçin veya Sürükleyin</strong>
-                            <span style="font-size: 0.82rem; color: #64748b; margin-top: 4px;">PNG, JPG, JPEG veya WEBP (Maksimum 5MB)</span>
+                            <span style="font-size: 0.82rem; color: #64748b; margin-top: 4px;">PNG, JPG, JPEG veya WEBP
+                                (Maksimum 5MB)</span>
                         </div>
-                        <input id="eventPosterInput" type="file" accept="image/*" style="display: none;" onchange="handlePosterSelect(event)">
-                        
+                        <input id="eventPosterInput" type="file" accept="image/*" style="display: none;"
+                            onchange="handlePosterSelect(event)">
+
                         <!-- Afiş Önizleme Alanı -->
                         <div id="posterPreviewContainer" style="display: none; margin-top: 10px;">
                             <div class="poster-preview-box">
                                 <img id="posterPreviewImg" src="" alt="Seçilen Afiş Önizlemesi">
-                                <button type="button" class="remove-thumb-btn" onclick="removePoster()" title="Afişi Kaldır">
+                                <button type="button" class="remove-thumb-btn" onclick="removePoster()"
+                                    title="Afişi Kaldır">
                                     <i class="fa-solid fa-xmark"></i>
                                 </button>
                             </div>
-                            <span style="display: block; font-size: 0.82rem; color: #0a6670; font-weight: 600; margin-top: 6px;">✓ Afiş başarıyla yüklendi</span>
+                            <span
+                                style="display: block; font-size: 0.82rem; color: #0a6670; font-weight: 600; margin-top: 6px;">✓
+                                Afiş başarıyla yüklendi</span>
                         </div>
                     </div>
 
@@ -694,19 +737,24 @@
                         <div class="upload-zone" onclick="document.getElementById('eventGalleryInput').click()">
                             <i class="fa-solid fa-photo-film upload-icon"></i>
                             <strong style="font-size: 0.98rem;">Birden Fazla Etkinlik Fotoğrafı Seçin</strong>
-                            <span style="font-size: 0.82rem; color: #64748b; margin-top: 4px;">Etkinlik esnasında çekilen fotoğrafları topluca yükleyebilirsiniz</span>
+                            <span style="font-size: 0.82rem; color: #64748b; margin-top: 4px;">Etkinlik esnasında
+                                çekilen fotoğrafları topluca yükleyebilirsiniz</span>
                         </div>
-                        <input id="eventGalleryInput" type="file" accept="image/*" multiple style="display: none;" onchange="handleGallerySelect(event)">
+                        <input id="eventGalleryInput" type="file" accept="image/*" multiple style="display: none;"
+                            onchange="handleGallerySelect(event)">
 
                         <!-- Galeri Görselleri Önizleme Alanı -->
                         <div id="galleryPreviewContainer" style="display: none; margin-top: 10px;">
-                            <span id="galleryCountBadge" style="font-size: 0.85rem; font-weight: 600; color: #0a6670;">0 görsel seçildi</span>
+                            <span id="galleryCountBadge" style="font-size: 0.85rem; font-weight: 600; color: #0a6670;">0
+                                görsel seçildi</span>
                             <div id="galleryPreviewGrid" class="gallery-grid-preview"></div>
                         </div>
                     </div>
 
                     <!-- Durum Mesajı -->
-                    <div id="publishStatus" style="display: none; padding: 12px 16px; border-radius: 10px; margin-top: 16px; font-weight: 600; font-size: 0.92rem;"></div>
+                    <div id="publishStatus"
+                        style="display: none; padding: 12px 16px; border-radius: 10px; margin-top: 16px; font-weight: 600; font-size: 0.92rem;">
+                    </div>
 
                     <!-- Yayınla Butonu -->
                     <button type="submit" class="btn-submit-event">
@@ -717,12 +765,14 @@
 
                 <!-- 6. DAHA ÖNCE YAYINLANAN ETKİNLİKLER LİSTESİ -->
                 <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(10, 102, 112, 0.15);">
-                    <h3 style="font-size: 1.15rem; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+                    <h3
+                        style="font-size: 1.15rem; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
                         <span>
                             <i class="fa-solid fa-list-check" style="color: #0a6670;"></i>
                             Yayınlanan Etkinlikler
                         </span>
-                        <span id="eventCountLabel" style="font-size: 0.85rem; color: #64748b; font-weight: normal;"></span>
+                        <span id="eventCountLabel"
+                            style="font-size: 0.85rem; color: #64748b; font-weight: normal;"></span>
                     </h3>
                     <div id="publishedEventsList">
                         <!-- JS ile doldurulacak -->
@@ -747,7 +797,27 @@
             document.body?.classList.add('dark');
         }
 
-        // --- 2. DEĞİŞKENLER VE DURUMLAR ---
+        // --- 2. MOBİL MENÜ AÇMA/KAPATMA MANTIĞI ---
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+
+                // Menü ikonu değiştirme (Üç çizgi / Çarpı işareti)
+                if (mobileMenu.classList.contains('hidden')) {
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars');
+                } else {
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-xmark');
+                }
+            });
+        }
+
+        // --- 3. DEĞİŞKENLER VE DURUMLAR ---
         let currentPosterBase64 = '';
         let currentGalleryBase64 = [];
 
@@ -773,7 +843,7 @@
             }
         }
 
-        // --- 3. KULLANICI GİRİŞİ ---
+        // --- 4. KULLANICI GİRİŞİ ---
         async function handleLogin() {
             const usernameInput = document.getElementById('kullaniciAdi').value.trim();
             const emailInput = document.getElementById('eposta').value.trim();
@@ -796,7 +866,7 @@
                         let decodedPass = '';
                         try { decodedPass = atob(u.sifre); } catch (e) { decodedPass = u.sifre; }
                         return (u.isim.toLowerCase() === usernameInput.toLowerCase() || u.email.toLowerCase() === emailInput.toLowerCase()) &&
-                               (passwordInput === decodedPass || passwordInput === u.sifre);
+                            (passwordInput === decodedPass || passwordInput === u.sifre);
                     });
 
                     if (foundUser) {
@@ -834,7 +904,7 @@
             checkAuthSession();
         }
 
-        // --- 4. AFİŞ YÜKLEME VE ÖNİZLEME ---
+        // --- 5. AFİŞ YÜKLEME VE ÖNİZLEME ---
         function handlePosterSelect(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -854,7 +924,7 @@
             document.getElementById('posterPreviewContainer').style.display = 'none';
         }
 
-        // --- 5. ETKİNLİK GÖRSELLERİ (GALERİ) YÜKLEME VE ÖNİZLEME ---
+        // --- 6. ETKİNLİK GÖRSELLERİ (GALERİ) YÜKLEME VE ÖNİZLEME ---
         function handleGallerySelect(event) {
             const files = Array.from(event.target.files);
             if (!files.length) return;
@@ -901,14 +971,13 @@
             renderGalleryPreviews();
         }
 
-        // --- 6. ETKİNLİĞİ YAYINLAMA / KAYDETME ---
+        // --- 7. ETKİNLİĞİ YAYINLAMA / KAYDETME ---
         function handlePublishEvent() {
             const title = document.getElementById('eventTitle').value.trim();
             const type = document.getElementById('eventType').value;
             const date = document.getElementById('eventDate').value;
             const location = document.getElementById('eventLocation').value.trim();
             const desc = document.getElementById('eventDesc').value.trim();
-            const statusEl = document.getElementById('publishStatus');
 
             if (!title || !date) {
                 showStatus('Lütfen etkinlik adı ve tarihini doldurun.', 'error');
@@ -974,7 +1043,7 @@
             }, 5000);
         }
 
-        // --- 7. YAYINLANAN ETKİNLİKLERİ LİSTELEME VE SİLME ---
+        // --- 8. YAYINLANAN ETKİNLİKLERİ LİSTELEME VE SİLME ---
         function renderPublishedEvents() {
             const listContainer = document.getElementById('publishedEventsList');
             const countLabel = document.getElementById('eventCountLabel');
