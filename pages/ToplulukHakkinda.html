@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yönetim Ekibimiz | SDÜ Yazılım ve Siber Güvenlik Topluluğu</title>
     <link rel="icon" type="image/png" href="../assets/images/yazılım_siber_logo.png">
+
     <script>
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
@@ -13,10 +14,13 @@
             document.documentElement.classList.remove('dark');
         }
     </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="styles/ToplulukHakkina.css">
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -39,6 +43,7 @@
             }
         }
     </script>
+
     <style>
         .glass-effect {
             backdrop-filter: blur(12px);
@@ -104,6 +109,16 @@
             color: #0b171c;
             box-shadow: 0 4px 14px rgba(59, 185, 171, 0.35);
         }
+
+        /* İSTENMEYEN ALT KISMI (MAVİ BANNER & FOOTER) GİZLEME KURALI */
+        footer,
+        .footer,
+        section[class*="footer"],
+        div[class*="footer"],
+        div[style*="background-color: rgb(59, 130, 246)"],
+        div[style*="background: rgb(59, 130, 246)"] {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -128,6 +143,7 @@
                         SİBER GÜVENLİK</span>
                 </div>
             </a>
+
             <nav class="hidden lg:flex items-center space-x-2.5" aria-label="Ana navigasyon">
                 <a class="nav-pill" href="index.html">Ana Sayfa</a>
                 <a class="nav-pill" href="etkinlik.html">Etkinlikler</a>
@@ -147,7 +163,7 @@
                 <!-- Mobile Menu Button -->
                 <button id="mobileMenuBtn" type="button" aria-label="Menüyü Aç"
                     class="lg:hidden p-2.5 rounded-full bg-[#0b6d7514] dark:bg-[#3bb9ab24] text-[#0a6670] dark:text-[#3bb9ab] hover:bg-[#11867c26] transition-all">
-                    <i class="fa-solid fa-bars text-lg"></i>
+                    <i class="fa-solid fa-bars text-lg" id="menuIcon"></i>
                 </button>
             </div>
         </div>
@@ -169,10 +185,9 @@
 
             <!-- Advisor Card (Left - 1/5 of the area) -->
             <div class="lg:col-span-1">
-                <div class="mb-5">
-                    <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-[#0b6d7514] dark:bg-[#3bb9ab20] text-[#0a6670] dark:text-[#3bb9ab] hover:bg-[#11867c26] transition-all">
-                        <i class="fa-solid fa-arrow-left"></i> Topluluk merkezine dön
-                    </a>
+                <div style="display: flex; margin-bottom: 20px; margin-left: 20px; font-size: medium;">
+                    <a style="width: auto; height: auto; background-color: rgb(5, 189, 235); color: rgb(0, 0, 0); padding: 6px 12px; border-radius: 8px; font-weight: 600;"
+                        href="index.html">&larr; Topluluk merkezine dön</a>
                 </div>
                 <div
                     class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-gray-200 dark:border-slate-700 shadow-sm card-hover relative group">
@@ -245,10 +260,8 @@
             </div>
         </div>
 
-        <!-- Team Grid (4 Columns matching layout structure from image) -->
-        <div id="teamGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Cards will be populated dynamically or static fallback -->
-        </div>
+        <!-- Team Grid -->
+        <div id="teamGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
 
         <div id="noResults" class="hidden text-center py-16">
             <i class="fa-solid fa-user-slash text-4xl text-gray-400 mb-3"></i>
@@ -256,65 +269,20 @@
         </div>
     </main>
 
-    <!-- Bottom Callout Section (Blue background matching bottom part of image) -->
-    <section class="bg-blue-600 dark:bg-blue-700 text-white py-16 px-4 sm:px-6 lg:px-8 mt-12">
-        <div class="max-w-4xl mx-auto text-left">
-            <span class="text-blue-200 font-semibold text-sm tracking-wider uppercase block mb-2">Geleceği Birlikte İnşa
-                Ediyoruz</span>
-            <h2 class="text-3xl sm:text-4xl font-serif font-bold tracking-tight mb-4">
-                This is where we keep our family adventures.
-            </h2>
-            <p class="text-blue-100 text-lg leading-relaxed max-w-2xl font-light">
-                From weekend getaways to big trips abroad, this is our space to remember the places we've explored.
-                Yazılım ve siber güvenlik alanında birlikte gelişiyor, projeler üretiyor ve topluluk ruhunu yaşatıyoruz.
-            </p>
-
-            <div class="mt-8 flex flex-wrap items-center gap-4 pt-4 border-t border-blue-500/50">
-                <a href="#"
-                    class="px-5 py-2.5 rounded-xl bg-white text-blue-700 font-bold hover:bg-blue-50 transition shadow">
-                    Aramıza Katıl
-                </a>
-                <div class="flex items-center space-x-4 text-xl pl-4">
-                    <a href="#" class="hover:text-blue-200 transition" title="Instagram"><i
-                            class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="hover:text-blue-200 transition" title="LinkedIn"><i
-                            class="fa-brands fa-linkedin"></i></a>
-                    <a href="#" class="hover:text-blue-200 transition" title="GitHub"><i
-                            class="fa-brands fa-github"></i></a>
-                    <a href="#" class="hover:text-blue-200 transition" title="X (Twitter)"><i
-                            class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" class="hover:text-blue-200 transition" title="Discord"><i
-                            class="fa-brands fa-discord"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact" class="bg-slate-950 text-gray-400 py-8 px-4 text-center text-sm border-t border-slate-800">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p>&copy; 2026 SDÜ Yazılım ve Siber Güvenlik Topluluğu. Tüm Hakları Saklıdır.</p>
-            <p class="text-xs text-gray-500">Isparta Süleyman Demirel Üniversitesi</p>
-        </div>
-    </footer>
-
-    <!-- Member Modal -->
+    <!-- Modal Element -->
     <div id="memberModal"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl transform scale-95 transition-transform duration-300 relative"
-            id="modalContent">
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="modalContent"
+            class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 relative transform scale-95 transition-transform duration-300 shadow-xl border border-gray-100 dark:border-slate-700">
             <button id="closeModal"
-                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-white text-xl">
-                <i class="fa-solid fa-xmark"></i>
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <div id="modalBody">
-                <!-- Dynamically filled -->
-            </div>
+            <div id="modalBody"></div>
         </div>
     </div>
 
     <script>
-        // Team Members Dataset matching layout images and community needs
         const teamData = [
             {
                 id: 1,
@@ -322,7 +290,7 @@
                 realName: "Eyüp Başelçin",
                 role: "Topluluk Başkanı",
                 category: "yonetim",
-                image: "../assets/images/yazılım_siber_logo.png",
+                image: "https://media.licdn.com/dms/image/v2/D4D03AQGuzaQ1YKBklg/profile-displayphoto-scale_400_400/B4DaC4yPlgJEAg-/0/1789806575219?e=1793836800&v=beta&t=VFZlI9_MgWDWK8asbH0HFFFFr-2R3J1zTGRWdtdyBpQ",
                 bio: "Bilgisayar Mühendisliği 3. Sınıf. Siber güvenlik alanında araştırmacı.",
                 socials: { linkedin: "#", github: "#", instagram: "#" }
             },
@@ -332,7 +300,7 @@
                 realName: "Zehra Kaygısız",
                 role: "Başkan Yardımcısı",
                 category: "yonetim",
-                image: "../assets/images/yazılım_siber_logo.png",
+                image: "#",
                 bio: "Bilgisayar Mühendisliği 2. Sınıf. Siber güvenlik alanında araştırmacı.",
                 socials: { linkedin: "#", github: "#", instagram: "#" }
             },
@@ -342,7 +310,7 @@
                 realName: "Muhammed Kerim Şahin",
                 role: "Denetim Kurulu Başkanı",
                 category: "yonetim",
-                image: "../assets/images/yazılım_siber_logo.png",
+                image: "#",
                 bio: "Topluluk içi etkinlik koordinesi ve Uygulama Geliştiricisi.",
                 socials: { linkedin: "#", github: "#" }
             },
@@ -352,7 +320,7 @@
                 realName: "Elif Nur Özek",
                 role: "Denetim Kurulu Başkan Yardımcısı",
                 category: "yonetim",
-                image: "../assets/images/yazılım_siber_logo.png",
+                image: "#",
                 bio: "Mobil Uygulama Geliştiricisi.",
                 socials: { linkedin: "#", github: "#" }
             },
@@ -362,9 +330,9 @@
                 realName: "Işıkhan IŞIK",
                 role: "Eğitmen",
                 category: "yonetim",
-                image: "../assets/images/yazılım_siber_logo.png",
+                image: "#",
                 bio: "Bilgisayar Mühendisliği 3. Sınıf. Donanımcı, kernel developer.",
-                socials: { linkedin: "https://www.linkedin.com/in/işıkhan-işik-8807b4337?utm_source=share_via&utm_content=profile&utm_medium=member_android", github: "https://github.com/WitchPrince" }
+                socials: { linkedin: "https://www.linkedin.com/in/işıkhan-işik-8807b4337", github: "https://github.com/WitchPrince" }
             },
             {
                 id: 6,
@@ -372,67 +340,67 @@
                 realName: "......",
                 role: "Proje Koordinatörü",
                 category: "proje",
-                image: "../assets/images/yazılım_siber_logo.png",
+                image: "",
                 bio: "Topluluk bünyesindeki yazılım projeleri, AR-GE ve TEKNOFEST takımları koordinasyonu.",
                 socials: { linkedin: "#", github: "#" }
             },
             {
                 id: 7,
                 name: "ETKİNLİK & ORGANİZASYON KOORDİNATÖRÜ",
-                realName: "......",
+                realName: "....",
                 role: "Etkinlik & Organizasyon Koordinatörü",
                 category: "etkinlik",
-                image: "../assets/images/yazılım_siber_logo.png",
+                image: "",
                 bio: "Workshop, seminer, hackathon ve sosyal etkinliklerin planlama ve icra sorumlusu.",
                 socials: { linkedin: "#", github: "#" }
             },
             {
                 id: 8,
                 name: "SPONSORLUK KOORDİNATÖRÜ",
-                realName: "......",
+                realName: "....",
                 role: "Sponsorluk Koordinatörü",
                 category: "sponsorluk",
-                image: "../assets/images/yazılım_siber_logo.png",
+                image: "",
                 bio: "Sektörel iş birlikleri, sponsorluk anlaşmaları ve dış ilişkiler yönetimi.",
                 socials: { linkedin: "#", instagram: "#" }
             },
             {
                 id: 9,
                 name: "PROJE KOORDİNATÖR YARDIMCISI",
-                realName: "......",
+                realName: "....",
                 role: "Proje Koordinatör Yardımcısı",
                 category: "proje",
-                image: "../assets/images/yazılım_siber_logo.png",
+                image: "",
                 bio: "Yazılım proje takımları takibi ve teknik dokümantasyon sorumlusu.",
                 socials: { linkedin: "#", github: "#" }
             },
             {
                 id: 10,
                 name: "ETKİNLİK & ORGANİZASYON SORUMLUSU",
-                realName: "......",
+                realName: "....",
                 role: "Etkinlik & Organizasyon Sorumlusu",
                 category: "etkinlik",
-                image: "../assets/images/yazılım_siber_logo.png",
+                image: "",
                 bio: "Teknik atölye organizasyonları ve salon lojistik koordinasyonu.",
                 socials: { linkedin: "#", github: "#" }
             },
             {
                 id: 11,
                 name: "SPONSORLUK SORUMLUSU",
-                realName: "......",
+                realName: "....",
                 role: "Sponsorluk Sorumlusu",
                 category: "sponsorluk",
-                image: "../assets/images/yazılım_siber_logo.png",
+                image: "",
                 bio: "Şirket görüşmeleri ve etkinlik sponsorluk paketleri hazırlığı.",
                 socials: { linkedin: "#", github: "#" }
             },
             {
                 id: 12,
                 name: "SOSYAL MEDYA & İÇERİK SORUMLUSU",
-                realName: "......",
+                realName: "....",
                 role: "Sosyal Medya & İçerik Sorumlusu",
                 category: "sosyal-medya",
-                image: "../assets/images/yazılım_siber_logo.png",
+                image: "",
                 bio: "Görsel tasarım, video prodüksiyon ve sosyal medya paylaşımları.",
                 socials: { linkedin: "#", instagram: "#" }
             }
@@ -457,10 +425,10 @@
 
                 card.innerHTML = `
                     <div>
-                        <div class="relative overflow-hidden rounded-xl aspect-square bg-gray-100 dark:bg-slate-700 mb-3 flex items-center justify-center p-2">
-                            <img src="${member.image || '../assets/images/yazılım_siber_logo.png'}" alt="${member.name}" 
-                                 class="w-full h-full object-contain group-hover:scale-105 transition duration-500"
-                                 onerror="this.src='../assets/images/yazılım_siber_logo.png'">
+                        <div class="relative overflow-hidden rounded-xl aspect-square bg-gray-100 dark:bg-slate-700 mb-3">
+                            <img src="${member.image}" alt="${member.name}" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                                 onerror="this.src='https://placehold.co/400x400/1e293b/white?text=${encodeURIComponent(member.name)}'">
                         </div>
                         <h3 class="font-bold text-gray-900 dark:text-white text-base leading-tight">${member.name}</h3>
                         <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">${member.role}</p>
@@ -507,12 +475,6 @@
 
         searchInput.addEventListener('input', filterData);
 
-        // Theme Toggle Logic
-        const themeToggleBtn = document.getElementById('themeToggle');
-        themeToggleBtn.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-        });
-
         // Modal Logic
         const modal = document.getElementById('memberModal');
         const modalBody = document.getElementById('modalBody');
@@ -521,15 +483,15 @@
         function openModal(member) {
             modalBody.innerHTML = `
                 <div class="text-center">
-                    <img src="${member.image || '../assets/images/yazılım_siber_logo.png'}" alt="${member.name}" class="w-24 h-24 rounded-full mx-auto object-contain mb-4 ring-4 ring-blue-500/20 p-1 bg-white dark:bg-slate-800" onerror="this.src='../assets/images/yazılım_siber_logo.png'">
+                    <img src="${member.image}" alt="${member.name}" class="w-24 h-24 rounded-full mx-auto object-cover mb-4 ring-4 ring-blue-500/20" onerror="this.src='https://placehold.co/400x400/1e293b/white?text=${encodeURIComponent(member.name)}'">
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white">${member.name}</h3>
                     <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">${member.role}</p>
                     <p class="text-xs text-gray-400 mt-0.5">${member.realName}</p>
                     <p class="text-sm text-gray-600 dark:text-gray-300 mt-4 leading-relaxed">${member.bio}</p>
                     <div class="flex justify-center space-x-4 mt-6 text-gray-600 dark:text-gray-300 text-lg">
-                        ${member.socials.linkedin ? `<a href="${member.socials.linkedin}" class="hover:text-blue-600"><i class="fa-brands fa-linkedin"></i></a>` : ''}
-                        ${member.socials.github ? `<a href="${member.socials.github}" class="hover:text-gray-900 dark:hover:text-white"><i class="fa-brands fa-github"></i></a>` : ''}
-                        ${member.socials.instagram ? `<a href="${member.socials.instagram}" class="hover:text-pink-600"><i class="fa-brands fa-instagram"></i></a>` : ''}
+                        ${member.socials.linkedin && member.socials.linkedin !== '#' ? `<a href="${member.socials.linkedin}" target="_blank" class="hover:text-blue-600"><i class="fa-brands fa-linkedin"></i></a>` : ''}
+                        ${member.socials.github && member.socials.github !== '#' ? `<a href="${member.socials.github}" target="_blank" class="hover:text-gray-900 dark:hover:text-white"><i class="fa-brands fa-github"></i></a>` : ''}
+                        ${member.socials.instagram && member.socials.instagram !== '#' ? `<a href="${member.socials.instagram}" target="_blank" class="hover:text-pink-600"><i class="fa-brands fa-instagram"></i></a>` : ''}
                     </div>
                 </div>
             `;
@@ -553,28 +515,24 @@
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
-            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
             themeToggle.addEventListener('click', () => {
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('theme', 'light');
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('theme', 'dark');
-                }
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
             });
         }
 
-        // Mobile Menu
+        // Mobile Menu Toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
         if (mobileMenuBtn && mobileMenu) {
             mobileMenuBtn.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
+                if (menuIcon) {
+                    menuIcon.classList.toggle('fa-bars');
+                    menuIcon.classList.toggle('fa-xmark');
+                }
             });
         }
 
