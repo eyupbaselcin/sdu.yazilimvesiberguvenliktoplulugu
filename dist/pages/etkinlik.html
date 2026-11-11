@@ -159,6 +159,15 @@
             opacity: 0.35 !important;
         }
 
+        .calendar tbody td.bugun {
+            box-shadow: inset 0 0 0 2px #0a6670;
+            font-weight: 800;
+        }
+
+        html.dark .calendar tbody td.bugun {
+            box-shadow: inset 0 0 0 2px #3bb9ab;
+        }
+
         html.dark .event-card {
             background: #162c35 !important;
             border-color: rgba(59, 185, 171, 0.2) !important;
@@ -177,6 +186,62 @@
         html.dark .event-card__date {
             color: #8ba5ac !important;
         }
+
+        .event-card__desc {
+            margin: 8px 0 0;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: #60757d;
+            white-space: pre-line;
+        }
+
+        html.dark .event-card__desc {
+            color: #9fb4ba;
+        }
+
+        /* Afişler: tek kartlı aylarda kart sayfa boyu uzamasın, afiş kırpılmadan tamamı görünsün */
+        .event-list {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+        }
+
+        .event-card__image {
+            position: relative;
+            height: auto !important;
+            aspect-ratio: 4 / 5;
+            isolation: isolate;
+        }
+
+        .event-card__image::before {
+            content: "";
+            position: absolute;
+            inset: -20px;
+            z-index: -1;
+            background: var(--afis) center / cover no-repeat;
+            filter: blur(18px) saturate(1.1);
+            opacity: .55;
+        }
+
+        .event-card__image a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: zoom-in;
+        }
+
+        .event-card__image img {
+            object-fit: contain !important;
+            transition: transform .25s ease;
+        }
+
+        .event-card__image a:hover img {
+            transform: scale(1.02);
+        }
+
+        .event-list-mesaj {
+            text-align: center;
+            padding: 32px 16px;
+            color: #60757d;
+        }
     </style>
 </head>
 
@@ -194,10 +259,11 @@
             </a>
             <nav class="site-nav" aria-label="Ana navigasyon">
                 <a class="site-nav__link" href="index.html">Ana Sayfa</a>
-                <a class="site-nav__link" href="etkinlik.html" aria-current="page">Etkinlikler</a>
+                <a class="site-nav__link active" href="etkinlik.html">Etkinlikler</a>
                 <a class="site-nav__link" href="ToplulukHakkinda.html">Yönetim Ekbimiz</a>
                 <a class="site-nav__link" href="iletisim.html">İletişim</a>
                 <a class="site-nav__link" href="giris.html">Giriş</a>
+                <a class="site-nav__link" href="egitim-kayit.html">Eğitim Kaydı</a>
                 <a class="site-nav__link" href="syber.html">Siber Güvenlik</a>
             </nav>
         </header>
@@ -215,7 +281,7 @@
                 </div>
                 <div class="news-wrap">
                     <div class="news-panel">
-                        <div class="news-header">Topluluğumuzun Ekim ayı etkinlikleri</div>
+                        <div class="news-header">Topluluğumuzun <span id="takvimAyMetni">Kasım</span> ayı etkinlikleri</div>
                         <h2 class="news-title">Bu ayki etkinlikler sizlerle-</h2>
 
                         <div class="news-meta">
@@ -228,227 +294,26 @@
                     </div>
                 </div>
                 <div class="calendar-block">
-                    <h2 class="card-title">Ekim ayı</h2>
+                    <h2 class="card-title" id="takvimBaslik">Kasım 2026</h2>
                     <table class="calendar">
                         <thead>
                             <tr>
+                                <th>Pzt</th>
                                 <th>Sal</th>
                                 <th>Çar</th>
                                 <th>Per</th>
                                 <th>Cum</th>
                                 <th>Cmt</th>
                                 <th>Paz</th>
-                                <th>Pzt</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="day"><span>30</span></td>
-                                <td class="day"><span>31</span></td>
-                                <td class="day"><span>1</span></td>
-                                <td class="day"><span>2</span></td>
-                                <td class="day"><span>3</span></td>
-                                <td class="day"><span>4</span></td>
-                                <td class="day" data-day-type="pink"><span>5 Stant</span></td>
-                            </tr>
-                            <tr>
-                                <td class="day" data-day-type="pink"><span>6 Stant</span></td>
-                                <td class="day" data-day-type="pink"><span>7 Stant</span></td>
-                                <td class="day" data-day-type="pink"><span>8 Stant</span></td>
-                                <td class="day" data-day-type="pink"><span>9 Stant</span></td>
-                                <td class="day"><span>10</span></td>
-                                <td class="day"><span>11</span></td>
-                                <td class="day"><span>12</span></td>
-                            </tr>
-                            <tr>
-                                <td class="day" data-day-type="green"><span>13 Tanışma Etkinliği</span></td>
-                                <td class="day"><span>14</span></td>
-                                <td class="day"><span>15</span></td>
-                                <td class="day"><span>16</span></td>
-                                <td class="day"><span>17</span></td>
-                                <td class="day"><span>18</span></td>
-                                <td class="day"><span>19</span></td>
-                            </tr>
-                            <tr>
-                                <td class="day"><span>20</span></td>
-                                <td class="day"><span>21</span></td>
-                                <td class="day"><span>22</span></td>
-                                <td class="day"><span>23</span></td>
-                                <td class="day"><span>24</span></td>
-                                <td class="day"><span>25</span></td>
-                                <td class="day"><span>26</span></td>
-                            </tr>
-                            <tr>
-                                <td class="day"><span>27</span></td>
-                                <td class="day"><span>28</span></td>
-                                <td class="day"><span>29</span></td>
-                                <td class="day"><span>30</span></td>
-                                <td class="day"><span>31</span></td>
-                                <td class="day muted"><span>1</span></td>
-                                <td class="day muted"><span>2</span></td>
-                            </tr>
-                        </tbody>
+                        <tbody id="takvimGunleri"></tbody>
                     </table>
                 </div>
 
                 <section class="event-month-list" aria-label="Etkinlikler aya göre">
-                    <!-- Yönetici Paneli Üzerinden Eklenen Yeni Etkinlikler -->
-                    <section class="event-month" id="customEventsSection" style="display: none;">
-                        <h2 class="event-month__title" style="color: #0a6670;">Yeni Eklenen Etkinlikler</h2>
-                        <div class="event-list" id="customEventList"></div>
-                    </section>
-
-                    <section class="event-month" aria-labelledby="events-october-2025">
-                        <h2 class="event-month__title" id="events-october-2025">Ekim 2025</h2>
-                        <div class="event-list">
-                            <article class="event-card">
-                                <div class="event-card__image">
-                                    <img src="../assets/events/01.10.2025.jpeg" alt="bardagini kap gel etkinliği">
-                                </div>
-                                <div class="event-card__body">
-                                    <span class="event-card__tag">SDÜ</span>
-                                    <h3 class="event-card__title">Bardağını Kap Gel</h3>
-                                    <div class="event-card__date">1 Ekim 2025</div>
-                                </div>
-                            </article>
-
-                            <article class="event-card">
-                                <div class="event-card__image placeholder-image">
-                                    <img src="../assets/events/11.10.2025.jpeg" alt="tanişma">
-                                </div>
-                                <div class="event-card__body">
-                                    <span class="event-card__tag">TNIŞMA</span>
-                                    <h3 class="event-card__title">Yönetim Tanışması</h3>
-                                    <div class="event-card__date">11 Ekim 2025</div>
-                                </div>
-                            </article>
-
-                            <article class="event-card">
-                                <div class="event-card__image">
-                                    <img src="../assets/events/23.10.2025.jpeg" alt="siber">
-                                </div>
-                                <div class="event-card__body">
-                                    <span class="event-card__tag">RED TEAM</span>
-                                    <h3 class="event-card__title">Siber Tehtid İstihbaratı</h3>
-                                    <div class="event-card__date">23 Ekim 2025</div>
-                                </div>
-                            </article>
-                        </div>
-                    </section>
-
-                    <section class="event-month" aria-labelledby="events-december-2025">
-                        <h2 class="event-month__title" id="events-december-2025">Aralık 2025</h2>
-                        <div class="event-list">
-                            <article class="event-card">
-                                <div class="event-card__image">
-                                    <img src="../assets/events/20.12.2025.png" alt="programlama">
-                                </div>
-                                <div class="event-card__body">
-                                    <span class="event-card__tag">EĞİTİM</span>
-                                    <h3 class="event-card__title">Programlama Eğitimi</h3>
-                                    <div class="event-card__date">20 Aralık 2025</div>
-                                </div>
-                            </article>
-                        </div>
-                    </section>
-
-                    <section class="event-month" aria-labelledby="events-january-2026">
-                        <h2 class="event-month__title" id="events-january-2026">Ocak 2026</h2>
-                        <div class="event-list">
-                            <article class="event-card">
-                                <div class="event-card__image">
-                                    <img src="../assets/events/04.01.2026.jpeg" alt="algoritma">
-                                </div>
-                                <div class="event-card__body">
-                                    <span class="event-card__tag">EĞİTİM</span>
-                                    <h3 class="event-card__title">Algoritma ve Programlama Final Öncesi Soru Çözümü</h3>
-                                    <div class="event-card__date">4 Ocak 2026</div>
-                                </div>
-                            </article>
-                            <article class="event-card">
-                                <div class="event-card__image">
-                                    <img src="../assets/events/17.01.2026-0.jpeg" alt="cisco">
-                                </div>
-                                <div class="event-card__body">
-                                    <span class="event-card__tag">SERTİFİKA</span>
-                                    <h3 class="event-card__title">Cyberrise Woman 2026</h3>
-                                    <div class="event-card__date">17 Ocak 2026</div>
-                                </div>
-                            </article>
-                        </div>
-                    </section>
-
-                    <section class="event-month" aria-labelledby="events-march-2026">
-                        <h2 class="event-month__title" id="events-march-2026">Mart 2026</h2>
-                        <div class="event-list">
-                            <article class="event-card">
-                                <div class="event-card__image">
-                                    <img src="../assets/events/10.03.2026.jpeg" alt="Linux101">
-                                </div>
-                                <div class="event-card__body">
-                                    <span class="event-card__tag">EĞİTİM</span>
-                                    <h3 class="event-card__title">Linux 101 Eğitimi</h3>
-                                    <div class="event-card__date">10 MART 2026</div>
-                                </div>
-                            </article>
-                            <article class="event-card">
-                                <div class="event-card__image">
-                                    <img src="../assets/events/12.03.2026.jpeg" alt="quiznight1">
-                                </div>
-                                <div class="event-card__body">
-                                    <span class="event-card__tag">SOSYAL</span>
-                                    <h3 class="event-card__title">QUIZ NIGHT 1</h3>
-                                    <div class="event-card__date">12 MART 2026</div>
-                                </div>
-                            </article>
-                            <article class="event-card">
-                                <div class="event-card__image">
-                                    <img src="../assets/events/25.03.2026.jpeg" alt="quiznight1">
-                                </div>
-                                <div class="event-card__body">
-                                    <span class="event-card__tag">EĞİTİM</span>
-                                    <h3 class="event-card__title">Programlama Dilleri 1 Vize Öncesi Soru Çözümü</h3>
-                                    <div class="event-card__date">25 MART 2026</div>
-                                </div>
-                            </article>
-                        </div>
-                    </section>
-
-                    <section class="event-month" aria-labelledby="events-april-2026">
-                        <h2 class="event-month__title" id="events-april-2026">Nisan 2026</h2>
-                        <div class="event-list">
-                            <article class="event-card">
-                                <div class="event-card__image">
-                                    <img src="../assets/events/16.04.2026.jpeg" alt="quiznight1">
-                                </div>
-                                <div class="event-card__body">
-                                    <span class="event-card__tag">SOSYAL</span>
-                                    <h3 class="event-card__title">Quiz Night 2</h3>
-                                    <div class="event-card__date">16 NİSAN 2026</div>
-                                </div>
-                            </article>
-                            <article class="event-card">
-                                <div class="event-card__image">
-                                    <img src="../assets/events/20.04.2026.jpeg" alt="sienema">
-                                </div>
-                                <div class="event-card__body">
-                                    <span class="event-card__tag">SOSYAL</span>
-                                    <h3 class="event-card__title">Sinema İzleme Etkinliği</h3>
-                                    <div class="event-card__date">20 NİSAN 2026</div>
-                                </div>
-                            </article>
-                            <article class="event-card">
-                                <div class="event-card__image">
-                                    <img src="../assets/events/22.04.2026.jpeg" alt="sienema">
-                                </div>
-                                <div class="event-card__body">
-                                    <span class="event-card__tag">EĞİTİM</span>
-                                    <h3 class="event-card__title">Temel Siber Güvenlik Eğitimi</h3>
-                                    <div class="event-card__date">22 NİSAN 2026</div>
-                                </div>
-                            </article>
-                        </div>
-                    </section>
+                    <!-- Etkinlikler /api/etkinlikler (yönetim paneli) verisinden oluşturulur. -->
+                    <p class="event-list-mesaj" id="etkinlikMesaj">Etkinlikler yükleniyor…</p>
                 </section>
             </div>
         </main>
@@ -468,40 +333,222 @@
             document.body?.classList.add('dark');
         }
 
-        // Yönetim Paneli Üzerinden Eklenen Etkinlikleri Yükleme
-        function loadCustomEvents() {
-            const list = document.getElementById('customEventList');
-            const section = document.getElementById('customEventsSection');
-            if (!list || !section) return;
+        // --- ETKİNLİK LİSTESİ: yönetim panelinden eklenen/düzenlenen etkinlikler ---
+        async function etkinlikleriGetir() {
+            // Önce sunucu (panelde yapılan değişiklikler), olmazsa (ör. localde npm run dev) başlangıç verisi.
+            for (const adres of ['/api/etkinlikler', '../data/etkinlikler.json']) {
+                try {
+                    const yanit = await fetch(adres);
+                    if (!yanit.ok) continue;
+                    const veri = await yanit.json();
+                    const liste = Array.isArray(veri) ? veri : veri.etkinlikler;
+                    if (Array.isArray(liste)) return liste;
+                } catch (hata) {
+                    // sıradaki kaynağı dene
+                }
+            }
+            throw new Error('Etkinlikler yüklenemedi.');
+        }
 
-            let events = [];
-            try {
-                events = JSON.parse(localStorage.getItem('topluluk_etkinlikler') || '[]');
-            } catch (e) { events = []; }
+        function etkinlikKarti(e) {
+            const tarih = new Date(`${e.tarih}T12:00:00`);
+            const kart = document.createElement('article');
+            kart.className = 'event-card';
 
-            if (events.length === 0) {
-                section.style.display = 'none';
-                return;
+            const resimKutusu = document.createElement('div');
+            resimKutusu.className = 'event-card__image';
+            const img = document.createElement('img');
+            img.src = e.afis;
+            img.alt = `${e.ad} afişi`;
+            img.loading = 'lazy';
+            // Afişin bulanık kopyası arka planı doldurur (kırpılmayan afişlerde boş şerit kalmasın).
+            resimKutusu.style.setProperty('--afis', `url(${JSON.stringify(img.src)})`);
+            // Afişe tıklayınca tam boyutu yeni sekmede açılır.
+            const baglanti = document.createElement('a');
+            baglanti.href = e.afis;
+            baglanti.target = '_blank';
+            baglanti.rel = 'noopener';
+            baglanti.title = 'Afişi tam boyutta aç';
+            baglanti.appendChild(img);
+            resimKutusu.appendChild(baglanti);
+
+            const govde = document.createElement('div');
+            govde.className = 'event-card__body';
+            const etiket = document.createElement('span');
+            etiket.className = 'event-card__tag';
+            etiket.textContent = e.kategori.toLocaleUpperCase('tr');
+            const baslik = document.createElement('h3');
+            baslik.className = 'event-card__title';
+            baslik.textContent = e.ad;
+            const bilgi = document.createElement('div');
+            bilgi.className = 'event-card__date';
+            bilgi.textContent = [
+                tarih.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }).toLocaleUpperCase('tr'),
+                e.saat,
+                e.yer,
+            ].filter(Boolean).join(' • ');
+            govde.append(etiket, baslik, bilgi);
+
+            if (e.aciklama) {
+                const aciklama = document.createElement('p');
+                aciklama.className = 'event-card__desc';
+                aciklama.textContent = e.aciklama;
+                govde.appendChild(aciklama);
             }
 
-            section.style.display = 'block';
-            list.innerHTML = events.map(evt => {
-                const formattedDate = new Date(evt.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
-                return `
-                    <article class="event-card">
-                        <div class="event-card__image">
-                            <img src="${evt.poster || '../assets/images/yazılım_siber_logo.png'}" alt="${evt.title}">
-                        </div>
-                        <div class="event-card__body">
-                            <span class="event-card__tag">${evt.type || 'ETKİNLİK'}</span>
-                            <h3 class="event-card__title">${evt.title}</h3>
-                            <div class="event-card__date">${formattedDate} &bull; ${evt.location || 'SDÜ'}</div>
-                        </div>
-                    </article>
-                `;
-            }).join('');
+            kart.append(resimKutusu, govde);
+            return kart;
         }
-        window.addEventListener('DOMContentLoaded', loadCustomEvents);
+
+        async function etkinlikleriGoster() {
+            const kapsayici = document.querySelector('.event-month-list');
+            const mesaj = document.getElementById('etkinlikMesaj');
+            if (!kapsayici) return;
+
+            try {
+                const etkinlikler = (await etkinlikleriGetir())
+                    .slice()
+                    .sort((a, b) => `${a.tarih} ${a.saat || ''}`.localeCompare(`${b.tarih} ${b.saat || ''}`));
+
+                if (!etkinlikler.length) {
+                    mesaj.textContent = 'Henüz etkinlik eklenmedi.';
+                    return;
+                }
+
+                // Aylara göre grupla: "Ekim 2025", "Aralık 2025", ...
+                const aylar = new Map();
+                etkinlikler.forEach((e) => {
+                    const anahtar = e.tarih.slice(0, 7);
+                    if (!aylar.has(anahtar)) aylar.set(anahtar, []);
+                    aylar.get(anahtar).push(e);
+                });
+
+                const bolumler = [...aylar].map(([anahtar, liste]) => {
+                    const ayAdi = new Date(`${anahtar}-01T12:00:00`).toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' });
+                    const bolum = document.createElement('section');
+                    bolum.className = 'event-month';
+                    bolum.setAttribute('aria-labelledby', `events-${anahtar}`);
+                    const baslik = document.createElement('h2');
+                    baslik.className = 'event-month__title';
+                    baslik.id = `events-${anahtar}`;
+                    baslik.textContent = ayAdi.charAt(0).toLocaleUpperCase('tr') + ayAdi.slice(1);
+                    const kartlar = document.createElement('div');
+                    kartlar.className = 'event-list';
+                    kartlar.append(...liste.map(etkinlikKarti));
+                    bolum.append(baslik, kartlar);
+                    return bolum;
+                });
+
+                kapsayici.replaceChildren(...bolumler);
+            } catch (hata) {
+                console.error(hata);
+                mesaj.textContent = 'Etkinlikler yüklenemedi. Lütfen sayfayı yenileyin.';
+            }
+        }
+        etkinlikleriGoster();
+
+        // --- AYLIK TAKVİM: her zaman içinde bulunulan ayı gösterir ---
+        // Etkinlikler public/data/takvim.json dosyasından okunur ("14 Lojik 1 Deneyleri" gibi gün + ad).
+        // Buraya da elle eklenebilir. Tarih: 'YYYY-AA-GG'. Tür: 'pink' veya 'green'.
+        const takvimEtkinlikleri = {
+            // '2026-11-20': { metin: 'Algoritma Eğitimi', tur: 'green', link: 'egitim-kayit.html' },
+        };
+
+        // Sınav, stant gibi günler pembe; diğer etkinlikler yeşil.
+        function etkinlikTuru(ad) {
+            return /vize|final|sınav|stant/i.test(ad.toLocaleLowerCase('tr')) ? 'pink' : 'green';
+        }
+
+        async function takvimVerisiniYukle() {
+            try {
+                const yanit = await fetch('../data/takvim.json', { cache: 'no-cache' });
+                if (!yanit.ok) throw new Error(`takvim.json yüklenemedi: ${yanit.status}`);
+                const veri = await yanit.json();
+                const iki = (n) => String(n).padStart(2, '0');
+
+                (veri.aylar || []).forEach((ay) => {
+                    Object.values(ay)
+                        .filter(Array.isArray)
+                        .flat()
+                        .forEach((gunBilgisi) => {
+                            // "14 Lojik" ve "14 - Lojik" biçimlerinin ikisi de kabul edilir.
+                            const eslesme = String(gunBilgisi).match(/^(\d+)(?:\s+[-–—]?|\s*[-–—])\s*(\S.*)$/);
+                            if (!eslesme) return;
+                            const anahtar = `${veri.yil}-${iki(ay.Ayn_no)}-${iki(eslesme[1])}`;
+                            if (!takvimEtkinlikleri[anahtar]) {
+                                takvimEtkinlikleri[anahtar] = { metin: eslesme[2], tur: etkinlikTuru(eslesme[2]) };
+                            }
+                        });
+                });
+            } catch (hata) {
+                console.error(hata);
+            }
+            takvimiCiz();
+        }
+
+        function takvimiCiz() {
+            const govde = document.getElementById('takvimGunleri');
+            if (!govde) return;
+
+            const bugun = new Date();
+            const yil = bugun.getFullYear();
+            const ay = bugun.getMonth();
+            const ayAdi = bugun.toLocaleDateString('tr-TR', { month: 'long' });
+            const buyukAyAdi = ayAdi.charAt(0).toLocaleUpperCase('tr') + ayAdi.slice(1);
+
+            document.getElementById('takvimBaslik').textContent = `${buyukAyAdi} ${yil}`;
+            document.getElementById('takvimAyMetni').textContent = buyukAyAdi;
+
+            // Pazartesi ile başlayan haftalar: ayın 1'inden önceki boş günleri önceki ayın günleriyle doldur.
+            const ilkGun = new Date(yil, ay, 1);
+            const bastanBosluk = (ilkGun.getDay() + 6) % 7;
+            const baslangic = new Date(yil, ay, 1 - bastanBosluk);
+            const sonGun = new Date(yil, ay + 1, 0);
+            const sondanBosluk = (7 - ((sonGun.getDay() + 6) % 7) - 1) % 7;
+            const toplamGun = bastanBosluk + sonGun.getDate() + sondanBosluk;
+            const iki = (n) => String(n).padStart(2, '0');
+
+            const satirlar = [];
+            for (let i = 0; i < toplamGun; i += 7) {
+                const tr = document.createElement('tr');
+                for (let j = 0; j < 7; j++) {
+                    const gun = new Date(baslangic.getFullYear(), baslangic.getMonth(), baslangic.getDate() + i + j);
+                    const td = document.createElement('td');
+                    const span = document.createElement('span');
+                    const anahtar = `${gun.getFullYear()}-${iki(gun.getMonth() + 1)}-${iki(gun.getDate())}`;
+                    const etkinlik = gun.getMonth() === ay ? takvimEtkinlikleri[anahtar] : null;
+
+                    td.className = gun.getMonth() === ay ? 'day' : 'day muted';
+                    if (gun.toDateString() === bugun.toDateString()) {
+                        td.classList.add('bugun');
+                        td.setAttribute('aria-current', 'date');
+                    }
+
+                    if (etkinlik) {
+                        td.dataset.dayType = etkinlik.tur || 'green';
+                        const metin = `${gun.getDate()} ${etkinlik.metin}`;
+                        if (etkinlik.link) {
+                            const a = document.createElement('a');
+                            a.href = etkinlik.link;
+                            a.textContent = metin;
+                            a.style.color = 'inherit';
+                            span.appendChild(a);
+                        } else {
+                            span.textContent = metin;
+                        }
+                    } else {
+                        span.textContent = gun.getDate();
+                    }
+
+                    td.appendChild(span);
+                    tr.appendChild(td);
+                }
+                satirlar.push(tr);
+            }
+            govde.replaceChildren(...satirlar);
+        }
+        takvimiCiz();
+        takvimVerisiniYukle();
     </script>
 </body>
 

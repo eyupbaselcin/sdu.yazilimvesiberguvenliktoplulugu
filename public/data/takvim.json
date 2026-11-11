@@ -450,13 +450,13 @@
       "ad": "Ekim",
       "pazartesi": [
         "5 Stant",
-        "12",
+        "12 Tanışma Etkinliği",
         "19",
         "26"
       ],
       "Salı": [
         "6 Stant",
-        "13 Tanışma Etkinliği",
+        "13",
         "20",
         "27"
       ],
@@ -499,41 +499,41 @@
       "Ayn_no": 11,
       "ad": "Kasım",
       "pazartesi": [
-        "2",
+        "2 - Vizeler",
         "9",
-        "16",
-        "23",
-        "30"
+        "16 - 14 Aralık öncesi Hazırlık 1",
+        "23 - 14 Aralık öncesi Hazırlık 2",
+        "30 - 14 Aralık öncesi Hazırlık 3"
       ],
       "Salı": [
-        "3",
-        "10",
-        "17",
-        "24"
+        "3 - Vizeler",
+        "10 - Atatürk'ü Anma Günü",
+        "17 - Algoritma ve Yapay Zeka Destekli Programlama Eğitimi",
+        "24 - Öğretmenler Günü Kutlu Olsun && Algoritma ve Yapay Zeka Destekli Programlama Eğitimi"
       ],
       "Çarşamba": [
-        "4",
+        "4 - Vizeler",
         "11",
         "18",
         "25"
       ],
       "Perşembe": [
-        "5",
+        "5 - Vizeler",
         "12",
         "19",
         "26"
       ],
       "Cuma": [
-        "6",
+        "6 - Vizeler",
         "13",
         "20",
         "27"
       ],
       "Cumartesi": [
         "7",
-        "14",
-        "21",
-        "28"
+        "14 - Lojik 1 Deneyleri",
+        "21 - Lojik 1 Deneyleri",
+        "28 - Lojik 1 Deneyleri"
       ],
       "Pazar": [
         "1",
@@ -548,17 +548,17 @@
       "Ayn_no": 12,
       "ad": "Aralık",
       "pazartesi": [
-        "7",
-        "14 ZIRH Siber Güvenlik Zirvesi",
+        "7 - 14 Aralık öncesi Hazırlık 4",
+        "14 - ZIRH Siber Güvenlik Zirvesi",
         "21",
         "28"
       ],
       "Salı": [
-        "1",
-        "8",
-        "15",
-        "22",
-        "29"
+        "1  - Algoritma ve Yapay Zeka Destekli Programlama Eğitimi",
+        "8  - Algoritma ve Yapay Zeka Destekli Programlama Eğitimi",
+        "15 - Algoritma ve Yapay Zeka Destekli Programlama Eğitimi",
+        "22 - Algoritma ve Yapay Zeka Destekli Programlama Eğitimi",
+        "29 - Algoritma ve Yapay Zeka Destekli Programlama Eğitimi"
       ],
       "Çarşamba": [
         "2",
@@ -576,12 +576,12 @@
       ],
       "Cuma": [
         "4",
-        "11",
+        "11 - Akdeniz Bilişim Zirvesi Teknik Gezisi",
         "18",
         "25"
       ],
       "Cumartesi": [
-        "5",
+        "5 - Mühendisler Günü Kutlu Olsun && Lojik 1 Deneyleri",
         "12",
         "19",
         "26"

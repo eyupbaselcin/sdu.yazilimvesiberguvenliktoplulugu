@@ -1,0 +1,142 @@
+[
+  {
+    "id": "e-2025-10-01-01102025",
+    "ad": "Bardağını Kap Gel",
+    "kategori": "SDÜ",
+    "tarih": "2025-10-01",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/01.10.2025.jpeg"
+  },
+  {
+    "id": "e-2025-10-11-11102025",
+    "ad": "Yönetim Tanışması",
+    "kategori": "TANIŞMA",
+    "tarih": "2025-10-11",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/11.10.2025.jpeg"
+  },
+  {
+    "id": "e-2025-10-23-23102025",
+    "ad": "Siber Tehdit İstihbaratı",
+    "kategori": "RED TEAM",
+    "tarih": "2025-10-23",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/23.10.2025.jpeg"
+  },
+  {
+    "id": "e-2025-12-20-20122025",
+    "ad": "Programlama Eğitimi",
+    "kategori": "EĞİTİM",
+    "tarih": "2025-12-20",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/20.12.2025.png"
+  },
+  {
+    "id": "e-2026-01-04-04012026",
+    "ad": "Algoritma ve Programlama Final Öncesi Soru Çözümü",
+    "kategori": "EĞİTİM",
+    "tarih": "2026-01-04",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/04.01.2026.jpeg"
+  },
+  {
+    "id": "e-2026-01-17-17012026-0",
+    "ad": "Cyberrise Woman 2026",
+    "kategori": "SERTİFİKA",
+    "tarih": "2026-01-17",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/17.01.2026-0.jpeg"
+  },
+  {
+    "id": "e-2026-02-27-27022026",
+    "ad": "Programlama Dilleri 1: Temel Seviye Java",
+    "kategori": "EĞİTİM",
+    "tarih": "2026-02-27",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/27.02.2026.jpeg"
+  },
+  {
+    "id": "e-2026-03-10-10032026",
+    "ad": "Linux 101 Eğitimi",
+    "kategori": "EĞİTİM",
+    "tarih": "2026-03-10",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/10.03.2026.jpeg"
+  },
+  {
+    "id": "e-2026-03-12-12032026",
+    "ad": "QUIZ NIGHT 1",
+    "kategori": "SOSYAL",
+    "tarih": "2026-03-12",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/12.03.2026.jpeg"
+  },
+  {
+    "id": "e-2026-03-25-25032026",
+    "ad": "Programlama Dilleri 1 Vize Öncesi Soru Çözümü",
+    "kategori": "EĞİTİM",
+    "tarih": "2026-03-25",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/25.03.2026.jpeg"
+  },
+  {
+    "id": "e-2026-04-16-16042026",
+    "ad": "Quiz Night 2",
+    "kategori": "SOSYAL",
+    "tarih": "2026-04-16",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/16.04.2026.jpeg"
+  },
+  {
+    "id": "e-2026-04-20-20042026",
+    "ad": "Sinema İzleme Etkinliği",
+    "kategori": "SOSYAL",
+    "tarih": "2026-04-20",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/20.04.2026.jpeg"
+  },
+  {
+    "id": "e-2026-04-22-22042026",
+    "ad": "Temel Siber Güvenlik Eğitimi",
+    "kategori": "EĞİTİM",
+    "tarih": "2026-04-22",
+    "saat": "",
+    "yer": "",
+    "aciklama": "",
+    "afis": "/assets/events/22.04.2026.jpeg"
+  },
+  {
+    "id": "e-2026-10-12-12102026",
+    "ad": "Tanışma Etkinliği",
+    "kategori": "TANIŞMA",
+    "tarih": "2026-10-12",
+    "saat": "18:00",
+    "yer": "Trigo Fırın Cafe",
+    "aciklama": "",
+    "afis": "/assets/events/12.10.2026.jpeg"
+  }
+]

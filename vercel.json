@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/galeri.js": {
+      "includeFiles": "galeri-private/images/**"
+    },
+    "api/galeri-gorsel.js": {
+      "includeFiles": "galeri-private/images/**"
+    },
+    "api/etkinlikler.js": {
+      "includeFiles": "public/data/etkinlikler.json"
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ]
+}

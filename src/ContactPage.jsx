@@ -98,6 +98,7 @@ export default function ContactPage() {
           <a className="site-nav__link" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
           <a className="site-nav__link active" href="iletisim.html" aria-current="page">İletişim</a>
           <a className="site-nav__link" href="giris.html">Giriş</a>
+          <a className="site-nav__link" href="egitim-kayit.html">Eğitim Kaydı</a>
           <a className="site-nav__link" href="syber.html">Siber Güvenlik</a>
         </nav>
         <div className="site-header-actions">

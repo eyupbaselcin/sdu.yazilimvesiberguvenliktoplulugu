@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yönetim Ekibimiz | SDÜ Yazılım ve Siber Güvenlik Topluluğu</title>
     <link rel="icon" type="image/png" href="../assets/images/yazılım_siber_logo.png">
-
     <script>
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
@@ -14,13 +13,10 @@
             document.documentElement.classList.remove('dark');
         }
     </script>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles/ToplulukHakkina.css">
-
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -43,7 +39,6 @@
             }
         }
     </script>
-
     <style>
         .glass-effect {
             backdrop-filter: blur(12px);
@@ -109,16 +104,6 @@
             color: #0b171c;
             box-shadow: 0 4px 14px rgba(59, 185, 171, 0.35);
         }
-
-        /* İSTENMEYEN ALT KISMI (MAVİ BANNER & FOOTER) GİZLEME KURALI */
-        footer,
-        .footer,
-        section[class*="footer"],
-        div[class*="footer"],
-        div[style*="background-color: rgb(59, 130, 246)"],
-        div[style*="background: rgb(59, 130, 246)"] {
-            display: none !important;
-        }
     </style>
 </head>
 
@@ -143,13 +128,13 @@
                         SİBER GÜVENLİK</span>
                 </div>
             </a>
-
             <nav class="hidden lg:flex items-center space-x-2.5" aria-label="Ana navigasyon">
                 <a class="nav-pill" href="index.html">Ana Sayfa</a>
                 <a class="nav-pill" href="etkinlik.html">Etkinlikler</a>
                 <a class="nav-pill active" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
                 <a class="nav-pill" href="iletisim.html">İletişim</a>
                 <a class="nav-pill" href="giris.html">Giriş</a>
+                <a class="nav-pill" href="egitim-kayit.html">Eğitim Kaydı</a>
                 <a class="nav-pill" href="syber.html">Siber Güvenlik</a>
             </nav>
 
@@ -163,7 +148,7 @@
                 <!-- Mobile Menu Button -->
                 <button id="mobileMenuBtn" type="button" aria-label="Menüyü Aç"
                     class="lg:hidden p-2.5 rounded-full bg-[#0b6d7514] dark:bg-[#3bb9ab24] text-[#0a6670] dark:text-[#3bb9ab] hover:bg-[#11867c26] transition-all">
-                    <i class="fa-solid fa-bars text-lg" id="menuIcon"></i>
+                    <i class="fa-solid fa-bars text-lg"></i>
                 </button>
             </div>
         </div>
@@ -176,6 +161,7 @@
             <a href="ToplulukHakkinda.html" class="nav-pill active w-full">Yönetim Ekibimiz</a>
             <a href="iletisim.html" class="nav-pill w-full">İletişim</a>
             <a href="giris.html" class="nav-pill w-full">Giriş</a>
+            <a href="egitim-kayit.html" class="nav-pill w-full">Eğitim Kaydı</a>
             <a href="syber.html" class="nav-pill w-full">Siber Güvenlik</a>
         </div>
     </header>
@@ -185,9 +171,10 @@
 
             <!-- Advisor Card (Left - 1/5 of the area) -->
             <div class="lg:col-span-1">
-                <div style="display: flex; margin-bottom: 20px; margin-left: 20px; font-size: medium;">
-                    <a style="width: auto; height: auto; background-color: rgb(5, 189, 235); color: rgb(0, 0, 0); padding: 6px 12px; border-radius: 8px; font-weight: 600;"
-                        href="index.html">&larr; Topluluk merkezine dön</a>
+                <div class="mb-5">
+                    <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-[#0b6d7514] dark:bg-[#3bb9ab20] text-[#0a6670] dark:text-[#3bb9ab] hover:bg-[#11867c26] transition-all">
+                        <i class="fa-solid fa-arrow-left"></i> Topluluk merkezine dön
+                    </a>
                 </div>
                 <div
                     class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-gray-200 dark:border-slate-700 shadow-sm card-hover relative group">
@@ -260,8 +247,10 @@
             </div>
         </div>
 
-        <!-- Team Grid -->
-        <div id="teamGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        <!-- Team Grid (4 Columns matching layout structure from image) -->
+        <div id="teamGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Cards will be populated dynamically or static fallback -->
+        </div>
 
         <div id="noResults" class="hidden text-center py-16">
             <i class="fa-solid fa-user-slash text-4xl text-gray-400 mb-3"></i>
@@ -269,274 +258,365 @@
         </div>
     </main>
 
-    <!-- Modal Element -->
+    <!-- Bottom Callout Section (Blue background matching bottom part of image) -->
+    <section class="bg-blue-600 dark:bg-blue-700 text-white py-16 px-4 sm:px-6 lg:px-8 mt-12">
+        <div class="max-w-4xl mx-auto text-left">
+            <span class="text-blue-200 font-semibold text-sm tracking-wider uppercase block mb-2">Geleceği Birlikte İnşa
+                Ediyoruz</span>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold tracking-tight mb-4">
+                Kod yazıyor, öğreniyor, birlikte büyüyoruz.
+            </h2>
+            <p class="text-blue-100 text-lg leading-relaxed max-w-2xl font-light">
+                Yazılım ve siber güvenlik alanında birlikte gelişiyor, projeler üretiyor ve topluluk ruhunu yaşatıyoruz.
+                Eğitimlerimize, atölyelerimize ve etkinliklerimize sen de katıl.
+            </p>
+
+            <div class="mt-8 flex flex-wrap items-center gap-4 pt-4 border-t border-blue-500/50">
+                <a href="iletisim.html"
+                    class="px-5 py-2.5 rounded-xl bg-white text-blue-700 font-bold hover:bg-blue-50 transition shadow">
+                    Aramıza Katıl
+                </a>
+                <a href="etkinlik.html" class="px-5 py-2.5 rounded-xl border border-white/60 font-semibold hover:bg-white/10 transition">
+                    Etkinliklerimiz
+                </a>
+                <div class="flex items-center space-x-4 text-xl pl-2">
+                    <a href="https://www.instagram.com/sduyzlm" target="_blank" rel="noopener" class="hover:text-blue-200 transition" title="Instagram" aria-label="Instagram"><i
+                            class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/sduyaz%C4%B1l%C4%B1m/" target="_blank" rel="noopener" class="hover:text-blue-200 transition" title="LinkedIn" aria-label="LinkedIn"><i
+                            class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-slate-950 text-gray-400 py-8 px-4 text-center text-sm border-t border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 SDÜ Yazılım ve Siber Güvenlik Topluluğu. Tüm Hakları Saklıdır.</p>
+            <p class="text-xs text-gray-500">Isparta Süleyman Demirel Üniversitesi</p>
+        </div>
+    </footer>
+
+    <!-- Member Modal -->
     <div id="memberModal"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
-        <div id="modalContent"
-            class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 relative transform scale-95 transition-transform duration-300 shadow-xl border border-gray-100 dark:border-slate-700">
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl transform scale-95 transition-transform duration-300 relative"
+            id="modalContent">
             <button id="closeModal"
-                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1">
-                <i class="fa-solid fa-xmark text-xl"></i>
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
             </button>
-            <div id="modalBody"></div>
+            <div id="modalBody">
+                <!-- Dynamically filled -->
+            </div>
         </div>
     </div>
 
     <script>
+        // Yönetim ekibi. Fotoğraflar: public/assets/images/ekip/ (480x600, 4:5 dikey kadraj).
+        // category: filtre düğmelerindeki data-filter değerleri. Birden fazla görevi olan için dizi yazılabilir.
+        // socials: boş bırakılan veya "#" olan bağlantılar gösterilmez.
+        const FOTO = (ad) => `../assets/images/ekip/${ad}.jpg`;
+        const LOGO = '../assets/images/yazılım_siber_logo.png';
+
         const teamData = [
             {
-                id: 1,
                 name: "BAŞKANIMIZ",
                 realName: "Eyüp Başelçin",
                 role: "Topluluk Başkanı",
                 category: "yonetim",
-                image: "https://media.licdn.com/dms/image/v2/D4D03AQGuzaQ1YKBklg/profile-displayphoto-scale_400_400/B4DaC4yPlgJEAg-/0/1789806575219?e=1793836800&v=beta&t=VFZlI9_MgWDWK8asbH0HFFFFr-2R3J1zTGRWdtdyBpQ",
+                image: FOTO("eyup"),
                 bio: "Bilgisayar Mühendisliği 3. Sınıf. Siber güvenlik alanında araştırmacı.",
-                socials: { linkedin: "#", github: "#", instagram: "#" }
+                socials: { linkedin: "https://www.linkedin.com/in/ey%C3%BCp-ba%C5%9Fel%C3%A7in-6b28b8334/", github: "https://github.com/eyupbaselcin" }
             },
             {
-                id: 2,
                 name: "BAŞKAN YARDIMCISI",
-                realName: "Zehra Kaygısız",
+                realName: "Necla İrem Erdemir",
                 role: "Başkan Yardımcısı",
                 category: "yonetim",
-                image: "#",
+                image: FOTO("necla"),
                 bio: "Bilgisayar Mühendisliği 2. Sınıf. Siber güvenlik alanında araştırmacı.",
-                socials: { linkedin: "#", github: "#", instagram: "#" }
+                socials: { linkedin: "https://www.linkedin.com/in/necla-irem-erdemir-650237389/" }
             },
             {
-                id: 3,
                 name: "DENETİM KURULU BAŞKANI",
                 realName: "Muhammed Kerim Şahin",
                 role: "Denetim Kurulu Başkanı",
                 category: "yonetim",
-                image: "#",
+                image: FOTO("kerim"),
                 bio: "Topluluk içi etkinlik koordinesi ve Uygulama Geliştiricisi.",
-                socials: { linkedin: "#", github: "#" }
+                socials: { linkedin: "https://www.linkedin.com/in/muhammed-kerim-%C5%9Fahin-7268aa355/" }
             },
             {
-                id: 4,
                 name: "DENETİM KURULU BAŞKAN YARDIMCISI",
                 realName: "Elif Nur Özek",
-                role: "Denetim Kurulu Başkan Yardımcısı",
-                category: "yonetim",
-                image: "#",
+                role: "Denetim Kurulu Başkan Yardımcısı · Etkinlik ve Organizasyon Koordinatörü",
+                category: ["yonetim", "etkinlik"],
+                image: LOGO, // fotoğraf eklenince: FOTO("elif")
                 bio: "Mobil Uygulama Geliştiricisi.",
-                socials: { linkedin: "#", github: "#" }
+                socials: {}
             },
             {
-                id: 5,
-                name: "WitchPrince",
-                realName: "Işıkhan IŞIK",
-                role: "Eğitmen",
-                category: "yonetim",
-                image: "#",
-                bio: "Bilgisayar Mühendisliği 3. Sınıf. Donanımcı, kernel developer.",
-                socials: { linkedin: "https://www.linkedin.com/in/işıkhan-işik-8807b4337", github: "https://github.com/WitchPrince" }
-            },
-            {
-                id: 6,
                 name: "PROJE KOORDİNATÖRÜ",
-                realName: "......",
+                realName: "Işıkhan Işık",
                 role: "Proje Koordinatörü",
                 category: "proje",
-                image: "",
+                image: FOTO("isikhan"),
                 bio: "Topluluk bünyesindeki yazılım projeleri, AR-GE ve TEKNOFEST takımları koordinasyonu.",
-                socials: { linkedin: "#", github: "#" }
+                socials: { linkedin: "https://www.linkedin.com/in/i%C5%9F%C4%B1khan-i%C5%9Fik-8807b4337", github: "https://github.com/WitchPrince" }
             },
             {
-                id: 7,
+                name: "PROJE KOORDİNATÖRÜ",
+                realName: "Gizem Kaymak",
+                role: "Proje Koordinatörü",
+                category: "proje",
+                image: FOTO("gizem"),
+                bio: "Topluluk bünyesindeki yazılım projeleri, AR-GE ve TEKNOFEST takımları koordinasyonu.",
+                socials: { linkedin: "https://www.linkedin.com/in/gizem-kaymak-ab873b388/" }
+            },
+            {
                 name: "ETKİNLİK & ORGANİZASYON KOORDİNATÖRÜ",
-                realName: "....",
+                realName: "Hacer Rüveyda Şimşek",
                 role: "Etkinlik & Organizasyon Koordinatörü",
                 category: "etkinlik",
-                image: "",
+                image: FOTO("ruveyda"),
                 bio: "Workshop, seminer, hackathon ve sosyal etkinliklerin planlama ve icra sorumlusu.",
-                socials: { linkedin: "#", github: "#" }
+                socials: {}
             },
             {
-                id: 8,
+                name: "ETKİNLİK & ORGANİZASYON KOORDİNATÖRÜ",
+                realName: "Sude Koç",
+                role: "Etkinlik & Organizasyon Koordinatörü",
+                category: "etkinlik",
+                image: FOTO("sude"),
+                bio: "Workshop, seminer, hackathon ve sosyal etkinliklerin planlama ve icra sorumlusu.",
+                socials: {}
+            },
+            {
                 name: "SPONSORLUK KOORDİNATÖRÜ",
-                realName: "....",
+                realName: "İlknur Beskan",
                 role: "Sponsorluk Koordinatörü",
                 category: "sponsorluk",
-                image: "",
-                bio: "Sektörel iş birlikleri, sponsorluk anlaşmaları ve dış ilişkiler yönetimi.",
-                socials: { linkedin: "#", instagram: "#" }
+                image: FOTO("ilknur"),
+                bio: "Sponsorluk ilişkilerinin yönetimi ve kurumsal iş birlikleri.",
+                socials: {}
             },
             {
-                id: 9,
-                name: "PROJE KOORDİNATÖR YARDIMCISI",
-                realName: "....",
-                role: "Proje Koordinatör Yardımcısı",
-                category: "proje",
-                image: "",
-                bio: "Yazılım proje takımları takibi ve teknik dokümantasyon sorumlusu.",
-                socials: { linkedin: "#", github: "#" }
-            },
-            {
-                id: 10,
-                name: "ETKİNLİK & ORGANİZASYON SORUMLUSU",
-                realName: "....",
-                role: "Etkinlik & Organizasyon Sorumlusu",
-                category: "etkinlik",
-                image: "",
-                bio: "Teknik atölye organizasyonları ve salon lojistik koordinasyonu.",
-                socials: { linkedin: "#", github: "#" }
-            },
-            {
-                id: 11,
-                name: "SPONSORLUK SORUMLUSU",
-                realName: "....",
-                role: "Sponsorluk Sorumlusu",
+                name: "SPONSORLUK KOORDİNATÖRÜ",
+                realName: "Efe Sarıhan",
+                role: "Sponsorluk Koordinatörü",
                 category: "sponsorluk",
-                image: "",
-                bio: "Şirket görüşmeleri ve etkinlik sponsorluk paketleri hazırlığı.",
-                socials: { linkedin: "#", github: "#" }
+                image: FOTO("efe"),
+                bio: "Sponsorluk ilişkilerinin yönetimi ve kurumsal iş birlikleri.",
+                socials: {}
             },
             {
-                id: 12,
-                name: "SOSYAL MEDYA & İÇERİK SORUMLUSU",
-                realName: "....",
-                role: "Sosyal Medya & İçerik Sorumlusu",
+                name: "SPONSORLUK KOORDİNATÖRÜ",
+                realName: "Zehra Kaygısız",
+                role: "Sponsorluk Koordinatörü",
+                category: "sponsorluk",
+                image: FOTO("zehra"),
+                bio: "Sponsorluk ilişkilerinin yönetimi ve kurumsal iş birlikleri.",
+                socials: { linkedin: "https://www.linkedin.com/in/zehrakayg%C4%B1s%C4%B1z/" }
+            },
+            {
+                name: "SOSYAL MEDYA & İLETİŞİM KOORDİNATÖRÜ",
+                realName: "İclal Işıl Uysal",
+                role: "Sosyal Medya & İletişim Koordinatörü",
                 category: "sosyal-medya",
-                image: "",
+                image: FOTO("iclal"),
+                bio: "Sosyal medya içerikleri ve kampanyaların yönetimi.",
+                socials: { linkedin: "https://www.linkedin.com/in/iclal-%C4%B1%C5%9F%C4%B1l-uysal-2b4084386/" }
+            },
+            {
+                name: "SOSYAL MEDYA & İLETİŞİM KOORDİNATÖRÜ",
+                realName: "Ecenaz Tan",
+                role: "Sosyal Medya & İletişim Koordinatörü",
+                category: "sosyal-medya",
+                image: FOTO("ecenaz"),
+                bio: "Sosyal medya içerikleri ve kampanyaların yönetimi.",
+                socials: { linkedin: "https://www.linkedin.com/in/ecenaz-tan-338434386/" }
+            },
+            {
+                name: "SOSYAL MEDYA & İLETİŞİM KOORDİNATÖRÜ",
+                realName: "Mehmet Emin Demir",
+                role: "Sosyal Medya & İletişim Koordinatörü",
+                category: "sosyal-medya",
+                image: FOTO("emin"),
                 bio: "Görsel tasarım, video prodüksiyon ve sosyal medya paylaşımları.",
-                socials: { linkedin: "#", instagram: "#" }
+                socials: {}
+            },
+            {
+                name: "SOSYAL MEDYA & İLETİŞİM KOORDİNATÖRÜ",
+                realName: "Mehmet Uğur Kara",
+                role: "Sosyal Medya & İletişim Koordinatörü",
+                category: "sosyal-medya",
+                image: FOTO("ugur"),
+                bio: "Görsel tasarım, video prodüksiyon ve sosyal medya paylaşımları.",
+                socials: {}
             }
         ];
 
-        // Render Cards
         const grid = document.getElementById('teamGrid');
         const noResults = document.getElementById('noResults');
+        const kucuk = (s) => String(s || '').toLocaleLowerCase('tr');
+        const kategoriler = (uye) => [].concat(uye.category || []);
+        const gercekBaglanti = (url) => typeof url === 'string' && /^https?:\/\//.test(url);
+
+        // Etiket oluşturma yardımcısı (veriler textContent ile yazılır, HTML olarak çalıştırılmaz).
+        function el(etiket, sinif, ...cocuklar) {
+            const e = document.createElement(etiket);
+            if (sinif) e.className = sinif;
+            cocuklar.forEach((c) => e.append(c));
+            return e;
+        }
+
+        function foto(uye, sinif) {
+            const img = el('img', sinif);
+            img.src = uye.image || LOGO;
+            img.alt = `${uye.realName} – ${uye.role}`;
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            img.width = 480;
+            img.height = 600;
+            img.onerror = () => { img.onerror = null; img.src = LOGO; img.classList.replace('object-cover', 'object-contain'); };
+            if (img.src.endsWith(encodeURI(LOGO.split('/').pop()))) img.classList.replace('object-cover', 'object-contain');
+            return img;
+        }
 
         function renderTeam(items) {
-            grid.innerHTML = '';
-            if (items.length === 0) {
-                noResults.classList.remove('hidden');
-                return;
-            }
-            noResults.classList.add('hidden');
+            grid.replaceChildren();
+            noResults.classList.toggle('hidden', items.length > 0);
 
-            items.forEach(member => {
-                const card = document.createElement('div');
-                card.className = "bg-white dark:bg-slate-800 rounded-2xl p-4 border border-gray-200 dark:border-slate-700/80 shadow-sm card-hover cursor-pointer group flex flex-col justify-between";
-                card.onclick = () => openModal(member);
+            items.forEach((uye) => {
+                const kart = el('button', 'text-left bg-white dark:bg-slate-800 rounded-2xl p-4 border border-gray-200 dark:border-slate-700/80 shadow-sm card-hover cursor-pointer group flex flex-col justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500');
+                kart.type = 'button';
+                kart.setAttribute('aria-label', `${uye.realName}, ${uye.role} – ayrıntılar`);
+                kart.addEventListener('click', () => openModal(uye));
 
-                card.innerHTML = `
-                    <div>
-                        <div class="relative overflow-hidden rounded-xl aspect-square bg-gray-100 dark:bg-slate-700 mb-3">
-                            <img src="${member.image}" alt="${member.name}" 
-                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                                 onerror="this.src='https://placehold.co/400x400/1e293b/white?text=${encodeURIComponent(member.name)}'">
-                        </div>
-                        <h3 class="font-bold text-gray-900 dark:text-white text-base leading-tight">${member.name}</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">${member.role}</p>
-                    </div>
-                    <div class="pt-3 mt-3 border-t border-gray-100 dark:border-slate-700/50 flex justify-between items-center text-xs text-blue-600 dark:text-blue-400 font-semibold">
-                        <span>${member.realName}</span>
-                        <i class="fa-solid fa-arrow-right opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                    </div>
-                `;
-                grid.appendChild(card);
+                const resimKutusu = el('div', 'relative overflow-hidden rounded-xl aspect-[4/5] bg-gray-100 dark:bg-slate-700 mb-3',
+                    foto(uye, 'w-full h-full object-cover group-hover:scale-105 transition duration-500'));
+
+                const ust = el('div', '',
+                    resimKutusu,
+                    el('h3', 'font-bold text-gray-900 dark:text-white text-base leading-tight', uye.name),
+                    el('p', 'text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium', uye.role));
+
+                const ok = el('i', 'fa-solid fa-arrow-right opacity-0 group-hover:opacity-100 transition-opacity');
+                ok.setAttribute('aria-hidden', 'true');
+                const alt = el('div', 'pt-3 mt-3 border-t border-gray-100 dark:border-slate-700/50 flex justify-between items-center text-xs text-blue-600 dark:text-blue-400 font-semibold',
+                    el('span', '', uye.realName), ok);
+
+                kart.append(ust, alt);
+                grid.append(kart);
             });
         }
 
-        // Search & Filter Logic
+        // Arama ve filtre
         let currentFilter = 'all';
         const searchInput = document.getElementById('searchInput');
         const filterBtns = document.querySelectorAll('.filter-btn');
 
         function filterData() {
-            const query = searchInput.value.toLowerCase().trim();
-            const filtered = teamData.filter(m => {
-                const matchesFilter = currentFilter === 'all' || m.category === currentFilter;
-                const matchesSearch = m.name.toLowerCase().includes(query) ||
-                    m.role.toLowerCase().includes(query) ||
-                    m.realName.toLowerCase().includes(query);
-                return matchesFilter && matchesSearch;
-            });
-            renderTeam(filtered);
+            const aranan = kucuk(searchInput.value.trim());
+            renderTeam(teamData.filter((uye) =>
+                (currentFilter === 'all' || kategoriler(uye).includes(currentFilter))
+                && [uye.name, uye.role, uye.realName].some((alan) => kucuk(alan).includes(aranan))));
         }
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                filterBtns.forEach(b => {
+        filterBtns.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach((b) => {
                     b.classList.remove('bg-blue-600', 'text-white');
                     b.classList.add('bg-white', 'dark:bg-slate-800', 'text-gray-600', 'dark:text-gray-300');
+                    b.setAttribute('aria-pressed', 'false');
                 });
                 btn.classList.remove('bg-white', 'dark:bg-slate-800', 'text-gray-600', 'dark:text-gray-300');
                 btn.classList.add('bg-blue-600', 'text-white');
-
+                btn.setAttribute('aria-pressed', 'true');
                 currentFilter = btn.dataset.filter;
                 filterData();
             });
         });
-
         searchInput.addEventListener('input', filterData);
 
-        // Modal Logic
+        // Üye ayrıntı penceresi
         const modal = document.getElementById('memberModal');
         const modalBody = document.getElementById('modalBody');
+        const modalContent = document.getElementById('modalContent');
         const closeModal = document.getElementById('closeModal');
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        closeModal.setAttribute('aria-label', 'Kapat');
+        let sonOdak = null;
 
-        function openModal(member) {
-            modalBody.innerHTML = `
-                <div class="text-center">
-                    <img src="${member.image}" alt="${member.name}" class="w-24 h-24 rounded-full mx-auto object-cover mb-4 ring-4 ring-blue-500/20" onerror="this.src='https://placehold.co/400x400/1e293b/white?text=${encodeURIComponent(member.name)}'">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">${member.name}</h3>
-                    <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">${member.role}</p>
-                    <p class="text-xs text-gray-400 mt-0.5">${member.realName}</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-4 leading-relaxed">${member.bio}</p>
-                    <div class="flex justify-center space-x-4 mt-6 text-gray-600 dark:text-gray-300 text-lg">
-                        ${member.socials.linkedin && member.socials.linkedin !== '#' ? `<a href="${member.socials.linkedin}" target="_blank" class="hover:text-blue-600"><i class="fa-brands fa-linkedin"></i></a>` : ''}
-                        ${member.socials.github && member.socials.github !== '#' ? `<a href="${member.socials.github}" target="_blank" class="hover:text-gray-900 dark:hover:text-white"><i class="fa-brands fa-github"></i></a>` : ''}
-                        ${member.socials.instagram && member.socials.instagram !== '#' ? `<a href="${member.socials.instagram}" target="_blank" class="hover:text-pink-600"><i class="fa-brands fa-instagram"></i></a>` : ''}
-                    </div>
-                </div>
-            `;
+        const SOSYAL = [
+            ['linkedin', 'fa-linkedin', 'LinkedIn', 'hover:text-blue-600'],
+            ['github', 'fa-github', 'GitHub', 'hover:text-gray-900 dark:hover:text-white'],
+            ['instagram', 'fa-instagram', 'Instagram', 'hover:text-pink-600'],
+        ];
+
+        function openModal(uye) {
+            sonOdak = document.activeElement;
+            const baglantilar = el('div', 'flex justify-center gap-5 mt-6 text-gray-600 dark:text-gray-300 text-2xl');
+            SOSYAL.forEach(([anahtar, ikon, ad, renk]) => {
+                const url = (uye.socials || {})[anahtar];
+                if (!gercekBaglanti(url)) return;
+                const a = el('a', renk, el('i', `fa-brands ${ikon}`));
+                a.href = url;
+                a.target = '_blank';
+                a.rel = 'noopener';
+                a.title = ad;
+                a.setAttribute('aria-label', `${uye.realName} – ${ad}`);
+                baglantilar.append(a);
+            });
+
+            modalBody.replaceChildren(el('div', 'text-center',
+                foto(uye, 'w-32 h-40 rounded-2xl mx-auto object-cover mb-4 ring-4 ring-blue-500/20 bg-white dark:bg-slate-800'),
+                el('h3', 'text-xl font-bold text-gray-900 dark:text-white', uye.realName),
+                el('p', 'text-sm text-blue-600 dark:text-blue-400 font-medium mt-1', uye.role),
+                el('p', 'text-sm text-gray-600 dark:text-gray-300 mt-4 leading-relaxed', (uye.bio || '').trim()),
+                ...(baglantilar.children.length ? [baglantilar] : [])));
+
             modal.classList.remove('opacity-0', 'pointer-events-none');
-            document.getElementById('modalContent').classList.remove('scale-95');
-            document.getElementById('modalContent').classList.add('scale-100');
+            modalContent.classList.replace('scale-95', 'scale-100');
+            document.body.style.overflow = 'hidden';
+            closeModal.focus();
         }
 
-        closeModal.addEventListener('click', () => {
+        function modaliKapat() {
             modal.classList.add('opacity-0', 'pointer-events-none');
-            document.getElementById('modalContent').classList.remove('scale-100');
-            document.getElementById('modalContent').classList.add('scale-95');
+            modalContent.classList.replace('scale-100', 'scale-95');
+            document.body.style.overflow = '';
+            if (sonOdak) sonOdak.focus();
+        }
+
+        closeModal.addEventListener('click', modaliKapat);
+        modal.addEventListener('click', (e) => { if (e.target === modal) modaliKapat(); });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('pointer-events-none')) modaliKapat();
         });
 
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal.click();
-            }
-        });
-
-        // Theme Toggle
+        // Tema (tercih diğer sayfalarla ortak saklanır)
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
-                const isDark = document.documentElement.classList.toggle('dark');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                const koyu = document.documentElement.classList.toggle('dark');
+                try { localStorage.setItem('theme', koyu ? 'dark' : 'light'); } catch { /* yok say */ }
             });
         }
 
-        // Mobile Menu Toggle
+        // Mobil menü
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
-        const menuIcon = document.getElementById('menuIcon');
-
         if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
             mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                if (menuIcon) {
-                    menuIcon.classList.toggle('fa-bars');
-                    menuIcon.classList.toggle('fa-xmark');
-                }
+                const acik = mobileMenu.classList.toggle('hidden') === false;
+                mobileMenuBtn.setAttribute('aria-expanded', String(acik));
             });
         }
 
-        // Initial render
         renderTeam(teamData);
     </script>
 </body>

@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../assets/images/yazılım_siber_logo.png"
+    />
+    <title>Eğitim Kaydı | SDÜ Yazılım ve Siber Güvenlik Topluluğu</title>
+
+    <script>
+      if (
+        localStorage.getItem("theme") === "dark" ||
+        (!localStorage.getItem("theme") &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+
+    <!-- Tailwind CSS (Eğer harici CSS dosyanızda tailwind yoksa CDN linki) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" crossorigin href="../assets/security-Csf-bCze.css" />
+    <link
+      rel="stylesheet"
+      crossorigin
+      href="../assets/community-D8jnM6IE.css"
+    />
+
+    <style>
+      body {
+        background: radial-gradient(
+          circle at top,
+          #ffffff,
+          #f4fbfb 45%,
+          #eaf5f6
+        );
+        color: #1f2d34;
+        min-height: 100vh;
+        margin: 0;
+        padding: 24px 20px 48px;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .theme-toggle-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 9999px;
+        background: #0b6d7514;
+        color: #0a6670;
+        border: 1px solid transparent;
+        cursor: pointer;
+        font-size: 1.15rem;
+        transition: all 0.2s ease;
+      }
+
+      .theme-toggle-btn:hover {
+        background: #11867c26;
+        transform: translateY(-1px);
+      }
+
+      .nav-pill {
+        padding: 8px 16px;
+        border-radius: 9999px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #1f2d34;
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+
+      .nav-pill:hover {
+        background-color: #0b6d7514;
+        color: #0a6670;
+      }
+
+      .nav-pill.active {
+        background-color: #0a6670 !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 14px rgba(10, 102, 112, 0.28);
+      }
+
+      .hero-image {
+        width: 88px;
+        height: 88px;
+        margin: 0 auto 20px;
+        padding: 8px;
+        border: 1px solid rgba(10, 102, 112, 0.15);
+        border-radius: 24px;
+        background: #ffffff;
+        object-fit: contain;
+        display: block;
+        box-shadow: 0 10px 24px rgba(10, 102, 112, 0.1);
+      }
+
+      .panel {
+        background: #fffffff0;
+        border: 1px solid rgba(10, 102, 112, 0.12);
+        border-radius: 28px;
+        box-shadow: 0 20px 45px rgba(14, 57, 63, 0.08);
+        padding: clamp(24px, 5vw, 48px);
+      }
+
+      .back-link {
+        color: #0a6670;
+        font-weight: 600;
+      }
+
+      .eyebrow {
+        color: #0a6670;
+      }
+
+      .section-title {
+        color: #1f2d34;
+      }
+
+      .section-subtitle {
+        color: #60757d;
+      }
+
+      #komut-listesi section {
+        background: #ffffff;
+        border: 1px solid rgba(10, 102, 112, 0.12);
+        border-radius: 18px;
+        box-shadow: 0 8px 20px rgba(14, 57, 63, 0.05);
+        padding: 22px;
+      }
+
+      /* DARK THEME */
+      html.dark,
+      html.dark body {
+        background: radial-gradient(
+          circle at top,
+          #162c35 0%,
+          #0b171c 45%,
+          #060e11 100%
+        ) !important;
+        color: #f1f8f9 !important;
+      }
+
+      html.dark .nav-pill {
+        color: #f1f8f9;
+      }
+
+      html.dark .nav-pill:hover {
+        background-color: rgba(59, 185, 171, 0.25);
+        color: #5eead4;
+      }
+
+      html.dark .nav-pill.active {
+        background-color: #3bb9ab !important;
+        color: #0b171c !important;
+        box-shadow: 0 4px 14px rgba(59, 185, 171, 0.35) !important;
+      }
+
+      html.dark .theme-toggle-btn {
+        background-color: rgba(59, 185, 171, 0.15) !important;
+        color: #3bb9ab !important;
+      }
+
+      html.dark .hero-image,
+      html.dark .panel {
+        background: #12242b !important;
+        border-color: rgba(59, 185, 171, 0.2) !important;
+      }
+
+      html.dark .back-link,
+      html.dark .eyebrow {
+        color: #3bb9ab !important;
+      }
+
+      html.dark .section-title {
+        color: #f1f8f9 !important;
+      }
+
+      html.dark #komut-listesi section {
+        background: #162c35 !important;
+        border-color: rgba(59, 185, 171, 0.2) !important;
+      }
+
+      /* EĞİTİM KAYIT FORMU */
+      .kayit-panel {
+        --k-ana: #0a6670;
+        --k-yazi: #1f2d34;
+        --k-soluk: #60757d;
+        --k-kart: #ffffff;
+        --k-cizgi: rgba(10, 102, 112, 0.18);
+        --k-zemin: #f4fbfb;
+        position: relative;
+        overflow: hidden;
+        max-width: 760px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      html.dark .kayit-panel {
+        --k-ana: #3bb9ab;
+        --k-yazi: #f1f8f9;
+        --k-soluk: #9fb4ba;
+        --k-kart: #162c35;
+        --k-cizgi: rgba(59, 185, 171, 0.25);
+        --k-zemin: #0b171c;
+      }
+
+      .kayit-serit {
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 10px;
+        background: linear-gradient(90deg, #0d6f7f, #20b2c2);
+      }
+
+      .kayit-uyari {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 12px 16px;
+        border-radius: 14px;
+        background: rgba(245, 158, 11, 0.12);
+        border: 1px solid rgba(245, 158, 11, 0.4);
+        color: #92400e;
+        font-weight: 700;
+        font-size: 0.92rem;
+      }
+
+      html.dark .kayit-uyari {
+        color: #fcd34d;
+      }
+
+      .kayit-uyari i {
+        margin-top: 3px;
+      }
+
+      .kayit-ozellikler {
+        display: grid;
+        gap: 8px;
+        color: var(--k-yazi);
+      }
+
+      .kayit-ozellikler i {
+        width: 22px;
+        color: var(--k-ana);
+      }
+
+      .kayit-zorunlu {
+        color: var(--k-soluk);
+        font-size: 0.85rem;
+      }
+
+      .kayit-zorunlu span,
+      .kayit-soru label span,
+      .kayit-soru legend span {
+        color: #d93025;
+      }
+
+      .kayit-formu {
+        display: grid;
+        gap: 16px;
+        margin-top: 16px;
+      }
+
+      .kayit-soru {
+        margin: 0;
+        padding: 20px;
+        border: 1px solid var(--k-cizgi);
+        border-radius: 16px;
+        background: var(--k-kart);
+        transition: border-color 0.2s ease;
+      }
+
+      .kayit-soru:focus-within {
+        border-color: var(--k-ana);
+        box-shadow: inset 4px 0 0 var(--k-ana);
+      }
+
+      .kayit-soru.hatali {
+        border-color: #d93025;
+      }
+
+      .kayit-soru > label,
+      .kayit-soru legend {
+        display: block;
+        font-weight: 600;
+        color: var(--k-yazi);
+        margin-bottom: 12px;
+        padding: 0;
+      }
+
+      .kayit-soru input[type="text"],
+      .kayit-soru input[type="tel"],
+      .kayit-soru input[type="email"] {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 8px 2px;
+        border: 0;
+        border-bottom: 1px solid var(--k-cizgi);
+        background: transparent;
+        color: var(--k-yazi);
+        font: inherit;
+        outline: none;
+      }
+
+      .kayit-soru input:focus {
+        border-bottom: 2px solid var(--k-ana);
+      }
+
+      .kayit-secenekler {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 10px;
+      }
+
+      .kayit-secenekler label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--k-yazi);
+        cursor: pointer;
+      }
+
+      .kayit-secenekler input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--k-ana);
+      }
+
+      .kayit-tuzak {
+        position: absolute;
+        left: -10000px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+
+      .kayit-alt {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .kayit-gonder,
+      .kayit-temizle {
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 10px 26px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .kayit-gonder {
+        background: var(--k-ana);
+        color: #ffffff;
+        border: 1px solid var(--k-ana);
+      }
+
+      html.dark .kayit-gonder {
+        color: #0b171c;
+      }
+
+      .kayit-gonder:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(10, 102, 112, 0.3);
+      }
+
+      .kayit-gonder:disabled {
+        opacity: 0.6;
+        cursor: wait;
+      }
+
+      .kayit-temizle {
+        background: transparent;
+        color: var(--k-ana);
+        border: 0;
+      }
+
+      .kayit-durum {
+        min-height: 1.5em;
+        font-weight: 600;
+      }
+
+      .kayit-durum.basarili {
+        color: #15803d;
+      }
+
+      html.dark .kayit-durum.basarili {
+        color: #4ade80;
+      }
+
+      .kayit-durum.hata {
+        color: #d93025;
+      }
+
+      .kayit-tesekkur {
+        text-align: center;
+        padding: 24px 0 8px;
+        color: var(--k-yazi);
+      }
+
+      .kayit-tesekkur i {
+        font-size: 2.6rem;
+        color: var(--k-ana);
+      }
+
+      #kayitSorular {
+        display: grid;
+        gap: 16px;
+      }
+
+      .kayit-soru-aciklama {
+        margin: -6px 0 12px;
+        color: var(--k-soluk);
+        font-size: 0.88rem;
+      }
+
+      .kayit-soru textarea {
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 96px;
+        padding: 8px 2px;
+        border: 0;
+        border-bottom: 1px solid var(--k-cizgi);
+        background: transparent;
+        color: var(--k-yazi);
+        font: inherit;
+        outline: none;
+        resize: vertical;
+      }
+
+      .kayit-soru textarea:focus {
+        border-bottom: 2px solid var(--k-ana);
+      }
+
+      .kayit-yukleniyor,
+      .kayit-kapali {
+        color: var(--k-soluk);
+        text-align: center;
+        padding: 24px 8px;
+      }
+    </style>
+  </head>
+
+  <body class="page">
+    <div class="site-page">
+      <div class="page">
+        <!-- HEADER BAŞLANGICI -->
+        <header
+          class="sticky top-0 z-40 w-full bg-white/80 dark:bg-[#12242b]/90 backdrop-blur-md border-b border-gray-200 dark:border-slate-800"
+          aria-label="Üst bilgi"
+        >
+          <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between"
+          >
+            <!-- Brand & Logo -->
+            <a
+              href="index.html"
+              class="flex items-center space-x-3.5 group"
+              title="Ana Sayfa"
+            >
+              <div
+                class="w-12 h-12 rounded-2xl overflow-hidden bg-gradient-to-tr from-[#0d6f7f] to-[#20b2c2] p-1 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform flex-shrink-0"
+              >
+                <img
+                  src="../assets/images/yazılım_siber_logo.png"
+                  alt="SDÜ Yazılım ve Siber Güvenlik Topluluğu Logosu"
+                  class="w-full h-full object-contain"
+                />
+              </div>
+              <div>
+                <span
+                  class="font-extrabold text-lg tracking-tight block leading-tight text-gray-900 dark:text-white group-hover:text-[#0a6670] dark:group-hover:text-[#3bb9ab] transition-colors"
+                  >SDÜ YAZILIM</span
+                >
+                <span
+                  class="text-xs text-[#0a6670] dark:text-[#3bb9ab] font-bold tracking-wider uppercase block mt-0.5"
+                  >VE SİBER GÜVENLİK</span
+                >
+              </div>
+            </a>
+
+            <!-- Desktop Nav (Masaüstünde görünür, mobilde gizli) -->
+            <nav
+              class="hidden lg:flex items-center space-x-2.5"
+              aria-label="Ana navigasyon"
+            >
+              <a class="nav-pill" href="index.html">Ana Sayfa</a>
+              <a class="nav-pill" href="etkinlik.html">Etkinlikler</a>
+              <a class="nav-pill" href="ToplulukHakkinda.html"
+                >Yönetim Ekibimiz</a
+              >
+              <a class="nav-pill" href="iletisim.html">İletişim</a>
+              <a class="nav-pill" href="giris.html">Giriş</a>
+              <a class="nav-pill active" href="egitim-kayit.html"
+                >Eğitim Kaydı</a
+              >
+              <a class="nav-pill" href="syber.html">Siber Güvenlik</a>
+            </nav>
+
+            <!-- Controls (Tema ve Mobil Menü Butonları) -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+              <button
+                id="themeToggle"
+                type="button"
+                aria-label="Temayı Değiştir"
+                class="theme-toggle-btn"
+              >
+                <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+                <i
+                  class="fa-solid fa-sun hidden dark:block text-amber-400 text-lg"
+                ></i>
+              </button>
+
+              <!-- Mobile Menu Button (Masaüstünde gizli, mobilde görünür) -->
+              <button
+                id="mobileMenuBtn"
+                type="button"
+                aria-label="Menüyü Aç"
+                class="lg:hidden theme-toggle-btn"
+              >
+                <i class="fa-solid fa-bars text-lg" id="menuIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mobile Menu Dropdown (Varsayılan olarak 'hidden' ile gizlidir, tıklanınca açılır) -->
+          <div
+            id="mobileMenu"
+            class="hidden lg:hidden px-4 pt-2 pb-4 space-y-2 border-t border-gray-100 dark:border-slate-800 bg-white dark:bg-[#12242b]"
+          >
+            <a class="nav-pill block w-full text-center" href="index.html"
+              >Ana Sayfa</a
+            >
+            <a class="nav-pill block w-full text-center" href="etkinlik.html"
+              >Etkinlikler</a
+            >
+            <a
+              class="nav-pill block w-full text-center"
+              href="ToplulukHakkinda.html"
+              >Yönetim Ekibimiz</a
+            >
+            <a class="nav-pill block w-full text-center" href="iletisim.html"
+              >İletişim</a
+            >
+            <a class="nav-pill block w-full text-center" href="giris.html"
+              >Giriş</a
+            >
+            <a
+              class="nav-pill active block w-full text-center"
+              href="egitim-kayit.html"
+              >Eğitim Kaydı</a
+            >
+            <a class="nav-pill block w-full text-center" href="syber.html"
+              >Siber Güvenlik</a
+            >
+          </div>
+        </header>
+        <!-- HEADER BİTİŞİ -->
+
+        <main class="page-shell mt-6">
+          <img
+            class="hero-image"
+            src="../assets/images/yazılım_siber_logo.png"
+            alt="SDÜ Yazılım ve Siber Güvenlik Topluluğu logosu"
+          />
+
+          <!-- EĞİTİM KAYIT FORMU -->
+          <section
+            class="panel kayit-panel"
+            id="egitim-kayit"
+            aria-labelledby="kayit-baslik"
+          >
+            <div class="kayit-serit" aria-hidden="true"></div>
+            <!-- Başlık, açıklamalar ve sorular yönetim panelinden düzenlenir (/api/form). -->
+            <p class="eyebrow font-semibold text-sm" id="formUstBaslik"></p>
+            <h2 id="kayit-baslik" class="section-title text-3xl font-bold mt-1">Kayıt formu</h2>
+
+            <div class="kayit-uyari mt-5" id="formUyari" hidden>
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+              <span id="formUyariMetni"></span>
+            </div>
+
+            <ul class="kayit-ozellikler mt-4" id="formMaddeler"></ul>
+
+            <p class="kayit-zorunlu mt-5" id="formZorunluNotu"><span>*</span> Zorunlu alan</p>
+
+            <form id="kayitFormu" class="kayit-formu" novalidate>
+              <div id="kayitSorular" aria-busy="true">
+                <p class="kayit-yukleniyor">Form yükleniyor…</p>
+              </div>
+
+              <!-- Bot tuzağı: kullanıcılar görmez -->
+              <div class="kayit-tuzak" aria-hidden="true">
+                <label for="web_sitesi">Web sitesi</label>
+                <input
+                  id="web_sitesi"
+                  name="web_sitesi"
+                  type="text"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="kayit-alt">
+                <button type="submit" id="kayitGonder" class="kayit-gonder">
+                  Gönder
+                </button>
+                <button type="reset" class="kayit-temizle">
+                  Formu temizle
+                </button>
+              </div>
+              <p
+                id="kayitDurum"
+                class="kayit-durum"
+                role="status"
+                aria-live="polite"
+              ></p>
+            </form>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"></script>
+    <script src="../scripts/kayit-formu.js"></script>
+
+    <script>
+      // Tema Değiştirme Mantığı
+      const themeToggle = document.getElementById("themeToggle");
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          const isDark = document.documentElement.classList.toggle("dark");
+          localStorage.setItem("theme", isDark ? "dark" : "light");
+        });
+      }
+
+      // Mobil Menü Açma/Kapatma Mantığı
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const menuIcon = document.getElementById("menuIcon");
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+
+          // Menü ikonu değiştirme (Üç çizgi / Çarpı işareti)
+          if (mobileMenu.classList.contains("hidden")) {
+            menuIcon.classList.remove("fa-xmark");
+            menuIcon.classList.add("fa-bars");
+          } else {
+            menuIcon.classList.remove("fa-bars");
+            menuIcon.classList.add("fa-xmark");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

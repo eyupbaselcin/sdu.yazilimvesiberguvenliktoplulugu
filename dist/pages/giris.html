@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SDÜ Yazılım ve Siber Güvenlik Topluluğu yönetim giriş ekranı.">
     <link rel="icon" type="image/png" href="../assets/images/yazılım_siber_logo.png">
+
     <script>
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
@@ -13,11 +14,23 @@
             document.documentElement.classList.remove('dark');
         }
     </script>
+
+    <!-- Tailwind CSS Kütüphanesi -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer">
     <title>Giriş & Etkinlik Paneli | SDÜ Yazılım ve Siber Güvenlik Topluluğu</title>
     <link rel="stylesheet" crossorigin href="../assets/login-BMR9NiEu.css">
     <link rel="stylesheet" crossorigin href="../assets/community-D8jnM6IE.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap">
     <style>
         body {
             background: radial-gradient(circle at top, #ffffff, #f4fbfb 45%, #eaf5f6);
@@ -34,7 +47,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: calc(100vh - 140px);
             padding: 20px 14px;
         }
 
@@ -79,16 +91,22 @@
             transform: translateY(-1px);
         }
 
-        .theme-toggle-btn .light-icon {
-            display: none;
+        .nav-pill {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1f2d34;
+            text-decoration: none;
+            transition: all 0.2s ease;
         }
 
-        .theme-toggle-btn .dark-icon {
-            display: inline-block;
+        .nav-pill:hover {
+            background-color: #0b6d7514;
+            color: #0a6670;
         }
 
-        /* Nav Pill styling */
-        .site-nav__link.active {
+        .nav-pill.active {
             background-color: #0a6670 !important;
             color: #ffffff !important;
             box-shadow: 0 4px 14px rgba(10, 102, 112, 0.28);
@@ -101,43 +119,27 @@
             color: #f1f8f9 !important;
         }
 
+        html.dark .nav-pill {
+            color: #f1f8f9;
+        }
+
+        html.dark .nav-pill:hover {
+            background-color: rgba(59, 185, 171, 0.25);
+            color: #5eead4;
+        }
+
+        html.dark .nav-pill.active {
+            background-color: #3bb9ab !important;
+            color: #0b171c !important;
+            box-shadow: 0 4px 14px rgba(59, 185, 171, 0.35) !important;
+        }
+
         html.dark .back-link {
             color: #3bb9ab !important;
         }
 
         html.dark .back-link:hover {
             color: #5eead4 !important;
-        }
-
-        html.dark .site-header {
-            background: rgba(18, 36, 43, 0.92) !important;
-            border-color: rgba(59, 185, 171, 0.2) !important;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5) !important;
-        }
-
-        html.dark .site-brand__title span:first-child {
-            color: #f1f8f9 !important;
-        }
-
-        html.dark .site-brand__title span:last-child {
-            color: #3bb9ab !important;
-        }
-
-        html.dark .site-nav__link {
-            background-color: rgba(59, 185, 171, 0.14) !important;
-            color: #3bb9ab !important;
-            border-color: rgba(59, 185, 171, 0.16) !important;
-        }
-
-        html.dark .site-nav__link:hover {
-            background-color: rgba(59, 185, 171, 0.25) !important;
-            color: #5eead4 !important;
-        }
-
-        html.dark .site-nav__link.active {
-            background-color: #3bb9ab !important;
-            color: #0b171c !important;
-            box-shadow: 0 4px 14px rgba(59, 185, 171, 0.35) !important;
         }
 
         html.dark .theme-toggle-btn {
@@ -149,15 +151,6 @@
         html.dark .theme-toggle-btn:hover {
             background-color: rgba(59, 185, 171, 0.28) !important;
             color: #5eead4 !important;
-        }
-
-        html.dark .theme-toggle-btn .light-icon {
-            display: inline-block !important;
-            color: #f59e0b !important;
-        }
-
-        html.dark .theme-toggle-btn .dark-icon {
-            display: none !important;
         }
 
         html.dark .login-form,
@@ -414,6 +407,7 @@
             .form-grid-2 {
                 grid-template-columns: 1fr;
             }
+
             .admin-panel {
                 padding: 24px 18px;
             }
@@ -486,37 +480,429 @@
         html.dark .event-card-item-meta {
             color: #94a3b8;
         }
+
+        /* ===== YÖNETİM PANELİ (Kontrol masası) ===== */
+        .yonetim {
+            --y-zemin: #faf8f3;
+            --y-kart: #ffffff;
+            --y-koyu: #1b3d33;
+            --y-koyu-hover: #24503f;
+            --y-yazi: #1f2a26;
+            --y-soluk: #5f6b66;
+            --y-cizgi: #e6e2d8;
+            --y-turuncu: #d9734a;
+            --y-yesil-acik: #e8efe7;
+            --y-kirmizi-acik: #fdece6;
+            --y-kirmizi: #b5482b;
+            --y-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 32px clamp(16px, 3vw, 32px) 48px;
+            background: var(--y-zemin);
+            color: var(--y-yazi);
+            border-radius: 20px;
+            font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+            box-sizing: border-box;
+        }
+
+        html.dark .yonetim {
+            --y-zemin: #0f1d19;
+            --y-kart: #15261f;
+            --y-koyu: #3bb98a;
+            --y-koyu-hover: #4fd09f;
+            --y-yazi: #eef3f0;
+            --y-soluk: #9fb1a9;
+            --y-cizgi: #24382f;
+            --y-turuncu: #f0956d;
+            --y-yesil-acik: #1f3a2f;
+            --y-kirmizi-acik: #3a2019;
+            --y-kirmizi: #f19a7f;
+        }
+
+        .yonetim-ust {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding-bottom: 24px;
+        }
+
+        .yonetim-eyebrow {
+            margin: 0 0 6px;
+            color: var(--y-turuncu);
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+
+        .yonetim-baslik {
+            margin: 0;
+            font-family: var(--y-serif);
+            font-weight: 400;
+            font-size: clamp(1.9rem, 4vw, 2.5rem);
+            line-height: 1.1;
+            color: var(--y-yazi);
+        }
+
+        .yonetim-hos { margin: 8px 0 0; color: var(--y-soluk); font-size: .92rem; }
+        .yonetim-hos span { font-weight: 600; color: var(--y-yazi); }
+        .yonetim-dugmeler { display: flex; flex-wrap: wrap; gap: 8px; }
+
+        .y-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 18px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            font: inherit;
+            font-size: .92rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color .15s ease, transform .15s ease;
+        }
+
+        .y-btn-ana { background: var(--y-koyu); color: #fff; padding: 13px 22px; }
+        html.dark .y-btn-ana { color: #0f1d19; }
+        .y-btn-ana:hover:not(:disabled) { background: var(--y-koyu-hover); transform: translateY(-1px); }
+        .y-btn-ana span { font-size: 1.15rem; line-height: 1; }
+        .y-btn-sade { background: transparent; color: var(--y-yazi); border-color: var(--y-cizgi); }
+        .y-btn-sade:hover { background: var(--y-yesil-acik); }
+        .y-btn:disabled { opacity: .6; cursor: wait; }
+
+        .yonetim-ozet {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            border-top: 1px solid var(--y-cizgi);
+            border-bottom: 1px solid var(--y-cizgi);
+            margin-bottom: 28px;
+        }
+
+        .yonetim-ozet > div {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 22px 24px 22px 0;
+        }
+
+        .yonetim-ozet > div + div { border-left: 1px solid var(--y-cizgi); padding-left: 24px; }
+        .yonetim-ozet span { color: var(--y-soluk); font-size: .92rem; }
+
+        .yonetim-ozet strong {
+            font-family: var(--y-serif);
+            font-weight: 400;
+            font-size: clamp(1.8rem, 4vw, 2.4rem);
+            color: var(--y-koyu);
+            font-variant-numeric: oldstyle-nums;
+        }
+
+        .yonetim-durum { min-height: 1.2em; margin: 0 0 12px; font-weight: 600; font-size: .92rem; }
+        .yonetim-durum.hata { color: var(--y-kirmizi); }
+        .yonetim-durum.basarili { color: var(--y-koyu); }
+
+        .yonetim-tablo-sarici { overflow-x: auto; background: var(--y-kart); }
+        .yonetim-tablo { width: 100%; min-width: 760px; border-collapse: collapse; font-size: .93rem; }
+
+        .yonetim-tablo thead th {
+            background: var(--y-koyu);
+            color: #fff;
+            text-align: left;
+            font-weight: 600;
+            font-size: .85rem;
+            padding: 15px 16px;
+        }
+
+        html.dark .yonetim-tablo thead th { color: #0f1d19; }
+        .yonetim-tablo td { padding: 14px 16px; border-bottom: 1px solid var(--y-cizgi); vertical-align: middle; }
+        .yonetim-tablo tbody tr:hover { background: color-mix(in srgb, var(--y-yesil-acik) 45%, transparent); }
+        .y-etkinlik { display: flex; align-items: center; gap: 12px; }
+        .y-etkinlik img { width: 44px; height: 44px; object-fit: cover; border-radius: 6px; flex-shrink: 0; background: var(--y-cizgi); }
+        .y-etkinlik strong { display: block; font-weight: 700; }
+        .y-etkinlik small { display: block; color: var(--y-soluk); font-size: .82rem; margin-top: 2px; }
+
+        .y-etiket {
+            display: inline-block;
+            padding: 5px 11px;
+            border-radius: 999px;
+            background: var(--y-yesil-acik);
+            color: var(--y-koyu);
+            font-size: .8rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .y-islem { display: flex; gap: 6px; }
+
+        .y-islem button {
+            font: inherit;
+            font-size: .85rem;
+            padding: 9px 12px;
+            border-radius: 4px;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .y-duzenle { background: var(--y-yesil-acik); color: var(--y-yazi); }
+        .y-sil { background: var(--y-kirmizi-acik); color: var(--y-kirmizi); }
+        .y-islem button:hover { filter: brightness(.95); }
+        .yonetim-bos { text-align: center; color: var(--y-soluk); padding: 32px !important; }
+        .yonetim-gecmis td { opacity: .72; }
+
+        .yonetim-dialog {
+            width: min(640px, calc(100vw - 32px));
+            max-height: calc(100vh - 32px);
+            border: 0;
+            border-radius: 16px;
+            padding: 0;
+            background: var(--y-kart);
+            color: var(--y-yazi);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, .25);
+        }
+
+        .yonetim-dialog::backdrop { background: rgba(15, 29, 25, .55); }
+        .yonetim-dialog form { display: grid; gap: 14px; padding: 24px; }
+        .dialog-ust { display: flex; align-items: center; justify-content: space-between; }
+        .dialog-ust h2 { margin: 0; font-family: var(--y-serif); font-weight: 400; font-size: 1.6rem; }
+        .dialog-kapat { border: 0; background: transparent; color: var(--y-soluk); font-size: 1.2rem; cursor: pointer; padding: 6px; }
+        .y-ikili { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .y-alan { display: grid; gap: 6px; font-size: .88rem; font-weight: 600; color: var(--y-yazi); }
+
+        .y-alan input,
+        .y-alan textarea {
+            width: 100%;
+            box-sizing: border-box;
+            font: inherit;
+            font-weight: 400;
+            padding: 11px 12px;
+            border: 1px solid var(--y-cizgi);
+            border-radius: 8px;
+            background: var(--y-zemin);
+            color: var(--y-yazi);
+        }
+
+        .y-alan textarea { resize: vertical; }
+        .y-alan input:focus, .y-alan textarea:focus { outline: 2px solid var(--y-koyu); outline-offset: 1px; }
+
+        .y-afis {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            min-height: 110px;
+            padding: 14px;
+            border: 2px dashed var(--y-cizgi);
+            border-radius: 10px;
+            color: var(--y-soluk);
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .y-afis:hover, .y-afis:focus-within { border-color: var(--y-koyu); }
+        .y-afis input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+        .y-afis img { max-height: 160px; max-width: 45%; border-radius: 6px; object-fit: contain; }
+        .dialog-alt { display: flex; justify-content: flex-end; gap: 8px; padding-top: 4px; }
+
+        @media (max-width: 640px) {
+            .yonetim-ozet { grid-template-columns: 1fr; }
+            .yonetim-ozet > div, .yonetim-ozet > div + div { border-left: 0; padding: 14px 0; }
+            .yonetim-ozet > div + div { border-top: 1px solid var(--y-cizgi); }
+            .y-ikili { grid-template-columns: 1fr; }
+            .yonetim-dugmeler { width: 100%; }
+            .y-btn-ana { margin-left: auto; }
+        }
+
+        /* Sekmeler, form düzenleyici ve yanıtlar */
+        .yonetim-sekmeler {
+            display: flex;
+            gap: 4px;
+            margin: 0 0 24px;
+            border-bottom: 1px solid var(--y-cizgi);
+            overflow-x: auto;
+        }
+        .yonetim-sekmeler button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border: 0;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -1px;
+            background: transparent;
+            color: var(--y-soluk);
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .yonetim-sekmeler button:hover { color: var(--y-yazi); }
+        .yonetim-sekmeler button[aria-selected="true"] { color: var(--y-koyu); border-bottom-color: var(--y-koyu); }
+        .y-sayac {
+            min-width: 22px;
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: var(--y-turuncu);
+            color: #fff;
+            font-size: .75rem;
+            text-align: center;
+        }
+        .y-kart {
+            display: grid;
+            gap: 14px;
+            padding: 20px;
+            margin-bottom: 28px;
+            border: 1px solid var(--y-cizgi);
+            border-radius: 12px;
+            background: var(--y-kart);
+        }
+        .y-kart-ust { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+        .y-kart-ust h2 { margin: 0; font-family: var(--y-serif); font-weight: 400; font-size: 1.4rem; }
+        .y-sorular-ust { margin-bottom: 14px; }
+        .y-alan small { font-weight: 400; color: var(--y-soluk); }
+        .y-anahtar { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: .9rem; cursor: pointer; }
+        .y-anahtar input { width: 18px; height: 18px; accent-color: var(--y-koyu); }
+        .y-soru-listesi { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 12px; counter-reset: soru; }
+        .y-soru {
+            display: grid;
+            gap: 12px;
+            padding: 16px 16px 16px 52px;
+            border: 1px solid var(--y-cizgi);
+            border-left: 4px solid var(--y-koyu);
+            border-radius: 10px;
+            background: var(--y-kart);
+            position: relative;
+            counter-increment: soru;
+        }
+        .y-soru::before {
+            content: counter(soru);
+            position: absolute;
+            left: 14px;
+            top: 16px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--y-yesil-acik);
+            color: var(--y-koyu);
+            font-weight: 700;
+            font-size: .85rem;
+            display: grid;
+            place-items: center;
+        }
+        .y-soru-satir { display: grid; grid-template-columns: 1fr 190px; gap: 12px; }
+        .y-soru select {
+            width: 100%;
+            font: inherit;
+            padding: 11px 12px;
+            border: 1px solid var(--y-cizgi);
+            border-radius: 8px;
+            background: var(--y-zemin);
+            color: var(--y-yazi);
+        }
+        .y-soru-alt { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+        .y-soru-dugmeler { display: flex; gap: 4px; }
+        .y-ikon-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--y-cizgi);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--y-yazi);
+            cursor: pointer;
+        }
+        .y-ikon-btn:hover:not(:disabled) { background: var(--y-yesil-acik); }
+        .y-ikon-btn:disabled { opacity: .35; cursor: default; }
+        .y-ikon-btn.y-sil-ikon { color: var(--y-kirmizi); }
+        .y-form-alt { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; }
+        .y-yanit-arac { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+        .y-yanit-arac input {
+            flex: 1 1 240px;
+            max-width: 360px;
+            font: inherit;
+            padding: 11px 14px;
+            border: 1px solid var(--y-cizgi);
+            border-radius: 8px;
+            background: var(--y-kart);
+            color: var(--y-yazi);
+        }
+        .y-yanit-tablosu { min-width: 640px; }
+        .y-yanit-tablosu td { white-space: pre-line; }
+        .y-kucuk-sayi { font-size: 1.05rem !important; font-family: inherit !important; font-weight: 600 !important; }
+        @media (max-width: 640px) {
+            .y-soru-satir { grid-template-columns: 1fr; }
+            .y-soru { padding-left: 16px; padding-top: 48px; }
+        }
     </style>
 </head>
 
 <body class="community-body">
     <div class="site-page">
-        <header class="site-header" aria-label="Üst bilgi">
-            <a class="site-brand" href="index.html" aria-label="Topluluk ana sayfası">
-                <span class="site-brand__logo">
-                    <img src="../assets/images/yazılım_siber_logo.png"
-                        alt="SDÜ Yazılım ve Siber Güvenlik Topluluğu Logosu">
-                </span>
-                <span class="site-brand__title">
-                    <span>Topluluk Hub</span>
-                    <span>Yazılım ve Siber Güvenlik</span>
-                </span>
-            </a>
-            <nav class="site-nav" aria-label="Ana navigasyon">
-                <a class="site-nav__link" href="index.html">Ana Sayfa</a>
-                <a class="site-nav__link" href="etkinlik.html">Etkinlikler</a>
-                <a class="site-nav__link" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
-                <a class="site-nav__link" href="iletisim.html">İletişim</a>
-                <a class="site-nav__link active" href="giris.html" aria-current="page">Giriş</a>
-                <a class="site-nav__link" href="syber.html">Siber Güvenlik</a>
-            </nav>
-            <div class="site-header-actions">
-                <button id="themeToggle" type="button" aria-label="Temayı Değiştir" class="theme-toggle-btn">
-                    <i class="fa-solid fa-moon dark-icon"></i>
-                    <i class="fa-solid fa-sun light-icon"></i>
-                </button>
+        <!-- HEADER BAŞLANGICI -->
+        <header
+            class="sticky top-0 z-40 w-full bg-white/80 dark:bg-[#12242b]/90 backdrop-blur-md border-b border-gray-200 dark:border-slate-800"
+            aria-label="Üst bilgi">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+
+                <!-- Brand & Official Logo -->
+                <a href="index.html" class="flex items-center space-x-3.5 group" title="Ana Sayfa">
+                    <div
+                        class="w-12 h-12 rounded-2xl overflow-hidden bg-gradient-to-tr from-[#0d6f7f] to-[#20b2c2] p-1 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform flex-shrink-0">
+                        <img src="../assets/images/yazılım_siber_logo.png"
+                            alt="SDÜ Yazılım ve Siber Güvenlik Topluluğu Logosu" class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <span
+                            class="font-extrabold text-lg tracking-tight block leading-tight text-gray-900 dark:text-white group-hover:text-[#0a6670] dark:group-hover:text-[#3bb9ab] transition-colors">SDÜ
+                            YAZILIM</span>
+                        <span
+                            class="text-xs text-[#0a6670] dark:text-[#3bb9ab] font-bold tracking-wider uppercase block mt-0.5">VE
+                            SİBER GÜVENLİK</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav (Masaüstünde görünür, mobilde gizli) -->
+                <nav class="hidden lg:flex items-center space-x-2.5" aria-label="Ana navigasyon">
+                    <a class="nav-pill" href="index.html">Ana Sayfa</a>
+                    <a class="nav-pill" href="etkinlik.html">Etkinlikler</a>
+                    <a class="nav-pill" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
+                    <a class="nav-pill" href="iletisim.html">İletişim</a>
+                    <a class="nav-pill active" href="giris.html" aria-current="page">Giriş</a>
+                    <a class="nav-pill" href="egitim-kayit.html">Eğitim Kaydı</a>
+                    <a class="nav-pill" href="syber.html">Siber Güvenlik</a>
+                </nav>
+
+                <!-- Header Controls -->
+                <div class="flex items-center space-x-2 sm:space-x-3">
+                    <button id="themeToggle" type="button" aria-label="Temayı Değiştir" class="theme-toggle-btn">
+                        <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+                        <i class="fa-solid fa-sun hidden dark:block text-amber-400 text-lg"></i>
+                    </button>
+
+                    <!-- Mobile Menu Button (Masaüstünde gizli, mobilde görünür) -->
+                    <button id="mobileMenuBtn" type="button" aria-label="Menüyü Aç" class="lg:hidden theme-toggle-btn">
+                        <i class="fa-solid fa-bars text-lg" id="menuIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Nav Dropdown (Açılır Mobil Menü) -->
+            <div id="mobileMenu"
+                class="hidden lg:hidden px-4 pt-2 pb-4 space-y-2 border-t border-gray-100 dark:border-slate-800 bg-white dark:bg-[#12242b]">
+                <a class="nav-pill block w-full text-center" href="index.html">Ana Sayfa</a>
+                <a class="nav-pill block w-full text-center" href="etkinlik.html">Etkinlikler</a>
+                <a class="nav-pill block w-full text-center" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
+                <a class="nav-pill block w-full text-center" href="iletisim.html">İletişim</a>
+                <a class="nav-pill active block w-full text-center" href="giris.html" aria-current="page">Giriş</a>
+                <a class="nav-pill block w-full text-center" href="egitim-kayit.html">Eğitim Kaydı</a>
+                <a class="nav-pill block w-full text-center" href="syber.html">Siber Güvenlik</a>
             </div>
         </header>
+        <!-- HEADER BİTİŞİ -->
 
         <main class="login-page">
             <!-- 1. GİRİŞ BÖLÜMÜ -->
@@ -537,28 +923,17 @@
                             Kullanıcı Adı
                         </label>
                         <input id="kullaniciAdi" name="username" type="text" autocomplete="username"
-                            placeholder="Kullanıcı adınızı girin" required>
+                            placeholder="Kullanıcı adınızı girin">
                         <p id="nameError" class="error" aria-live="polite"></p>
                     </div>
 
                     <div class="field">
                         <label for="eposta">
                             <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-                            Email
+                            Email <span style="font-weight: 400; opacity: .7;">(kullanıcı adı yerine)</span>
                         </label>
-                        <input id="eposta" name="email" type="email" autocomplete="email" placeholder="isim@ornek.com"
-                            required>
+                        <input id="eposta" name="email" type="email" autocomplete="email" placeholder="isim@ornek.com">
                         <p id="emailError" class="error" aria-live="polite"></p>
-                    </div>
-
-                    <div class="field">
-                        <label for="numara">
-                            <i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i>
-                            Numara
-                        </label>
-                        <input id="numara" name="phone" class="phone" type="tel" autocomplete="tel" inputmode="tel"
-                            placeholder="(5##) ### ## ##" required>
-                        <p id="phoneError" class="error" aria-live="polite"></p>
                     </div>
 
                     <div class="field">
@@ -578,157 +953,169 @@
                 </form>
             </div>
 
-            <!-- 2. ETKİNLİK YÖNETİM & YÜKLEME PANELİ (GİRİŞ BAŞARILI OLUNCA GÖRÜNÜR) -->
-            <div id="adminSection" class="admin-panel" style="display: none;">
-                <div class="admin-top-bar">
+            <!-- 2. YÖNETİM PANELİ (GİRİŞ BAŞARILI OLUNCA GÖRÜNÜR) -->
+            <section id="adminSection" class="yonetim" style="display: none;" aria-labelledby="yonetimBaslik">
+                <div class="yonetim-ust">
                     <div>
-                        <div class="admin-badge">
-                            <i class="fa-solid fa-shield-halved"></i>
-                            Yönetici Paneli
-                        </div>
-                        <h2 style="margin: 8px 0 0; font-size: 1.4rem;">Hoş Geldin, <span id="adminGreetingName" style="color: #0a6670;">Yönetici</span> 👋</h2>
-                        <p style="margin: 4px 0 0; font-size: 0.9rem; color: #64748b;">Yeni bir etkinlik afişi, tarihi ve görsellerini buradan ekleyip yayınlayabilirsiniz.</p>
+                        <p class="yonetim-eyebrow">Kontrol masası</p>
+                        <h1 class="yonetim-baslik" id="yonetimBaslik">Etkinlik listesi</h1>
+                        <p class="yonetim-hos">Hoş geldin, <span id="adminGreetingName">Yönetici</span></p>
                     </div>
-                    <div class="admin-actions">
-                        <a href="etkinlik.html" class="btn-secondary" title="Etkinlikler sayfasına git">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            Etkinlikler Sayfası
-                        </a>
-                        <button type="button" class="btn-secondary btn-logout" onclick="handleLogout()">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            Çıkış Yap
-                        </button>
+                    <div class="yonetim-dugmeler">
+                        <a href="galeri.html" class="y-btn y-btn-sade"><i class="fa-solid fa-images" aria-hidden="true"></i> Özel galeri</a>
+                        <button type="button" class="y-btn y-btn-sade" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Çıkış</button>
+                        <button type="button" class="y-btn y-btn-ana" id="etkinlikEkleBtn" data-sekme-dugmesi="etkinlikler"><span aria-hidden="true">+</span> Etkinlik ekle</button>
                     </div>
                 </div>
 
-                <!-- Yeni Etkinlik Ekleme Formu -->
-                <form id="eventUploadForm" onsubmit="event.preventDefault(); handlePublishEvent();">
-                    <h3 style="font-size: 1.15rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                        <i class="fa-solid fa-plus-circle" style="color: #0a6670;"></i>
-                        Yeni Etkinlik Paylaşımı
-                    </h3>
+                <nav class="yonetim-sekmeler" role="tablist" aria-label="Yönetim bölümleri">
+                    <button type="button" role="tab" id="sekme-etkinlikler" aria-controls="panel-etkinlikler" aria-selected="true" data-sekme="etkinlikler"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Etkinlikler</button>
+                    <button type="button" role="tab" id="sekme-form" aria-controls="panel-form" aria-selected="false" data-sekme="form"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Kayıt formu</button>
+                    <button type="button" role="tab" id="sekme-yanitlar" aria-controls="panel-yanitlar" aria-selected="false" data-sekme="yanitlar"><i class="fa-solid fa-inbox" aria-hidden="true"></i> Yanıtlar <span class="y-sayac" id="yanitSayaci" hidden></span></button>
+                </nav>
 
-                    <!-- 1. Etkinlik Adı & Türü -->
-                    <div class="form-grid-2">
-                        <div class="field">
-                            <label for="eventTitle">
-                                <i class="fa-solid fa-heading"></i>
-                                Etkinlik Adı *
-                            </label>
-                            <input id="eventTitle" type="text" placeholder="Örn: Siber Güvenlik ve Ağ Güvenliği Kampı" required>
-                        </div>
-                        <div class="field">
-                            <label for="eventType">
-                                <i class="fa-solid fa-tag"></i>
-                                Etkinlik Kategorisi
-                            </label>
-                            <select id="eventType" style="width: 100%; height: 52px; padding: 0 14px; border: 1px solid #dce0e8; border-radius: 12px; font: inherit;">
-                                <option value="Atölye & Workshop">Atölye & Workshop</option>
-                                <option value="Seminer & Konferans">Seminer & Konferans</option>
-                                <option value="CTF & Siber Güvenlik">CTF & Siber Güvenlik</option>
-                                <option value="Tanışma Etkinliği">Tanışma Etkinliği</option>
-                                <option value="Hackathon">Hackathon</option>
-                                <option value="Sosyal Etkinlik">Sosyal Etkinlik</option>
-                            </select>
-                        </div>
-                    </div>
+                <div id="panel-etkinlikler" role="tabpanel" aria-labelledby="sekme-etkinlikler" data-sekme-paneli="etkinlikler">
+                <div class="yonetim-ozet">
+                    <div><span>Toplam etkinlik</span><strong id="ozetToplam">00</strong></div>
+                    <div><span>Kategoriler</span><strong id="ozetKategori">00</strong></div>
+                    <div><span>Yaklaşan</span><strong id="ozetYaklasan">00</strong></div>
+                </div>
 
-                    <!-- 2. Tarih ve Konum -->
-                    <div class="form-grid-2">
-                        <div class="field">
-                            <label for="eventDate">
-                                <i class="fa-solid fa-calendar-day"></i>
-                                Etkinlik Tarihi & Saati *
-                            </label>
-                            <input id="eventDate" type="datetime-local" required>
-                        </div>
-                        <div class="field">
-                            <label for="eventLocation">
-                                <i class="fa-solid fa-location-dot"></i>
-                                Etkinlik Yeri / Konumu
-                            </label>
-                            <input id="eventLocation" type="text" placeholder="Örn: Mühendislik Fakültesi Konferans Salonu" required>
-                        </div>
-                    </div>
+                <p id="yonetimDurum" class="yonetim-durum" role="status" aria-live="polite"></p>
 
-                    <!-- 3. Açıklama -->
-                    <div class="field">
-                        <label for="eventDesc">
-                            <i class="fa-solid fa-align-left"></i>
-                            Etkinlik Açıklaması
+                <div class="yonetim-tablo-sarici">
+                    <table class="yonetim-tablo">
+                        <thead>
+                            <tr>
+                                <th scope="col">Etkinlik</th>
+                                <th scope="col">Kategori</th>
+                                <th scope="col">Tarih</th>
+                                <th scope="col">Yer</th>
+                                <th scope="col">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="etkinlikTablosu">
+                            <tr><td colspan="5" class="yonetim-bos">Yükleniyor…</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <dialog id="etkinlikDialog" class="yonetim-dialog" aria-labelledby="dialogBaslik">
+                    <form id="etkinlikFormu" method="dialog" novalidate>
+                        <div class="dialog-ust">
+                            <h2 id="dialogBaslik">Yeni etkinlik</h2>
+                            <button type="button" class="dialog-kapat" data-kapat aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+
+                        <label class="y-alan">Etkinlik adı *
+                            <input name="ad" type="text" required minlength="3" maxlength="120" placeholder="Örn: Kariyer Günleri 2026">
                         </label>
-                        <textarea id="eventDesc" rows="3" placeholder="Etkinliğin detayları, katılım koşulları ve hedefleri..." style="width: 100%; padding: 12px 16px; border: 1px solid #dce0e8; border-radius: 12px; font: inherit; resize: vertical;"></textarea>
-                    </div>
-
-                    <!-- 4. AFİŞ YÜKLEME (Tekil Kapak Resmi) -->
-                    <div class="field" style="margin-top: 20px;">
-                        <label style="font-weight: 700;">
-                            <i class="fa-solid fa-image"></i>
-                            Etkinlik Afişi Yükle *
+                        <div class="y-ikili">
+                            <label class="y-alan">Kategori *
+                                <input name="kategori" type="text" required minlength="2" maxlength="30" list="kategoriListesi" placeholder="Örn: Eğitim">
+                                <datalist id="kategoriListesi"></datalist>
+                            </label>
+                            <label class="y-alan">Yer
+                                <input name="yer" type="text" maxlength="120" placeholder="Örn: A Blok Konferans Salonu">
+                            </label>
+                        </div>
+                        <div class="y-ikili">
+                            <label class="y-alan">Tarih *
+                                <input name="tarih" type="date" required>
+                            </label>
+                            <label class="y-alan">Saat
+                                <input name="saat" type="time">
+                            </label>
+                        </div>
+                        <label class="y-alan">Açıklama
+                            <textarea name="aciklama" rows="3" maxlength="1500" placeholder="Etkinliğin detayları, katılım koşulları…"></textarea>
                         </label>
-                        <div class="upload-zone" onclick="document.getElementById('eventPosterInput').click()">
-                            <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-                            <strong style="font-size: 0.98rem;">Afiş Görselini Seçin veya Sürükleyin</strong>
-                            <span style="font-size: 0.82rem; color: #64748b; margin-top: 4px;">PNG, JPG, JPEG veya WEBP (Maksimum 5MB)</span>
-                        </div>
-                        <input id="eventPosterInput" type="file" accept="image/*" style="display: none;" onchange="handlePosterSelect(event)">
-                        
-                        <!-- Afiş Önizleme Alanı -->
-                        <div id="posterPreviewContainer" style="display: none; margin-top: 10px;">
-                            <div class="poster-preview-box">
-                                <img id="posterPreviewImg" src="" alt="Seçilen Afiş Önizlemesi">
-                                <button type="button" class="remove-thumb-btn" onclick="removePoster()" title="Afişi Kaldır">
-                                    <i class="fa-solid fa-xmark"></i>
-                                </button>
-                            </div>
-                            <span style="display: block; font-size: 0.82rem; color: #0a6670; font-weight: 600; margin-top: 6px;">✓ Afiş başarıyla yüklendi</span>
-                        </div>
-                    </div>
 
-                    <!-- 5. ETKİNLİK GÖRSELLERİ (Çoklu Galeri Fotoğrafları) -->
-                    <div class="field" style="margin-top: 20px;">
-                        <label style="font-weight: 700;">
-                            <i class="fa-solid fa-images"></i>
-                            Etkinlik Görselleri (Galeri / Çoklu Fotoğraf)
+                        <div class="y-alan">
+                            <span>Afiş *</span>
+                            <label class="y-afis" id="afisAlani">
+                                <input id="afisDosyasi" type="file" accept="image/jpeg,image/png,image/webp">
+                                <img id="afisOnizleme" alt="" hidden>
+                                <span id="afisMetni"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> Afiş seçmek için tıklayın (JPG, PNG, WEBP)</span>
+                            </label>
+                        </div>
+
+                        <p id="dialogDurum" class="yonetim-durum" role="alert"></p>
+
+                        <div class="dialog-alt">
+                            <button type="button" class="y-btn y-btn-sade" data-kapat>İptal</button>
+                            <button type="submit" class="y-btn y-btn-ana" id="kaydetBtn">Kaydet</button>
+                        </div>
+                    </form>
+                </dialog>
+                </div>
+
+                <!-- KAYIT FORMU DÜZENLEYİCİ -->
+                <div id="panel-form" role="tabpanel" aria-labelledby="sekme-form" data-sekme-paneli="form" hidden>
+                    <p id="formDurum" class="yonetim-durum" role="status" aria-live="polite"></p>
+
+                    <div class="y-kart">
+                        <div class="y-kart-ust">
+                            <h2>Form bilgileri</h2>
+                            <label class="y-anahtar">
+                                <input type="checkbox" id="formAcik">
+                                <span>Yanıt kabul ediliyor</span>
+                            </label>
+                        </div>
+                        <label class="y-alan">Üst başlık
+                            <input id="formUstBaslikGir" type="text" maxlength="150" placeholder="Örn: Süleyman Demirel Üniversitesi Yazılım ve Siber Güvenlik Topluluğu">
                         </label>
-                        <div class="upload-zone" onclick="document.getElementById('eventGalleryInput').click()">
-                            <i class="fa-solid fa-photo-film upload-icon"></i>
-                            <strong style="font-size: 0.98rem;">Birden Fazla Etkinlik Fotoğrafı Seçin</strong>
-                            <span style="font-size: 0.82rem; color: #64748b; margin-top: 4px;">Etkinlik esnasında çekilen fotoğrafları topluca yükleyebilirsiniz</span>
-                        </div>
-                        <input id="eventGalleryInput" type="file" accept="image/*" multiple style="display: none;" onchange="handleGallerySelect(event)">
-
-                        <!-- Galeri Görselleri Önizleme Alanı -->
-                        <div id="galleryPreviewContainer" style="display: none; margin-top: 10px;">
-                            <span id="galleryCountBadge" style="font-size: 0.85rem; font-weight: 600; color: #0a6670;">0 görsel seçildi</span>
-                            <div id="galleryPreviewGrid" class="gallery-grid-preview"></div>
-                        </div>
+                        <label class="y-alan">Form başlığı *
+                            <input id="formBaslikGir" type="text" maxlength="150" required>
+                        </label>
+                        <label class="y-alan">Uyarı kutusu <small>(boş bırakılırsa gösterilmez)</small>
+                            <input id="formUyariGir" type="text" maxlength="300">
+                        </label>
+                        <label class="y-alan">Açıklama maddeleri <small>(her satır bir madde)</small>
+                            <textarea id="formMaddelerGir" rows="3"></textarea>
+                        </label>
                     </div>
 
-                    <!-- Durum Mesajı -->
-                    <div id="publishStatus" style="display: none; padding: 12px 16px; border-radius: 10px; margin-top: 16px; font-weight: 600; font-size: 0.92rem;"></div>
+                    <div class="y-kart-ust y-sorular-ust">
+                        <h2>Sorular</h2>
+                        <a href="egitim-kayit.html" target="_blank" rel="noopener" class="y-btn y-btn-sade"><i class="fa-solid fa-eye" aria-hidden="true"></i> Formu görüntüle</a>
+                    </div>
+                    <ol id="soruListesi" class="y-soru-listesi"></ol>
 
-                    <!-- Yayınla Butonu -->
-                    <button type="submit" class="btn-submit-event">
-                        <i class="fa-solid fa-circle-check"></i>
-                        Etkinliği Yayınla & Sisteme Kaydet
-                    </button>
-                </form>
-
-                <!-- 6. DAHA ÖNCE YAYINLANAN ETKİNLİKLER LİSTESİ -->
-                <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(10, 102, 112, 0.15);">
-                    <h3 style="font-size: 1.15rem; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
-                        <span>
-                            <i class="fa-solid fa-list-check" style="color: #0a6670;"></i>
-                            Yayınlanan Etkinlikler
-                        </span>
-                        <span id="eventCountLabel" style="font-size: 0.85rem; color: #64748b; font-weight: normal;"></span>
-                    </h3>
-                    <div id="publishedEventsList">
-                        <!-- JS ile doldurulacak -->
+                    <div class="y-form-alt">
+                        <button type="button" class="y-btn y-btn-sade" id="soruEkleBtn"><span aria-hidden="true">+</span> Soru ekle</button>
+                        <button type="button" class="y-btn y-btn-ana" id="formKaydetBtn">Formu kaydet</button>
                     </div>
                 </div>
-            </div>
+
+                <!-- YANITLAR -->
+                <div id="panel-yanitlar" role="tabpanel" aria-labelledby="sekme-yanitlar" data-sekme-paneli="yanitlar" hidden>
+                    <div class="yonetim-ozet">
+                        <div><span>Toplam yanıt</span><strong id="ozetYanit">00</strong></div>
+                        <div><span>Bugün</span><strong id="ozetBugun">00</strong></div>
+                        <div><span>Son yanıt</span><strong id="ozetSon" class="y-kucuk-sayi">—</strong></div>
+                    </div>
+
+                    <p id="yanitDurum" class="yonetim-durum" role="status" aria-live="polite"></p>
+
+                    <div class="y-yanit-arac">
+                        <input id="yanitAra" type="search" placeholder="İsim, e-posta, numara ara…" aria-label="Yanıtlarda ara">
+                        <div class="yonetim-dugmeler">
+                            <button type="button" class="y-btn y-btn-sade" id="yanitYenileBtn"><i class="fa-solid fa-rotate" aria-hidden="true"></i> Yenile</button>
+                            <button type="button" class="y-btn y-btn-ana" id="yanitIndirBtn"><i class="fa-solid fa-file-excel" aria-hidden="true"></i> Excel (CSV) indir</button>
+                        </div>
+                    </div>
+
+                    <div class="yonetim-tablo-sarici">
+                        <table class="yonetim-tablo y-yanit-tablosu">
+                            <thead><tr id="yanitBasliklar"></tr></thead>
+                            <tbody id="yanitTablosu">
+                                <tr><td class="yonetim-bos">Yükleniyor…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
@@ -747,297 +1134,111 @@
             document.body?.classList.add('dark');
         }
 
-        // --- 2. DEĞİŞKENLER VE DURUMLAR ---
-        let currentPosterBase64 = '';
-        let currentGalleryBase64 = [];
+        // --- 2. MOBİL MENÜ AÇMA/KAPATMA MANTIĞI ---
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
 
-        // Sayfa yüklendiğinde oturum kontrolü
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+
+                // Menü ikonu değiştirme (Üç çizgi / Çarpı işareti)
+                if (mobileMenu.classList.contains('hidden')) {
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars');
+                } else {
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-xmark');
+                }
+            });
+        }
+
+        // --- 3. OTURUM ---
         window.addEventListener('DOMContentLoaded', () => {
             checkAuthSession();
-            renderPublishedEvents();
         });
 
-        function checkAuthSession() {
-            const userSession = sessionStorage.getItem('ysgt_logged_user');
-            const loginSection = document.getElementById('loginSection');
-            const adminSection = document.getElementById('adminSection');
-
-            if (userSession) {
-                const user = JSON.parse(userSession);
-                document.getElementById('adminGreetingName').textContent = user.name || 'Yönetici';
-                loginSection.style.display = 'none';
-                adminSection.style.display = 'block';
-            } else {
-                loginSection.style.display = 'flex';
-                adminSection.style.display = 'none';
+        function showSection(isLoggedIn, name) {
+            document.getElementById('loginSection').style.display = isLoggedIn ? 'none' : 'flex';
+            document.getElementById('adminSection').style.display = isLoggedIn ? 'block' : 'none';
+            if (isLoggedIn) {
+                document.getElementById('adminGreetingName').textContent = name || 'Yönetici';
+                document.dispatchEvent(new CustomEvent('yonetim:giris'));
             }
         }
 
-        // --- 3. KULLANICI GİRİŞİ ---
+        // Oturumu sunucu doğrular (HttpOnly çerez); tarayıcıda şifre veya kullanıcı listesi tutulmaz.
+        async function checkAuthSession() {
+            try {
+                const res = await fetch('/api/oturum', { credentials: 'same-origin' });
+                const data = res.ok ? await res.json() : { girisYapildi: false };
+                showSection(data.girisYapildi, data.isim);
+            } catch (err) {
+                showSection(false);
+            }
+        }
+
+        // --- 4. KULLANICI GİRİŞİ ---
         async function handleLogin() {
             const usernameInput = document.getElementById('kullaniciAdi').value.trim();
             const emailInput = document.getElementById('eposta').value.trim();
-            const phoneInput = document.getElementById('numara').value.trim();
-            const passwordInput = document.getElementById('sifre').value.trim();
+            const passwordInput = document.getElementById('sifre').value;
+
+            if (!usernameInput && !emailInput) {
+                document.getElementById('nameError').textContent = 'Kullanıcı adı veya e-posta girin.';
+                return;
+            }
 
             const nameError = document.getElementById('nameError');
             const passwordError = document.getElementById('passwordError');
+            const loginBtn = document.getElementById('loginBtn');
             nameError.textContent = '';
             passwordError.textContent = '';
-
-            let authenticated = false;
+            loginBtn.disabled = true;
 
             try {
-                // dist/data/giris.json dosyasından kullanıcıları almayı dene
-                const res = await fetch('../data/giris.json');
-                if (res.ok) {
-                    const data = await res.json();
-                    const foundUser = data.kullanicilar.find(u => {
-                        let decodedPass = '';
-                        try { decodedPass = atob(u.sifre); } catch (e) { decodedPass = u.sifre; }
-                        return (u.isim.toLowerCase() === usernameInput.toLowerCase() || u.email.toLowerCase() === emailInput.toLowerCase()) &&
-                               (passwordInput === decodedPass || passwordInput === u.sifre);
-                    });
+                const res = await fetch('/api/giris', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ kimlik: usernameInput || emailInput, sifre: passwordInput }),
+                });
+                const data = await res.json().catch(() => null);
 
-                    if (foundUser) {
-                        authenticated = true;
+                if (!data) {
+                    // Sunucu JSON döndürmediyse giriş servisi hiç çalışmıyor demektir (şifre kontrol edilmedi).
+                    passwordError.textContent = `Giriş sunucusuna ulaşılamadı (hata ${res.status}). Şifreniz kontrol edilmedi; lütfen daha sonra tekrar deneyin.`;
+                    return;
+                }
+
+                if (res.ok && data.basarili) {
+                    document.getElementById('sifre').value = '';
+                    if (new URLSearchParams(location.search).get('sonra') === 'galeri') {
+                        location.href = 'galeri.html';
+                        return;
                     }
+                    showSection(true, data.isim);
+                } else {
+                    passwordError.textContent = data.mesaj || 'Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyin.';
                 }
             } catch (err) {
-                console.warn('giris.json kontrolü yapılamadı, yerel doğrulama yapılıyor.', err);
-            }
-
-            // Yedek kontrol (3yupb, Kaliteli_yap, zamani_kurtar veya şifre eşleşmeleri)
-            if (!authenticated) {
-                if ((usernameInput.toLowerCase() === '3yupb' && passwordInput === 'sdu_ysgt_baskani') ||
-                    (usernameInput.toLowerCase() === 'kaliteli_yap' && passwordInput === 'eyup_ysgt') ||
-                    (usernameInput.toLowerCase() === 'zamani_kurtar' && passwordInput === 'zehra_ysgt') ||
-                    (emailInput.toLowerCase() === 'eyehan1321@gmail.com' && passwordInput === 'sdu_ysgt_baskani')) {
-                    authenticated = true;
-                }
-            }
-
-            if (authenticated) {
-                sessionStorage.setItem('ysgt_logged_user', JSON.stringify({
-                    name: usernameInput,
-                    email: emailInput,
-                    phone: phoneInput
-                }));
-                checkAuthSession();
-            } else {
-                passwordError.textContent = 'Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyin.';
+                passwordError.textContent = 'Giriş sunucusuna ulaşılamadı. Lütfen daha sonra tekrar deneyin.';
+            } finally {
+                loginBtn.disabled = false;
             }
         }
 
-        function handleLogout() {
-            sessionStorage.removeItem('ysgt_logged_user');
-            checkAuthSession();
-        }
-
-        // --- 4. AFİŞ YÜKLEME VE ÖNİZLEME ---
-        function handlePosterSelect(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                currentPosterBase64 = e.target.result;
-                document.getElementById('posterPreviewImg').src = currentPosterBase64;
-                document.getElementById('posterPreviewContainer').style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function removePoster() {
-            currentPosterBase64 = '';
-            document.getElementById('eventPosterInput').value = '';
-            document.getElementById('posterPreviewContainer').style.display = 'none';
-        }
-
-        // --- 5. ETKİNLİK GÖRSELLERİ (GALERİ) YÜKLEME VE ÖNİZLEME ---
-        function handleGallerySelect(event) {
-            const files = Array.from(event.target.files);
-            if (!files.length) return;
-
-            files.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    currentGalleryBase64.push(e.target.result);
-                    renderGalleryPreviews();
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function renderGalleryPreviews() {
-            const container = document.getElementById('galleryPreviewContainer');
-            const grid = document.getElementById('galleryPreviewGrid');
-            const badge = document.getElementById('galleryCountBadge');
-
-            if (currentGalleryBase64.length === 0) {
-                container.style.display = 'none';
-                return;
-            }
-
-            container.style.display = 'block';
-            badge.textContent = `${currentGalleryBase64.length} adet görsel seçildi`;
-            grid.innerHTML = '';
-
-            currentGalleryBase64.forEach((imgBase64, index) => {
-                const thumb = document.createElement('div');
-                thumb.className = 'gallery-thumb';
-                thumb.innerHTML = `
-                    <img src="${imgBase64}" alt="Galeri görseli ${index + 1}">
-                    <button type="button" class="remove-thumb-btn" onclick="removeGalleryImage(${index})" title="Kaldır">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                `;
-                grid.appendChild(thumb);
-            });
-        }
-
-        function removeGalleryImage(index) {
-            currentGalleryBase64.splice(index, 1);
-            renderGalleryPreviews();
-        }
-
-        // --- 6. ETKİNLİĞİ YAYINLAMA / KAYDETME ---
-        function handlePublishEvent() {
-            const title = document.getElementById('eventTitle').value.trim();
-            const type = document.getElementById('eventType').value;
-            const date = document.getElementById('eventDate').value;
-            const location = document.getElementById('eventLocation').value.trim();
-            const desc = document.getElementById('eventDesc').value.trim();
-            const statusEl = document.getElementById('publishStatus');
-
-            if (!title || !date) {
-                showStatus('Lütfen etkinlik adı ve tarihini doldurun.', 'error');
-                return;
-            }
-
-            if (!currentPosterBase64) {
-                showStatus('Lütfen bir etkinlik afişi yükleyin!', 'error');
-                return;
-            }
-
-            // Yeni Etkinlik Nesnesi
-            const newEvent = {
-                id: 'event_' + Date.now(),
-                title: title,
-                type: type,
-                date: date,
-                location: location,
-                description: desc,
-                poster: currentPosterBase64,
-                gallery: [...currentGalleryBase64],
-                createdAt: new Date().toISOString()
-            };
-
-            // localStorage'a kaydet
-            let savedEvents = [];
+        async function handleLogout() {
             try {
-                savedEvents = JSON.parse(localStorage.getItem('topluluk_etkinlikler') || '[]');
-            } catch (e) {
-                savedEvents = [];
+                await fetch('/api/cikis', { method: 'POST', credentials: 'same-origin' });
+            } finally {
+                showSection(false);
             }
-
-            savedEvents.unshift(newEvent);
-            localStorage.setItem('topluluk_etkinlikler', JSON.stringify(savedEvents));
-
-            showStatus('🎉 Etkinlik afişi, tarihi ve görselleriyle birlikte başarıyla yayınlandı!', 'success');
-
-            // Formu temizle
-            document.getElementById('eventUploadForm').reset();
-            removePoster();
-            currentGalleryBase64 = [];
-            renderGalleryPreviews();
-
-            // Listeyi yenile
-            renderPublishedEvents();
-        }
-
-        function showStatus(message, type) {
-            const statusEl = document.getElementById('publishStatus');
-            statusEl.style.display = 'block';
-            statusEl.textContent = message;
-            if (type === 'success') {
-                statusEl.style.background = 'rgba(16, 185, 129, 0.15)';
-                statusEl.style.color = '#059669';
-                statusEl.style.border = '1px solid rgba(16, 185, 129, 0.3)';
-            } else {
-                statusEl.style.background = 'rgba(239, 68, 68, 0.15)';
-                statusEl.style.color = '#dc2626';
-                statusEl.style.border = '1px solid rgba(239, 68, 68, 0.3)';
-            }
-            setTimeout(() => {
-                statusEl.style.display = 'none';
-            }, 5000);
-        }
-
-        // --- 7. YAYINLANAN ETKİNLİKLERİ LİSTELEME VE SİLME ---
-        function renderPublishedEvents() {
-            const listContainer = document.getElementById('publishedEventsList');
-            const countLabel = document.getElementById('eventCountLabel');
-            if (!listContainer) return;
-
-            let events = [];
-            try {
-                events = JSON.parse(localStorage.getItem('topluluk_etkinlikler') || '[]');
-            } catch (e) {
-                events = [];
-            }
-
-            if (countLabel) {
-                countLabel.textContent = `${events.length} etkinlik kayıtlı`;
-            }
-
-            if (events.length === 0) {
-                listContainer.innerHTML = `
-                    <div style="text-align: center; padding: 24px; color: #64748b; font-size: 0.95rem;">
-                        <i class="fa-regular fa-calendar-xmark" style="font-size: 1.8rem; margin-bottom: 8px; display: block; color: #94a3b8;"></i>
-                        Henüz sisteme eklenmiş yeni bir etkinlik bulunmuyor. Yukarıdaki formu kullanarak ilk etkinliğinizi yayınlayabilirsiniz.
-                    </div>
-                `;
-                return;
-            }
-
-            listContainer.innerHTML = events.map(evt => {
-                const formattedDate = new Date(evt.date).toLocaleString('tr-TR', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-
-                return `
-                    <div class="event-card-item">
-                        <img src="${evt.poster || '../assets/images/yazılım_siber_logo.png'}" alt="${evt.title}">
-                        <div class="event-card-item-details">
-                            <h4 class="event-card-item-title">${evt.title}</h4>
-                            <div class="event-card-item-meta">
-                                <span><i class="fa-solid fa-calendar"></i> ${formattedDate}</span> &bull; 
-                                <span><i class="fa-solid fa-location-dot"></i> ${evt.location || 'SDÜ Kampüsü'}</span> &bull; 
-                                <span><i class="fa-solid fa-images"></i> ${evt.gallery ? evt.gallery.length : 0} fotoğraf</span>
-                            </div>
-                        </div>
-                        <button type="button" class="btn-secondary btn-logout" onclick="deleteEvent('${evt.id}')" title="Etkinliği Sil">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function deleteEvent(id) {
-            if (!confirm('Bu etkinliği silmek istediğinize emin misiniz?')) return;
-
-            let events = JSON.parse(localStorage.getItem('topluluk_etkinlikler') || '[]');
-            events = events.filter(e => e.id !== id);
-            localStorage.setItem('topluluk_etkinlikler', JSON.stringify(events));
-            renderPublishedEvents();
         }
     </script>
+    <script src="../scripts/yonetim.js"></script>
+    <script src="../scripts/yonetim-form.js"></script>
 </body>
 
 </html>

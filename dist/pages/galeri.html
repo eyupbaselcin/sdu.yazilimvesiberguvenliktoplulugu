@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <link rel="icon" type="image/png" href="../assets/images/yazılım_siber_logo.png">
+    <title>Özel Fotoğraf Galerisi | SDÜ Yazılım ve Siber Güvenlik Topluluğu</title>
+    <style>
+        :root { --ana: #0a6670; --zemin: #f4fbfb; --kart: #fff; --yazi: #1f2d34; --soluk: #60757d; --cizgi: rgba(10,102,112,.15); }
+        html.dark { --ana: #3bb9ab; --zemin: #0b171c; --kart: #12242b; --yazi: #f1f8f9; --soluk: #9fb4ba; --cizgi: rgba(59,185,171,.2); }
+        * { box-sizing: border-box; }
+        body { margin: 0; min-height: 100vh; background: var(--zemin); color: var(--yazi); font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+        .ust { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 24px 16px; }
+        h1 { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
+        .baglantilar { display: flex; gap: 8px; flex-wrap: wrap; }
+        .buton { font: inherit; font-weight: 600; padding: 9px 18px; border-radius: 999px; border: 1px solid var(--ana); background: transparent; color: var(--ana); cursor: pointer; text-decoration: none; }
+        .buton.dolu { background: var(--ana); color: #fff; }
+        html.dark .buton.dolu { color: #0b171c; }
+        main { max-width: 1200px; margin: 0 auto; padding: 0 16px 48px; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+        figure { margin: 0; background: var(--kart); border: 1px solid var(--cizgi); border-radius: 16px; overflow: hidden; }
+        figure img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--cizgi); user-select: none; -webkit-user-drag: none; }
+        figcaption { padding: 10px 14px; font-size: .9rem; color: var(--soluk); overflow-wrap: anywhere; }
+        .mesaj { grid-column: 1 / -1; text-align: center; padding: 48px 16px; color: var(--soluk); }
+    </style>
+    <script>
+        try {
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        } catch { /* tema tercihi okunamadı */ }
+    </script>
+</head>
+<body>
+    <header class="ust">
+        <h1>Özel Fotoğraf Galerisi</h1>
+        <div class="baglantilar">
+            <a class="buton" href="giris.html">Yönetici paneli</a>
+            <button class="buton dolu" id="cikisBtn" type="button">Güvenli çıkış</button>
+        </div>
+    </header>
+    <main id="galeri" aria-live="polite">
+        <p class="mesaj">Yükleniyor…</p>
+    </main>
+    <script src="../scripts/galeri.js"></script>
+</body>
+</html>

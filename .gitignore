@@ -2,3 +2,5 @@ node_modules/
 /galeri-private/config.php
 .DS_Store
 *.log
+.env*.local
+.vercel

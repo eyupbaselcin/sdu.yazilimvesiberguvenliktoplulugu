@@ -1,240 +1,106 @@
-const takvim = {
-  "yil": 2026,
-  "aylar": [
-    {
-      "Ayn_no": 1,
-      "ad": "Ocak",
-      "pazartesi": ["5","12","19","26"],
-      "Salı": ["6", "13", "20", "27"],
-      "Çarşamba": ["7","14", "21","28"],
-      "Perşembe": ["1", "8", "15", "22", "29"],
-      "Cuma": ["2", "9", "16","23", "30"],
-      "Cumartesi": ["3", "10", "17","24","31"],
-      "Pazar": ["4", "11", "18","25"],
-      "etkinlikler": []
-    },
-    {
-      "Ayn_no": 2,
-      "ad": "Şubat",
-      "pazartesi": ["2", "9", "16", "23"],
-      "Salı": ["3", "10","17","24"],
-      "Çarşamba": ["4", "11", "18","25"],
-      "Perşembe": ["5", "12","19","26"],
-      "Cuma": ["6","13", "20", "27"],
-      "Cumartesi": ["7","14", "21", "28"],
-      "Pazar": ["1","8","15", "22"],
-      "etkinlikler": []
-    },
-    {
-      "Ayn_no": 3,
-      "ad": "Mart",
-      "pazartesi": ["2", "9","16","23","30"],
-      "Salı": ["3", "10", "17", "24", "31"],
-      "Çarşamba": ["4","11", "18","25"],
-      "Perşembe": ["5", "12","19", "26"],
-      "Cuma": ["6", "13", "20", "27"],
-      "Cumartesi": ["7","14","21", "28"],
-      "Pazar": ["1", "8", "15", "22", "29"],
-      "etkinlikler": []
-    },
-    {
-      "Ayn_no": 4,
-      "ad": "Nisan",
-      "pazartesi": ["6","13","20","27"],
-      "Salı": ["7","14","21", "28"],
-      "Çarşamba": ["1", "8","15","22","29"],
-      "Perşembe": ["2","9", "16", "23","30"],
-      "Cuma": ["3","10","17", "24"],
-      "Cumartesi": ["4","11", "18","25" ],
-      "Pazar": ["5", "12","19","26" ],
-      "etkinlikler": []
-    },
-    {
-      "Ayn_no": 5,
-      "ad": "Mayıs",
-      "pazartesi": ["4","11", "18", "25"],
-      "Salı": ["5", "12", "19", "26"],
-      "Çarşamba": ["6", "13","20","27" ],
-      "Perşembe": ["7", "14","21","28" ],
-      "Cuma": ["1","8", "15", "22","29"],
-      "Cumartesi": ["2", "9", "16","23", "30"],
-      "Pazar": ["3","10", "17", "24", "31"],
-      "etkinlikler": []
-    },
-    {
-      "Ayn_no": 6,
-      "ad": "Haziran",
-      "pazartesi": ["1", "8", "15","22", "29"],
-      "Salı": ["2","9", "16", "23", "30"],
-      "Çarşamba": ["3","10", "17","24"],
-      "Perşembe": ["4", "11","18","25"],
-      "Cuma": ["5", "12","19","26"],
-      "Cumartesi": ["6","13", "20","27"],
-      "Pazar": ["7","14", "21","28"],
-      "etkinlikler": []
-    },
-    {
-      "Ayn_no": 7,
-      "ad": "Temmuz",
-      "pazartesi": ["6","13","20","27"],
-      "Salı": ["7","14", "21","28" ],
-      "Çarşamba": ["1", "8", "15", "22", "29"],
-      "Perşembe": ["2","9", "16","23", "30"],
-      "Cuma": ["3", "10","17","24", "31"],
-      "Cumartesi": ["4","11","18", "25"],
-      "Pazar": ["5", "12","19","26" ],
-      "etkinlikler": []
-    },
-    {
-      "Ayn_no": 8,
-      "ad": "Ağustos",
-      "pazartesi": ["3", "10", "17","24","31"],
-      "Salı": ["4", "11","18", "25"],
-      "Çarşamba": ["5", "12","19","26"],
-      "Perşembe": ["6", "13","20", "27"],
-      "Cuma": ["7", "14", "21", "28"],
-      "Cumartesi": ["1","8", "15", "22", "29"],
-      "Pazar": ["2", "9","16","23", "30"],
-      "etkinlikler": []
-    },
-    {
-      "Ayn_no": 9,
-      "ad": "Eylül",
-      "pazartesi": ["7","14", "21", "28"],
-      "Salı": ["1","8","15","22","29" ],
-      "Çarşamba": ["2","9", "16","23","30"],
-      "Perşembe": ["3", "10", "17","24" ],
-      "Cuma": ["4","11","18", "25"],
-      "Cumartesi": ["5", "12","19", "26"],
-      "Pazar": ["6", "13", "20","27"],
-      "etkinlikler": []
-    },
-    {
-      "Ayn_no": 10,
-      "ad": "Ekim",
-      "pazartesi": ["5 Stant","12","19", "26"],
-      "Salı": ["6 Stant","13 Tanışma Etkinliği","20","27"],
-      "Çarşamba": ["7 Stant", "14","21","28"],
-      "Perşembe": ["1", "8 Stant","15", "22", "29"],
-      "Cuma": ["2","9 Stant","16", "23", "30"],
-      "Cumartesi": ["3", "10","17","24", "31"],
-      "Pazar": ["4", "11","18","25" ],
-      "etkinlikler": []
-    },
-    {
-      "Ayn_no": 11,
-      "ad": "Kasım",
-      "pazartesi": ["2","9", "16","23", "30"],
-      "Salı": ["3","10", "17", "24"],
-      "Çarşamba": ["4","11", "18", "25"],
-      "Perşembe": ["5","12", "19","26"],
-      "Cuma": ["6","13","20", "27"],
-      "Cumartesi": ["7","14","21","28"],
-      "Pazar": ["1","8", "15", "22","29"],
-      "etkinlikler": []
-    },
-    {
-      "Ayn_no": 12,
-      "ad": "Aralık",
-      "pazartesi": ["7", "14", "21", "28"],
-      "Salı": ["1", "8", "15","22", "29"],
-      "Çarşamba": ["2","9", "16","23","30"],
-      "Perşembe": ["3", "10", "17","24","31"],
-      "Cuma": ["4","11","18", "25"],
-      "Cumartesi": ["5", "12", "19","26"],
-      "Pazar": ["6", "13", "20","27"],
-      "etkinlikler": []
-    }
-  ]
-};
+// Ana sayfadaki takvim kutuları.
+// Etkinlikler public/data/takvim.json dosyasından okunur (etkinlikler sayfasıyla aynı kaynak).
+// Her kutu hangi ayı göstereceğini kendisi söyler:
+//   <div class="calendar-wrap" data-takvim-ay="bugun">              → içinde bulunulan ay
+//   <div class="calendar-wrap" data-takvim-ay="2026-12" data-takvim-vurgu="14"> → Aralık 2026, 14'ü vurgulu
+(() => {
+    const kutular = document.querySelectorAll('[data-takvim-ay]');
+    if (!kutular.length) return;
 
-function takvimiOlustur(takvimVerisi, ay) {
-    const takvimBaslik = document.querySelector("#takvim-baslik");
-    const takvimAyi = document.querySelector("#takvim-ayi");
-    const takvimGunleri = document.querySelector("#takvim-gunleri");
+    // "14 Lojik 1" ve "14 - Lojik 1" biçimlerinin ikisi de kabul edilir; yalnız "14" etkinlik değildir.
+    const GUN_DESENI = /^(\d+)(?:\s+[-–—]?|\s*[-–—])\s*(\S.*)$/;
 
-    if (!takvimAyi || !takvimGunleri) {
-        return;
+    // Sınav ve stant günleri pembe, diğer etkinlikler yeşil.
+    const etkinlikTuru = (ad) => (/vize|final|sınav|stant/.test(ad.toLocaleLowerCase('tr')) ? 'pink' : 'green');
+
+    function ayinEtkinlikleri(veri, ayNo) {
+        const ay = (veri.aylar || []).find((a) => Number(a.Ayn_no) === ayNo);
+        if (!ay) return { ad: null, etkinlikler: [] };
+
+        const etkinlikler = Object.values(ay)
+            .filter(Array.isArray)
+            .flat()
+            .map((gunBilgisi) => String(gunBilgisi).match(GUN_DESENI))
+            .filter(Boolean)
+            .map((e) => ({ gun: Number(e[1]), ad: e[2] }))
+            .sort((a, b) => a.gun - b.gun);
+
+        return { ad: ay.ad, etkinlikler };
     }
 
-    if (takvimBaslik) {
-        takvimBaslik.textContent = `${takvimVerisi.yil} Etkinlikleri`;
-    }
-    takvimAyi.textContent = `${ay.ad} ${takvimVerisi.yil}`;
-    takvimGunleri.replaceChildren();
+    function kutuyuCiz(kutu, veri) {
+        const baslik = kutu.querySelector('[data-takvim-baslik]');
+        const ayYazisi = kutu.querySelector('[data-takvim-ayi]');
+        const liste = kutu.querySelector('[data-takvim-gunleri]');
+        const bugun = new Date();
 
-    const gunListeleri = [
-        ay.pazartesi || [],
-        ay.Salı || [],
-        ay.Çarşamba || [],
-        ay.Perşembe || [],
-        ay.Cuma || [],
-        ay.Cumartesi || [],
-        ay.Pazar || []
-    ];
-    const etkinlikGunleri = [];
-    gunListeleri.flat().forEach((gunBilgisi) => {
-        const eslesme = String(gunBilgisi).match(/^(\d+)(?:\s+(.+))?$/);
+        let yil = bugun.getFullYear();
+        let ayNo = bugun.getMonth() + 1;
+        const istenen = kutu.dataset.takvimAy;
+        if (/^\d{4}-\d{2}$/.test(istenen)) {
+            [yil, ayNo] = istenen.split('-').map(Number);
+        }
+        const vurgulanan = Number(kutu.dataset.takvimVurgu) || null;
 
-        if (!eslesme) {
-            throw new Error(`Geçersiz takvim günü: ${gunBilgisi}`);
+        const ayAdi = new Date(yil, ayNo - 1, 1).toLocaleDateString('tr-TR', { month: 'long' });
+        const buyukAyAdi = ayAdi.charAt(0).toLocaleUpperCase('tr') + ayAdi.slice(1);
+        if (baslik) baslik.textContent = `${buyukAyAdi} ${yil} Etkinlikleri`;
+        if (ayYazisi) ayYazisi.textContent = istenen === 'bugun' ? 'Bu ay' : buyukAyAdi;
+
+        // takvim.json yalnızca kendi yılını içerir.
+        const { etkinlikler } = Number(veri.yil) === yil ? ayinEtkinlikleri(veri, ayNo) : { etkinlikler: [] };
+
+        if (!etkinlikler.length) {
+            const bos = document.createElement('li');
+            bos.className = 'calendar-events__empty';
+            bos.textContent = 'Bu ay için planlanmış etkinlik bulunmuyor.';
+            liste.replaceChildren(bos);
+            return;
         }
 
-        if (eslesme[2]) {
-            etkinlikGunleri.push({
-                gun: Number(eslesme[1]),
-                ad: eslesme[2]
+        liste.replaceChildren(...etkinlikler.map(({ gun, ad }) => {
+            const li = document.createElement('li');
+            li.className = 'calendar-event';
+            li.dataset.dayType = etkinlikTuru(ad);
+
+            const bugunMu = yil === bugun.getFullYear() && ayNo === bugun.getMonth() + 1 && gun === bugun.getDate();
+            if (bugunMu || gun === vurgulanan) {
+                li.classList.add('today');
+            }
+
+            const tarih = document.createElement('span');
+            tarih.className = 'calendar-event__date';
+            const gunAdi = new Date(yil, ayNo - 1, gun).toLocaleDateString('tr-TR', { weekday: 'long' });
+            tarih.textContent = `${gun} ${buyukAyAdi} ${gunAdi}${bugunMu ? ' • Bugün' : ''}`;
+
+            const adAlani = document.createElement('span');
+            adAlani.className = 'calendar-event__name';
+            adAlani.textContent = ad;
+
+            li.append(tarih, adAlani);
+            return li;
+        }));
+    }
+
+    async function yukle() {
+        try {
+            const yanit = await fetch('../data/takvim.json', { cache: 'no-cache' });
+            if (!yanit.ok) throw new Error(`takvim.json yüklenemedi: ${yanit.status}`);
+            const veri = await yanit.json();
+            kutular.forEach((kutu) => kutuyuCiz(kutu, veri));
+        } catch (hata) {
+            console.error(hata);
+            kutular.forEach((kutu) => {
+                const baslik = kutu.querySelector('[data-takvim-baslik]');
+                if (baslik) baslik.textContent = 'Takvim yüklenemedi';
+                const liste = kutu.querySelector('[data-takvim-gunleri]');
+                const li = document.createElement('li');
+                li.className = 'calendar-events__empty';
+                li.textContent = 'Takvim şu anda yüklenemedi. Lütfen sayfayı yenileyin.';
+                liste.replaceChildren(li);
             });
         }
-    });
-
-    etkinlikGunleri.sort((a, b) => a.gun - b.gun);
-
-    if (etkinlikGunleri.length === 0) {
-        const mesaj = document.createElement("li");
-        mesaj.className = "calendar-events__empty";
-        mesaj.textContent = "Bu ay için planlanmış etkinlik bulunmuyor.";
-        takvimGunleri.appendChild(mesaj);
-        return;
     }
 
-    const bugun = new Date();
-    etkinlikGunleri.forEach(({ gun, ad }) => {
-        const etkinlik = document.createElement("li");
-        etkinlik.className = "calendar-event";
-
-        if (ad.toLocaleLowerCase("tr").includes("stant")) {
-            etkinlik.dataset.dayType = "pink";
-        } else if (ad.toLocaleLowerCase("tr").includes("tanışma")) {
-            etkinlik.dataset.dayType = "green";
-        }
-
-        if (
-            takvimVerisi.yil === bugun.getFullYear() &&
-            ay.Ayn_no - 1 === bugun.getMonth() &&
-            gun === bugun.getDate()
-        ) {
-            etkinlik.classList.add("today");
-        }
-
-        const tarih = document.createElement("span");
-        tarih.className = "calendar-event__date";
-        tarih.textContent = `${gun} ${ay.ad}`;
-
-        const adAlani = document.createElement("span");
-        adAlani.className = "calendar-event__name";
-        adAlani.textContent = ad;
-
-        etkinlik.append(tarih, adAlani);
-        takvimGunleri.appendChild(etkinlik);
-    });
-}
-
-function takvimVerisiniAl() {
-    const mevcutAy = new Date().getFullYear() === takvim.yil
-        ? new Date().getMonth() + 1
-        : 1;
-    const ay = takvim.aylar.find((takvimAyi) => takvimAyi.Ayn_no === mevcutAy) || takvim.aylar[0];
-    takvimiOlustur(takvim, ay);
-}
-takvimVerisiniAl();
+    yukle();
+})();

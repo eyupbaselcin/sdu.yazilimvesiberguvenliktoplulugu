@@ -1,21 +1,54 @@
-# Özel fotoğraf galerisi kurulumu
+# Yönetici girişi ve özel fotoğraf galerisi (Vercel)
 
-Bu galeri PHP oturumları ve Apache `.htaccess` kuralları kullanır; cPanel/Plesk üzerindeki PHP destekli HTTPS alan adında çalıştırılmalıdır. HTML dosyasını doğrudan bilgisayarda açmakla giriş koruması çalışmaz.
+Giriş ve galeri, `api/` klasöründeki JavaScript sunucu fonksiyonlarıyla çalışır. Şifreler ve fotoğraflar tarayıcıya hiç gönderilmez; sunucu şifreyi kontrol eder ve yalnızca giriş yapmış kişiye fotoğrafları verir.
 
-## Yayına alma
+| Dosya | Görevi |
+| --- | --- |
+| `api/giris.js` | Kullanıcı adı/e-posta + şifreyi doğrular, 8 saatlik oturum açar |
+| `api/oturum.js` | Giriş yapılmış mı kontrol eder |
+| `api/cikis.js` | Oturumu kapatır |
+| `api/galeri.js`, `api/galeri-gorsel.js` | Galeri listesi ve fotoğraflar (yalnızca giriş yapanlara) |
+| `api/etkinlikler.js` | Etkinlik listesi (herkese) ve ekleme/düzenleme/silme (yalnızca yöneticiye) |
+| `public/scripts/yonetim.js` | Kontrol masası paneli |
+| `pages/giris.html` | Giriş ekranı ve yönetici paneli |
+| `pages/galeri.html` | Galeri sayfası (panelde "Özel Galeri" düğmesi) |
+| `galeri-private/images/` | Galeri fotoğrafları. Sitede herkese açık değildir |
+| `tools/sifre-olustur.mjs` | Şifre hash'i üretme aracı |
 
-1. Proje dosyalarını `sduyzlm.com` alan adının web köküne yükleyin. `galeri-private` içindeki `.htaccess` dosyalarının da yüklendiğini kontrol edin.
-2. cPanel Dosya Yöneticisi'nde `galeri-private/config.example.php` dosyasını kopyalayıp kopyaya `config.php` adını verin.
-3. cPanel Terminal'de aşağıdaki komutu çalıştırın. İstendiğinde ortak galeri şifresini girin. Komut salt ve hash üretir; ekranda görünen bu iki değeri yapılandırmaya koyun:
+## Kurulum (bir kez)
+
+1. Bilgisayarda proje klasöründe çalıştırın ve her yönetici için kullanıcı adı, e-posta ve **yeni** bir şifre girin:
 
    ```sh
-   php -r '$password = rtrim(fgets(STDIN), "\r\n"); $salt = random_bytes(16); echo bin2hex($salt), PHP_EOL, hash_pbkdf2("sha256", $password, $salt, 600000, 32), PHP_EOL;'
+   node tools/sifre-olustur.mjs
    ```
 
-4. `galeri-private/config.php` içindeki `TUZ_DEGERINI_BURAYA_YAPISTIRIN` ve `HASH_DEGERINI_BURAYA_YAPISTIRIN` değerlerini sırasıyla üretilen salt ve hash ile değiştirin. İterasyon sayısını `600000` olarak bırakın. `config.php` dosyasını herkese açık bir depoya göndermeyin; `.gitignore` bu dosyayı hariç tutar.
-5. Fotoğrafları `galeri-private/images/` klasörüne yükleyin. Desteklenen biçimler JPG, JPEG, PNG, GIF ve WEBP'dir. Klasörün `.htaccess` dosyasını silmeyin.
-6. `https://sduyzlm.com/giris.html` adresinden giriş yapın. Galeriden çıkış bağlantısını kullanarak oturumu kapatın.
+2. Araç iki değer basar. Vercel'de **Project → Settings → Environment Variables** bölümüne ikisini de ekleyin:
+   - `GIRIS_KULLANICILAR`
+   - `OTURUM_SIRRI`
+3. **Deployments → Redeploy** ile yeniden yayınlayın.
 
-Görseller, oturum doğrulaması yapan PHP uç noktası üzerinden verilir; `galeri-private` klasörüne doğrudan HTTP erişimi engellenir. Ortak parola tüm kullanıcılarca paylaşıldığından hesap bazlı izleme veya kullanıcıya özel yetki sağlamaz.
+Şifreler hiçbir dosyada tutulmaz; Vercel'de yalnızca geri çevrilemeyen hash'leri durur. Kullanıcı eklemek veya şifre değiştirmek için aracı yeniden çalıştırıp `GIRIS_KULLANICILAR` değerini güncelleyin. `OTURUM_SIRRI`'ni değiştirmek herkesin oturumunu kapatır.
 
-Tarayıcılar ekran görüntüsü alınmasını kesin olarak engelleyemez. Bu kurulum doğrudan görsel URL'lerini ve oturum açmadan erişimi korur; yetkili bir kullanıcı ekran görüntüsü alabilir veya görüntüyü kaydedebilir.
+## Etkinlik yönetimi (Kontrol masası)
+
+Giriş yapınca açılan panelde etkinlikler eklenir, düzenlenir ve silinir; değişiklikler Etkinlikler sayfasında herkese görünür. Veriler ve afişler **Vercel Blob** deposunda saklanır.
+
+Kurulum (bir kez):
+
+1. Vercel'de projeyi açın → **Storage** → **Create Database** → **Blob** → oluşturup bu projeye bağlayın (**Connect**).
+2. Bu işlem `BLOB_READ_WRITE_TOKEN` ortam değişkenini otomatik ekler. **Deployments → Redeploy** ile yeniden yayınlayın.
+
+Depo kurulana kadar Etkinlikler sayfası `public/data/etkinlikler.json` dosyasındaki etkinlikleri gösterir; panelde kaydetmeye çalışınca "Etkinlik deposu kurulmamış" uyarısı çıkar. İlk kayıttan sonra liste depodan okunur ve bu dosya artık kullanılmaz.
+
+Her değişiklikte listenin yeni bir sürümü kaydedilir; son 10 sürüm Vercel → Storage → Blob → `etkinlikler/` klasöründe durur. Yanlışlıkla silinen bir etkinlik oradan geri getirilebilir.
+
+## Fotoğraf eklemek
+
+Fotoğrafları (JPG, PNG, GIF, WEBP) `galeri-private/images/` klasörüne koyup projeyi yeniden yayınlayın. `vercel.json` bu klasörü yalnızca galeri fonksiyonlarına dahil eder; doğrudan bir adresten açılamaz.
+
+## Local'de denemek
+
+`npm run dev` yalnızca sayfaları açar, `api/` fonksiyonlarını çalıştırmaz. Giriş ve galeriyi bilgisayarda denemek için `npx vercel dev` kullanın.
+
+Tarayıcılar ekran görüntüsü alınmasını engelleyemez; giriş yapan biri fotoğrafı kaydedebilir.
