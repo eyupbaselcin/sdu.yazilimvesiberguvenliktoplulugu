@@ -8,9 +8,18 @@ export const SIFRE_ITERASYON = 600000;
 const OTURUM_CEREZI = 'ysgt_oturum';
 const OTURUM_SURESI_SN = 8 * 60 * 60; // 8 saat
 
+// Vercel paneline yapıştırırken değerin başında/sonunda kalabilen boşluk ve tırnakları temizler.
+function ortamDegeri(ad) {
+    let deger = String(process.env[ad] || '').trim();
+    while (deger.length >= 2 && /^(['"`]).*\1$/s.test(deger)) {
+        deger = deger.slice(1, -1).trim();
+    }
+    return deger;
+}
+
 function oturumSirri() {
-    const sir = process.env.OTURUM_SIRRI;
-    if (!sir || sir.length < 32) {
+    const sir = ortamDegeri('OTURUM_SIRRI');
+    if (sir.length < 32) {
         throw new Error('OTURUM_SIRRI ortam değişkeni eksik veya 32 karakterden kısa.');
     }
     return sir;
@@ -20,13 +29,33 @@ function oturumSirri() {
  * GIRIS_KULLANICILAR ortam değişkeni: tools/sifre-olustur.mjs ile üretilen JSON dizisi.
  * [{ "isim": "...", "email": "...", "salt": "hex", "hash": "hex" }, ...]
  */
-function kullanicilar() {
+function kullaniciListesiOku() {
+    const ham = ortamDegeri('GIRIS_KULLANICILAR');
+    if (!ham) return { liste: [], hata: 'eksik' };
     try {
-        const liste = JSON.parse(process.env.GIRIS_KULLANICILAR || '[]');
-        return Array.isArray(liste) ? liste : [];
+        const liste = JSON.parse(ham);
+        if (!Array.isArray(liste)) return { liste: [], hata: 'gecersiz' };
+        const gecerli = liste.filter((k) => k && typeof k.isim === 'string'
+            && /^[0-9a-f]{32}$/i.test(k.salt) && /^[0-9a-f]{64}$/i.test(k.hash));
+        return { liste: gecerli, hata: gecerli.length ? null : 'hashsiz' };
     } catch {
-        return [];
+        return { liste: [], hata: 'gecersiz' };
     }
+}
+
+function kullanicilar() {
+    return kullaniciListesiOku().liste;
+}
+
+/** Giriş ayarlarında eksik ne var? Değerleri asla göstermez; yalnızca durumu söyler. */
+export function girisAyarSorunu() {
+    const { hata } = kullaniciListesiOku();
+    const sorunlar = [];
+    if (hata === 'eksik') sorunlar.push('Vercel\'de GIRIS_KULLANICILAR ayarı bulunamadı');
+    if (hata === 'gecersiz') sorunlar.push('GIRIS_KULLANICILAR ayarı okunamadı (değer [{ ile başlayıp }] ile bitmeli)');
+    if (hata === 'hashsiz') sorunlar.push('GIRIS_KULLANICILAR ayarında "salt" ve "hash" yok (açık şifre değil, üretilen değer yapıştırılmalı)');
+    if (ortamDegeri('OTURUM_SIRRI').length < 32) sorunlar.push('Vercel\'de OTURUM_SIRRI ayarı bulunamadı veya çok kısa');
+    return sorunlar.length ? `Giriş sistemi ayarlanmamış: ${sorunlar.join('; ')}. Ayarlardan sonra Redeploy yapılmalı.` : null;
 }
 
 export async function sifreHashle(sifre, saltHex) {

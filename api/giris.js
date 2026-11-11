@@ -1,4 +1,4 @@
-import { kullaniciDogrula, kullaniciSayisi, onbellekYok, oturumAc } from './_ortak.js';
+import { girisAyarSorunu, kullaniciDogrula, onbellekYok, oturumAc } from './_ortak.js';
 
 export default async function handler(req, res) {
     onbellekYok(res);
@@ -16,11 +16,9 @@ export default async function handler(req, res) {
         return res.status(400).json({ basarili: false, mesaj: 'Kullanıcı adı/e-posta ve şifre gerekli.' });
     }
 
-    if (!kullaniciSayisi() || !process.env.OTURUM_SIRRI) {
-        return res.status(503).json({
-            basarili: false,
-            mesaj: 'Henüz yönetici şifresi oluşturulmadı. Proje klasöründe "node tools/sifre-olustur.mjs" komutunu çalıştırın.',
-        });
+    const ayarSorunu = girisAyarSorunu();
+    if (ayarSorunu) {
+        return res.status(503).json({ basarili: false, mesaj: ayarSorunu });
     }
 
     try {
