@@ -23,6 +23,19 @@
             theme: {
                 extend: {
                     colors: {
+                        // Ortak tema (styles/tema.css) ile uyumlu: mavi yerine koyu petrol, mavi-gri yerine nötr koyu tonlar.
+                        blue: {
+                            50: '#eef5f4', 100: '#e1ecea', 200: '#c3dbd7', 300: '#9ac4bd', 400: '#74c0b5',
+                            500: '#2f8a86', 600: '#0f5c63', 700: '#0a454b', 800: '#08383d', 900: '#062b2f',
+                        },
+                        slate: {
+                            50: '#f3f2ee', 100: '#ebe9e3', 200: '#dcd9d0', 300: '#bdbab2', 400: '#9b9fa6',
+                            500: '#6b6f75', 600: '#45484d', 700: '#2d3035', 800: '#1b1d20', 900: '#121315', 950: '#0c0d0e',
+                        },
+                        gray: {
+                            50: '#f3f2ee', 100: '#ebe9e3', 200: '#dcd9d0', 300: '#bdbab2', 400: '#8e9197',
+                            500: '#5c6066', 600: '#45484d', 700: '#33363a', 800: '#24262a', 900: '#191b1f',
+                        },
                         brand: {
                             50: '#eff6ff',
                             100: '#dbeafe',
@@ -105,6 +118,7 @@
             box-shadow: 0 4px 14px rgba(59, 185, 171, 0.35);
         }
     </style>
+    <link rel="stylesheet" href="../styles/tema.css">
 </head>
 
 <body
