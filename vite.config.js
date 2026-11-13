@@ -2,7 +2,7 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 
 // `npm run dev` sırasında api/ klasöründeki Vercel fonksiyonlarını (giriş, galeri, etkinlikler) yerelde çalıştırır.
-// Ayarlar .env.local dosyasından okunur (node tools/sifre-olustur.mjs oluşturur). Yayındaki siteyi etkilemez.
+// Ayarlar .env.local dosyasından okunur (bkz. GALERI_KURULUM.md). Yayındaki siteyi etkilemez.
 function yerelApi() {
   return {
     name: "yerel-api",

@@ -1,4 +1,5 @@
-import { girisAyarSorunu, kullaniciDogrula, onbellekYok, oturumAc } from './_ortak.js';
+// Yönetici girişi: e-posta + şifre Firebase Authentication ile doğrulanır, ardından imzalı oturum çerezi verilir.
+import { GirisHatasi, girisAyarSorunu, kullaniciDogrula, onbellekYok, oturumAc } from './_ortak.js';
 
 export default async function handler(req, res) {
     onbellekYok(res);
@@ -9,11 +10,11 @@ export default async function handler(req, res) {
     }
 
     const govde = typeof req.body === 'object' && req.body !== null ? req.body : {};
-    const kimlik = typeof govde.kimlik === 'string' ? govde.kimlik.slice(0, 200) : '';
+    const eposta = typeof govde.eposta === 'string' ? govde.eposta.trim().slice(0, 200) : '';
     const sifre = typeof govde.sifre === 'string' ? govde.sifre.slice(0, 200) : '';
 
-    if (!kimlik || !sifre) {
-        return res.status(400).json({ basarili: false, mesaj: 'Kullanıcı adı/e-posta ve şifre gerekli.' });
+    if (!eposta || !sifre) {
+        return res.status(400).json({ basarili: false, mesaj: 'E-posta ve şifre gerekli.' });
     }
 
     const ayarSorunu = girisAyarSorunu();
@@ -22,15 +23,14 @@ export default async function handler(req, res) {
     }
 
     try {
-        const kullanici = await kullaniciDogrula(kimlik, sifre);
-        if (!kullanici) {
-            return res.status(401).json({ basarili: false, mesaj: 'Kullanıcı adı veya şifre hatalı.' });
-        }
-
+        const kullanici = await kullaniciDogrula(eposta, sifre);
         oturumAc(res, kullanici.isim);
         return res.status(200).json({ basarili: true, isim: kullanici.isim });
     } catch (hata) {
+        if (hata instanceof GirisHatasi) {
+            return res.status(hata.kod).json({ basarili: false, mesaj: hata.message });
+        }
         console.error('Giriş hatası:', hata);
-        return res.status(500).json({ basarili: false, mesaj: 'Giriş sistemi yapılandırılmamış.' });
+        return res.status(500).json({ basarili: false, mesaj: 'Giriş sırasında bir hata oluştu. Lütfen tekrar deneyin.' });
     }
 }

@@ -265,6 +265,7 @@
                 <a class="site-nav__link" href="iletisim.html">İletişim</a>
                 <a class="site-nav__link" href="egitim-kayit.html">Eğitim Kaydı</a>
                 <a class="site-nav__link" href="syber.html">Siber Güvenlik</a>
+                <a class="site-nav__link" href="giris.html">Giriş</a>
             </nav>
         </header>
         <main class="page-shell">
@@ -334,6 +335,7 @@
         }
 
         // --- ETKİNLİK LİSTESİ: yönetim panelinden eklenen/düzenlenen etkinlikler ---
+        let hamAdres = ''; // yeni yüklenen afiş yayına girene kadar GitHub'dan gösterilir
         async function etkinlikleriGetir() {
             // Önce sunucu (panelde yapılan değişiklikler), olmazsa (ör. localde npm run dev) başlangıç verisi.
             for (const adres of ['/api/etkinlikler', '../data/etkinlikler.json']) {
@@ -342,6 +344,7 @@
                     if (!yanit.ok) continue;
                     const veri = await yanit.json();
                     const liste = Array.isArray(veri) ? veri : veri.etkinlikler;
+                    if (typeof veri.hamAdres === 'string' && veri.hamAdres.startsWith('https://raw.githubusercontent.com/')) hamAdres = veri.hamAdres;
                     if (Array.isArray(liste)) return liste;
                 } catch (hata) {
                     // sıradaki kaynağı dene
@@ -371,6 +374,14 @@
             baglanti.title = 'Afişi tam boyutta aç';
             baglanti.appendChild(img);
             resimKutusu.appendChild(baglanti);
+            img.addEventListener('error', () => {
+                if (!hamAdres || !String(e.afis).startsWith('/assets/images/etkinlikler/')) return;
+                const yedek = hamAdres + e.afis;
+                if (img.src === yedek) return;
+                img.src = yedek;
+                baglanti.href = yedek;
+                resimKutusu.style.setProperty('--afis', `url(${JSON.stringify(yedek)})`);
+            });
 
             const govde = document.createElement('div');
             govde.className = 'event-card__body';

@@ -1,20 +1,22 @@
 // Etkinlikler: herkes okuyabilir, yalnızca giriş yapmış yönetici ekleyip düzenleyebilir/silebilir.
-// Veriler Vercel Blob'da saklanır (BLOB_READ_WRITE_TOKEN). Blob boşken public/data/etkinlikler.json kullanılır.
+// Liste GitHub deposundaki public/data/etkinlikler.json dosyasında, afişler public/assets/images/etkinlikler/
+// altında saklanır. Her değişiklik bir commit'tir (geçmiş GitHub'da durur) ve Vercel siteyi otomatik yeniden yayınlar.
 import { readFile } from 'node:fs/promises';
 import { randomBytes } from 'node:crypto';
 import path from 'node:path';
-import { del, list, put } from '@vercel/blob';
 import { onbellekYok, oturumOku } from './_ortak.js';
+import { CakismaHatasi, commitYap, dosyaOku, githubKuruluMu, hamAdres, sonCommit } from './_github.js';
 
-const LISTE_ONEKI = 'etkinlikler/liste-';
-const SAKLANACAK_SURUM = 10; // yanlışlıkla silmeye karşı son 10 sürüm tutulur
-const BASLANGIC_DOSYASI = path.join(process.cwd(), 'public', 'data', 'etkinlikler.json');
+const LISTE_YOLU = 'public/data/etkinlikler.json';
+const AFIS_KLASORU = 'public/assets/images/etkinlikler';
+const YEREL_LISTE = path.join(process.cwd(), LISTE_YOLU);
 const AFIS_EN_FAZLA = 3.5 * 1024 * 1024;
 const AFIS_TURLERI = {
     'image/jpeg': { uzanti: 'jpg', imza: [0xff, 0xd8, 0xff] },
     'image/png': { uzanti: 'png', imza: [0x89, 0x50, 0x4e, 0x47] },
     'image/webp': { uzanti: 'webp', imza: [0x52, 0x49, 0x46, 0x46] },
 };
+const GITHUB_YOK_MESAJI = 'Etkinlik kaydı için GitHub bağlantısı kurulmamış (Vercel\'de GITHUB_TOKEN ayarı yok). Kurulum: GALERI_KURULUM.md';
 
 class IstekHatasi extends Error {
     constructor(kod, mesaj) {
@@ -23,37 +25,29 @@ class IstekHatasi extends Error {
     }
 }
 
-const depoKuruluMu = () => Boolean(process.env.BLOB_READ_WRITE_TOKEN);
-
-async function listeyiOku() {
-    if (!depoKuruluMu()) {
-        return { etkinlikler: JSON.parse(await readFile(BASLANGIC_DOSYASI, 'utf8')), surumler: [] };
-    }
-    const { blobs } = await list({ prefix: LISTE_ONEKI, limit: 100 });
-    if (blobs.length) {
-        blobs.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
-        const yanit = await fetch(blobs[0].url, { cache: 'no-store' });
-        if (!yanit.ok) throw new Error(`Etkinlik listesi okunamadı: ${yanit.status}`);
-        return { etkinlikler: await yanit.json(), surumler: blobs };
-    }
-    return { etkinlikler: JSON.parse(await readFile(BASLANGIC_DOSYASI, 'utf8')), surumler: [] };
-}
-
-async function listeyiYaz(etkinlikler, eskiSurumler) {
-    // Her kayıt yeni bir dosya adıyla yazılır; böylece önbellekten eski liste gelmez.
-    await put(`${LISTE_ONEKI}${Date.now()}-${randomBytes(4).toString('hex')}.json`, JSON.stringify(etkinlikler), {
-        access: 'public',
-        contentType: 'application/json',
-        addRandomSuffix: false,
-    });
-    const silinecek = eskiSurumler.slice(SAKLANACAK_SURUM - 1).map((b) => b.url);
-    if (silinecek.length) {
-        await del(silinecek).catch((hata) => console.error('Eski sürümler silinemedi:', hata));
-    }
-}
-
 const sirala = (etkinlikler) => [...etkinlikler].sort((a, b) =>
     `${a.tarih} ${a.saat || ''}`.localeCompare(`${b.tarih} ${b.saat || ''}`));
+
+function listeyiCoz(metin) {
+    const veri = JSON.parse(metin || '[]');
+    return Array.isArray(veri) ? veri : [];
+}
+
+async function yerelListe() {
+    return listeyiCoz(await readFile(YEREL_LISTE, 'utf8'));
+}
+
+/** Herkese açık okuma: GitHub'daki en güncel liste; GitHub ayarlı değilse veya ulaşılamazsa yayındaki dosya. */
+async function guncelListe() {
+    if (!githubKuruluMu()) return yerelListe();
+    try {
+        const metin = await dosyaOku(LISTE_YOLU);
+        return metin === null ? yerelListe() : listeyiCoz(metin);
+    } catch (hata) {
+        console.error('GitHub\'dan etkinlikler okunamadı, yayındaki dosya kullanılıyor:', hata.message);
+        return yerelListe();
+    }
+}
 
 function metin(deger, ad, { en = 0, enFazla }) {
     const s = typeof deger === 'string' ? deger.replace(/[\u0000-\u001F\u007F]+/g, ' ').replace(/\s+/g, ' ').trim() : '';
@@ -89,7 +83,8 @@ function alanlariDogrula(govde) {
     };
 }
 
-async function afisYukle(veriUrl, id) {
+/** Gönderilen afişi doğrular; depoya yazılacak dosyayı ve sitedeki adresini döner. */
+function afisHazirla(veriUrl, tarih) {
     const eslesme = typeof veriUrl === 'string' && veriUrl.match(/^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/);
     if (!eslesme) throw new IstekHatasi(400, 'Afiş JPG, PNG veya WEBP olmalı.');
 
@@ -98,18 +93,15 @@ async function afisYukle(veriUrl, id) {
     if (icerik.length > AFIS_EN_FAZLA) throw new IstekHatasi(413, 'Afiş çok büyük (en fazla 3,5 MB).');
     if (!tur.imza.every((bayt, i) => icerik[i] === bayt)) throw new IstekHatasi(400, 'Afiş dosyası bozuk veya resim değil.');
 
-    const { url } = await put(`afisler/${id}-${randomBytes(6).toString('hex')}.${tur.uzanti}`, icerik, {
-        access: 'public',
-        contentType: eslesme[1],
-        addRandomSuffix: false,
-    });
-    return url;
+    const ad = `${tarih}-${randomBytes(4).toString('hex')}.${tur.uzanti}`;
+    return { degisiklik: { yol: `${AFIS_KLASORU}/${ad}`, ikili: icerik }, adres: `/assets/images/etkinlikler/${ad}` };
 }
 
-async function afisSil(url) {
-    if (typeof url === 'string' && url.includes('.blob.vercel-storage.com/afisler/')) {
-        await del(url).catch((hata) => console.error('Afiş silinemedi:', hata));
-    }
+/** Yalnızca panelden yüklenmiş afişler silinir; eski elle eklenen görsellere dokunulmaz. */
+function afisSilme(adres) {
+    const onek = '/assets/images/etkinlikler/';
+    if (typeof adres !== 'string' || !adres.startsWith(onek) || !/^[\w.-]+$/.test(adres.slice(onek.length))) return [];
+    return [{ yol: `public${adres}`, sil: true }];
 }
 
 function yoneticiKontrol(req) {
@@ -120,19 +112,44 @@ function yoneticiKontrol(req) {
         try { kaynakHost = new URL(kaynak).host; } catch { /* geçersiz kaynak */ }
         if (kaynakHost !== req.headers.host) throw new IstekHatasi(403, 'Geçersiz istek kaynağı.');
     }
-    if (!oturumOku(req)) throw new IstekHatasi(401, 'Bu işlem için giriş yapmanız gerekiyor.');
+    const oturum = oturumOku(req);
+    if (!oturum) throw new IstekHatasi(401, 'Bu işlem için giriş yapmanız gerekiyor.');
+    return oturum;
+}
+
+/**
+ * Listeyi GitHub'dan okuyup islem() ile değiştirir ve tek commit'te yazar.
+ * Aynı anda başka bir değişiklik olursa baştan okuyup yeniden dener.
+ */
+async function listeyiDegistir(islem) {
+    for (let deneme = 0; deneme < 3; deneme += 1) {
+        const temel = await sonCommit();
+        const liste = listeyiCoz(await dosyaOku(LISTE_YOLU, temel.sha) || '[]');
+        const { yeniListe, dosyalar = [], mesaj, sonuc } = islem(liste);
+        try {
+            await commitYap(temel, [
+                ...dosyalar,
+                { yol: LISTE_YOLU, metin: `${JSON.stringify(sirala(yeniListe), null, 2)}\n` },
+            ], mesaj);
+            return sonuc;
+        } catch (hata) {
+            if (!(hata instanceof CakismaHatasi)) throw hata;
+        }
+    }
+    throw new IstekHatasi(409, 'Aynı anda başka bir değişiklik yapıldı. Lütfen tekrar deneyin.');
 }
 
 export default async function handler(req, res) {
     try {
         if (req.method === 'GET') {
-            const { etkinlikler } = await listeyiOku();
+            const etkinlikler = await guncelListe();
             if (req.query.taze) {
                 onbellekYok(res);
             } else {
                 res.setHeader('Cache-Control', 'public, s-maxage=15, stale-while-revalidate=60');
             }
-            return res.status(200).json({ etkinlikler: sirala(etkinlikler) });
+            // hamAdres: yeni yüklenen afiş site yeniden yayınlanana kadar (~1 dk) buradan gösterilir.
+            return res.status(200).json({ etkinlikler: sirala(etkinlikler), hamAdres: `${hamAdres()}/public` });
         }
 
         onbellekYok(res);
@@ -140,51 +157,68 @@ export default async function handler(req, res) {
             res.setHeader('Allow', 'GET, POST, PUT, DELETE');
             throw new IstekHatasi(405, 'Geçersiz istek.');
         }
-        yoneticiKontrol(req);
-        if (!depoKuruluMu()) {
-            throw new IstekHatasi(503, 'Etkinlik deposu kurulmamış (Vercel Blob). Kurulum için GALERI_KURULUM.md dosyasına bakın.');
-        }
+        const oturum = yoneticiKontrol(req);
+        if (!githubKuruluMu()) throw new IstekHatasi(503, GITHUB_YOK_MESAJI);
 
         const govde = typeof req.body === 'object' && req.body !== null ? req.body : {};
-        const { etkinlikler, surumler } = await listeyiOku();
+        const imza = `\n\nYönetim panelinden: ${oturum.isim}`;
 
         if (req.method === 'POST') {
             const alanlar = alanlariDogrula(govde);
             if (!govde.afisVeri) throw new IstekHatasi(400, 'Lütfen bir afiş yükleyin.');
-            const id = `e-${alanlar.tarih}-${randomBytes(4).toString('hex')}`;
-            const yeni = { id, ...alanlar, afis: await afisYukle(govde.afisVeri, id) };
-            await listeyiYaz([...etkinlikler, yeni], surumler);
-            return res.status(201).json({ etkinlik: yeni });
+            const afis = afisHazirla(govde.afisVeri, alanlar.tarih);
+            const yeni = { id: `e-${alanlar.tarih}-${randomBytes(4).toString('hex')}`, ...alanlar, afis: afis.adres };
+            const etkinlik = await listeyiDegistir((liste) => ({
+                yeniListe: [...liste, yeni],
+                dosyalar: [afis.degisiklik],
+                mesaj: `Etkinlik eklendi: ${yeni.ad}${imza}`,
+                sonuc: yeni,
+            }));
+            return res.status(201).json({ etkinlik });
         }
 
         const id = typeof (req.query.id || govde.id) === 'string' ? (req.query.id || govde.id) : '';
-        const sira = etkinlikler.findIndex((e) => e.id === id);
-        if (sira === -1) throw new IstekHatasi(404, 'Etkinlik bulunamadı.');
-        const eski = etkinlikler[sira];
 
         if (req.method === 'PUT') {
             const alanlar = alanlariDogrula(govde);
-            const afis = govde.afisVeri ? await afisYukle(govde.afisVeri, id) : eski.afis;
-            const guncel = { ...eski, ...alanlar, afis };
-            const yeniListe = etkinlikler.map((e, i) => (i === sira ? guncel : e));
-            await listeyiYaz(yeniListe, surumler);
-            if (afis !== eski.afis) await afisSil(eski.afis);
-            return res.status(200).json({ etkinlik: guncel });
+            const yeniAfis = govde.afisVeri ? afisHazirla(govde.afisVeri, alanlar.tarih) : null;
+            const etkinlik = await listeyiDegistir((liste) => {
+                const eski = liste.find((e) => e.id === id);
+                if (!eski) throw new IstekHatasi(404, 'Etkinlik bulunamadı.');
+                const guncel = { ...eski, ...alanlar, afis: yeniAfis ? yeniAfis.adres : eski.afis };
+                const eskiAfisKullaniliyor = liste.some((e) => e.id !== id && e.afis === eski.afis);
+                return {
+                    yeniListe: liste.map((e) => (e.id === id ? guncel : e)),
+                    dosyalar: yeniAfis ? [yeniAfis.degisiklik, ...(eskiAfisKullaniliyor ? [] : afisSilme(eski.afis))] : [],
+                    mesaj: `Etkinlik güncellendi: ${guncel.ad}${imza}`,
+                    sonuc: guncel,
+                };
+            });
+            return res.status(200).json({ etkinlik });
         }
 
         // DELETE
-        await listeyiYaz(etkinlikler.filter((e) => e.id !== id), surumler);
-        // Afiş hemen silinmez: önceki liste sürümleri ona bağlı kalabilsin diye yerinde bırakılır.
+        await listeyiDegistir((liste) => {
+            const eski = liste.find((e) => e.id === id);
+            if (!eski) throw new IstekHatasi(404, 'Etkinlik bulunamadı.');
+            // Silinen afiş GitHub geçmişinde kalır; gerekirse geri alınabilir.
+            const baskaKullanan = liste.some((e) => e.id !== id && e.afis === eski.afis);
+            return {
+                yeniListe: liste.filter((e) => e.id !== id),
+                dosyalar: baskaKullanan ? [] : afisSilme(eski.afis),
+                mesaj: `Etkinlik silindi: ${eski.ad}${imza}`,
+            };
+        });
         return res.status(200).json({ silindi: id });
     } catch (hata) {
         if (hata instanceof IstekHatasi) {
             return res.status(hata.kod).json({ mesaj: hata.message });
         }
         console.error('Etkinlik API hatası:', hata);
-        const yapilandirilmamis = /BLOB_READ_WRITE_TOKEN|No token found/i.test(String(hata && hata.message));
+        const yetkiYok = hata && (hata.durum === 401 || hata.durum === 403 || hata.durum === 404);
         return res.status(500).json({
-            mesaj: yapilandirilmamis
-                ? 'Etkinlik deposu kurulmamış (Vercel Blob). Kurulum için GALERI_KURULUM.md dosyasına bakın.'
+            mesaj: yetkiYok
+                ? 'GitHub kaydı reddetti: GITHUB_TOKEN geçersiz, süresi dolmuş veya bu depoya yazma izni yok.'
                 : 'Sunucu hatası. Lütfen tekrar deneyin.',
         });
     }

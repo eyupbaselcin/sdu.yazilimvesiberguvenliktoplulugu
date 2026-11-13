@@ -874,6 +874,7 @@
                     <a class="nav-pill" href="iletisim.html">İletişim</a>
                     <a class="nav-pill" href="egitim-kayit.html">Eğitim Kaydı</a>
                     <a class="nav-pill" href="syber.html">Siber Güvenlik</a>
+                    <a class="nav-pill active" href="giris.html" aria-current="page">Giriş</a>
                 </nav>
 
                 <!-- Header Controls -->
@@ -899,6 +900,7 @@
                 <a class="nav-pill block w-full text-center" href="iletisim.html">İletişim</a>
                 <a class="nav-pill block w-full text-center" href="egitim-kayit.html">Eğitim Kaydı</a>
                 <a class="nav-pill block w-full text-center" href="syber.html">Siber Güvenlik</a>
+                <a class="nav-pill active block w-full text-center" href="giris.html" aria-current="page">Giriş</a>
             </div>
         </header>
         <!-- HEADER BİTİŞİ -->
@@ -917,21 +919,11 @@
                     </div>
 
                     <div class="field">
-                        <label for="kullaniciAdi">
-                            <i class="fa-solid fa-user" aria-hidden="true"></i>
-                            Kullanıcı Adı
-                        </label>
-                        <input id="kullaniciAdi" name="username" type="text" autocomplete="username"
-                            placeholder="Kullanıcı adınızı girin">
-                        <p id="nameError" class="error" aria-live="polite"></p>
-                    </div>
-
-                    <div class="field">
                         <label for="eposta">
                             <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-                            Email <span style="font-weight: 400; opacity: .7;">(kullanıcı adı yerine)</span>
+                            E-posta
                         </label>
-                        <input id="eposta" name="email" type="email" autocomplete="email" placeholder="isim@ornek.com">
+                        <input id="eposta" name="email" type="email" autocomplete="username" placeholder="isim@ornek.com" required>
                         <p id="emailError" class="error" aria-live="polite"></p>
                     </div>
 
@@ -1180,16 +1172,15 @@
 
         // --- 4. KULLANICI GİRİŞİ ---
         async function handleLogin() {
-            const usernameInput = document.getElementById('kullaniciAdi').value.trim();
             const emailInput = document.getElementById('eposta').value.trim();
             const passwordInput = document.getElementById('sifre').value;
+            const nameError = document.getElementById('emailError');
 
-            if (!usernameInput && !emailInput) {
-                document.getElementById('nameError').textContent = 'Kullanıcı adı veya e-posta girin.';
+            if (!emailInput) {
+                nameError.textContent = 'E-posta adresinizi girin.';
                 return;
             }
 
-            const nameError = document.getElementById('nameError');
             const passwordError = document.getElementById('passwordError');
             const loginBtn = document.getElementById('loginBtn');
             nameError.textContent = '';
@@ -1201,7 +1192,7 @@
                     method: 'POST',
                     credentials: 'same-origin',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ kimlik: usernameInput || emailInput, sifre: passwordInput }),
+                    body: JSON.stringify({ eposta: emailInput, sifre: passwordInput }),
                 });
                 const data = await res.json().catch(() => null);
 
@@ -1219,7 +1210,7 @@
                     }
                     showSection(true, data.isim);
                 } else {
-                    passwordError.textContent = data.mesaj || 'Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyin.';
+                    passwordError.textContent = data.mesaj || 'E-posta veya şifre hatalı. Lütfen tekrar deneyin.';
                 }
             } catch (err) {
                 passwordError.textContent = 'Giriş sunucusuna ulaşılamadı. Lütfen daha sonra tekrar deneyin.';

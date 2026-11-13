@@ -1,5 +1,5 @@
 // Yönetim paneli (Kontrol masası): etkinlik listesi, ekleme, düzenleme, silme.
-// Veriler /api/etkinlikler üzerinden sunucuda (Vercel Blob) saklanır; siteye giren herkes görür.
+// Veriler /api/etkinlikler üzerinden GitHub deposuna kaydedilir (afişler assets/images/etkinlikler altına); siteye giren herkes görür.
 (() => {
     const API = '/api/etkinlikler';
     const AFIS_EN_GENIS = 1600; // px – afiş yüklenmeden önce bu boyuta küçültülür
@@ -17,6 +17,7 @@
     const afisMetni = document.getElementById('afisMetni');
 
     let etkinlikler = [];
+    let hamAdres = ''; // yeni afiş yayına girene kadar GitHub'dan gösterilir
     let duzenlenenId = null;
     let afisVeri = null; // yeni seçilen afiş (data URL)
 
@@ -57,6 +58,7 @@
         try {
             const veri = await istek('GET');
             etkinlikler = veri.etkinlikler || [];
+            hamAdres = typeof veri.hamAdres === 'string' && veri.hamAdres.startsWith('https://raw.githubusercontent.com/') ? veri.hamAdres : '';
             ciz();
         } catch (hata) {
             tablo.replaceChildren(bosSatir('Etkinlikler yüklenemedi.'));
@@ -102,6 +104,10 @@
             const img = document.createElement('img');
             img.src = e.afis;
             img.alt = '';
+            img.addEventListener('error', () => {
+                const yedek = hamAdres && String(e.afis).startsWith('/assets/images/etkinlikler/') ? hamAdres + e.afis : '';
+                if (yedek && img.src !== yedek) img.src = yedek;
+            }, { once: true });
             img.loading = 'lazy';
             const yazi = document.createElement('div');
             const ad = document.createElement('strong');
@@ -249,7 +255,7 @@
         try {
             await istek(duzenlenenId ? 'PUT' : 'POST', bilgiler, duzenlenenId);
             dialog.close();
-            mesaj(durum, duzenlenenId ? 'Etkinlik güncellendi.' : 'Etkinlik yayınlandı. Etkinlikler sayfasında görünüyor.', 'basarili');
+            mesaj(durum, `${duzenlenenId ? 'Etkinlik güncellendi.' : 'Etkinlik eklendi.'} Sitede görünmesi yaklaşık 1 dakika sürebilir.`, 'basarili');
             await listeyiYukle();
         } catch (hata) {
             mesaj(dialogDurum, hata.message, 'hata');
@@ -265,7 +271,7 @@
         dugme.disabled = true;
         try {
             await istek('DELETE', null, etkinlik.id);
-            mesaj(durum, 'Etkinlik silindi.', 'basarili');
+            mesaj(durum, 'Etkinlik silindi. Siteden kalkması yaklaşık 1 dakika sürebilir.', 'basarili');
             await listeyiYukle();
         } catch (hata) {
             mesaj(durum, hata.message, 'hata');

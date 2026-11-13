@@ -4,44 +4,57 @@ Giriş ve galeri, `api/` klasöründeki JavaScript sunucu fonksiyonlarıyla çal
 
 | Dosya | Görevi |
 | --- | --- |
-| `api/giris.js` | Kullanıcı adı/e-posta + şifreyi doğrular, 8 saatlik oturum açar |
+| `api/giris.js` | E-posta + şifreyi **Firebase Authentication** ile doğrular, 8 saatlik oturum açar |
 | `api/oturum.js` | Giriş yapılmış mı kontrol eder |
 | `api/cikis.js` | Oturumu kapatır |
 | `api/galeri.js`, `api/galeri-gorsel.js` | Galeri listesi ve fotoğraflar (yalnızca giriş yapanlara) |
 | `api/etkinlikler.js` | Etkinlik listesi (herkese) ve ekleme/düzenleme/silme (yalnızca yöneticiye) |
+| `api/_github.js` | Panelden yapılan değişiklikleri GitHub deposuna commit eder |
 | `public/scripts/yonetim.js` | Kontrol masası paneli |
 | `pages/giris.html` | Giriş ekranı ve yönetici paneli |
 | `pages/galeri.html` | Galeri sayfası (panelde "Özel Galeri" düğmesi) |
 | `galeri-private/images/` | Galeri fotoğrafları. Sitede herkese açık değildir |
-| `tools/sifre-olustur.mjs` | Şifre hash'i üretme aracı |
 
-## Kurulum (bir kez)
+## 1. Giriş: Firebase (bir kez)
 
-1. Bilgisayarda proje klasöründe çalıştırın ve her yönetici için kullanıcı adı, e-posta ve **yeni** bir şifre girin:
+1. [Firebase konsolu](https://console.firebase.google.com) → **toplulukadmin** projesi → **Authentication** → **Başlayın**.
+2. **Sign-in method** sekmesinde **E-posta/Şifre** yöntemini açın.
+3. **Users** sekmesinde **Kullanıcı ekle** ile her yönetici için e-posta ve şifre oluşturun.
+4. **Proje ayarları** (dişli simgesi) → **Genel** → **Web API anahtarı** değerini kopyalayın.
+5. Vercel'de **Project → Settings → Environment Variables** bölümüne ekleyin:
 
-   ```sh
-   node tools/sifre-olustur.mjs
-   ```
+   | Ad | Değer |
+   | --- | --- |
+   | `FIREBASE_API_KEY` | 4. adımda kopyalanan anahtar |
+   | `YONETICI_EPOSTALAR` | Panele girebilecek e-postalar, virgülle ayrılmış |
+   | `OTURUM_SIRRI` | Zaten var; değiştirmeyin |
 
-2. Araç iki değer basar. Vercel'de **Project → Settings → Environment Variables** bölümüne ikisini de ekleyin:
-   - `GIRIS_KULLANICILAR`
-   - `OTURUM_SIRRI`
-3. **Deployments → Redeploy** ile yeniden yayınlayın.
+6. **Deployments → Redeploy**.
 
-Şifreler hiçbir dosyada tutulmaz; Vercel'de yalnızca geri çevrilemeyen hash'leri durur. Kullanıcı eklemek veya şifre değiştirmek için aracı yeniden çalıştırıp `GIRIS_KULLANICILAR` değerini güncelleyin. `OTURUM_SIRRI`'ni değiştirmek herkesin oturumunu kapatır.
+Şifreler Firebase'de durur; ne bu depoda ne Vercel'de saklanır. Şifre değiştirmek, kullanıcı silmek veya
+devre dışı bırakmak Firebase → Authentication → Users ekranından yapılır. Firebase'de hesabı olsa bile e-postası
+`YONETICI_EPOSTALAR` listesinde olmayan kişi panele giremez. Eski `GIRIS_KULLANICILAR` ayarı artık kullanılmıyor; Vercel'den silinebilir.
 
-## Etkinlik yönetimi (Kontrol masası)
+## 2. Etkinlik ve afiş kaydı: GitHub (bir kez)
 
-Giriş yapınca açılan panelde etkinlikler eklenir, düzenlenir ve silinir; değişiklikler Etkinlikler sayfasında herkese görünür. Veriler ve afişler **Vercel Blob** deposunda saklanır.
+Panelden eklenen/düzenlenen/silinen etkinlikler `public/data/etkinlikler.json` dosyasına, yüklenen afişler
+`public/assets/images/etkinlikler/` klasörüne **GitHub'a commit olarak** yazılır. Vercel her commit'te siteyi
+yeniden yayınlar; değişikliğin sitede görünmesi yaklaşık 1 dakika sürer. Her değişiklik GitHub geçmişinde
+durduğu için yanlışlıkla silinen bir etkinlik veya afiş oradan geri alınabilir.
 
-Kurulum (bir kez):
+1. GitHub → **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**.
+2. **Repository access**: *Only select repositories* → `sdu.yazilimvesiberguvenliktoplulugu`.
+3. **Permissions → Repository permissions → Contents**: *Read and write*. Başka izin vermeyin.
+4. Oluşan token'ı Vercel'e `GITHUB_TOKEN` adıyla ekleyin ve **Redeploy** yapın.
 
-1. Vercel'de projeyi açın → **Storage** → **Create Database** → **Blob** → oluşturup bu projeye bağlayın (**Connect**).
-2. Bu işlem `BLOB_READ_WRITE_TOKEN` ortam değişkenini otomatik ekler. **Deployments → Redeploy** ile yeniden yayınlayın.
+Token'ın süresi dolunca panel "GitHub kaydı reddetti" der; yeni token oluşturup Vercel'deki değeri güncelleyin.
+Panelden bir değişiklik yaptıktan sonra bilgisayarda çalışmaya devam etmeden önce `git pull` yapın.
 
-Depo kurulana kadar Etkinlikler sayfası `public/data/etkinlikler.json` dosyasındaki etkinlikleri gösterir; panelde kaydetmeye çalışınca "Etkinlik deposu kurulmamış" uyarısı çıkar. İlk kayıttan sonra liste depodan okunur ve bu dosya artık kullanılmaz.
+## Kayıt formu ve yanıtlar
 
-Her değişiklikte listenin yeni bir sürümü kaydedilir; son 10 sürüm Vercel → Storage → Blob → `etkinlikler/` klasöründe durur. Yanlışlıkla silinen bir etkinlik oradan geri getirilebilir.
+Kayıt formu tanımı ve yanıtlar kişisel veri içerdiği için GitHub'a yazılmaz; **Vercel Blob** deposunda saklanır.
+Vercel → **Storage** → **Create Database** → **Blob** → bu projeye bağlayın (**Connect**) ve **Redeploy** yapın.
+Blob kurulana kadar kayıtlar yalnızca EmailJS üzerinden e-postayla gelir.
 
 ## Fotoğraf eklemek
 
@@ -49,6 +62,8 @@ Fotoğrafları (JPG, PNG, GIF, WEBP) `galeri-private/images/` klasörüne koyup 
 
 ## Local'de denemek
 
-`npm run dev` yalnızca sayfaları açar, `api/` fonksiyonlarını çalıştırmaz. Giriş ve galeriyi bilgisayarda denemek için `npx vercel dev` kullanın.
+`npm run dev`, `api/` fonksiyonlarını da çalıştırır. Ayarları proje klasöründeki `.env.local` dosyasına
+(`FIREBASE_API_KEY=...` biçiminde) yazın; bu dosya GitHub'a yüklenmez. `.env.local`'e `GITHUB_TOKEN` eklenirse
+yerelde panelden yapılan değişiklikler de gerçek depoya yazılır.
 
 Tarayıcılar ekran görüntüsü alınmasını engelleyemez; giriş yapan biri fotoğrafı kaydedebilir.
