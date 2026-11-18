@@ -24,7 +24,7 @@ export default async function handler(req, res) {
 
     try {
         const kullanici = await kullaniciDogrula(eposta, sifre);
-        oturumAc(res, kullanici.isim);
+        oturumAc(res, kullanici.isim, kullanici.eposta);
         return res.status(200).json({ basarili: true, isim: kullanici.isim });
     } catch (hata) {
         if (hata instanceof GirisHatasi) {

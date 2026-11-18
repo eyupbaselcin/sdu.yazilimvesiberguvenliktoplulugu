@@ -1,6 +1,7 @@
 // Eğitim kayıt formunun tanımı (başlık, açıklamalar, sorular).
 // Herkes okuyabilir (form sayfası bunu çizer); yalnızca yönetici değiştirebilir.
 import { onbellekYok } from './_ortak.js';
+import { createHash } from 'node:crypto';
 import {
     DEPO_YOK_MESAJI, IstekHatasi, depoKuruluMu, hataYaniti, rastgele, sonSurumuOku, surumYaz, temizMetin, yoneticiKontrol,
 } from './_depo.js';
@@ -26,9 +27,11 @@ export const VARSAYILAN_FORM = {
 };
 
 export async function formuOku() {
-    if (!depoKuruluMu()) return { form: VARSAYILAN_FORM, surumler: [] };
-    const { veri, surumler } = await sonSurumuOku(ONEK);
-    return { form: veri || VARSAYILAN_FORM, surumler };
+    if (!depoKuruluMu()) throw new IstekHatasi(503, DEPO_YOK_MESAJI);
+    const { veri, surumler, etag } = await sonSurumuOku(ONEK);
+    const form = veri || VARSAYILAN_FORM;
+    const surum = form.surum || createHash('sha256').update(JSON.stringify(form)).digest('hex');
+    return { form: { ...form, surum }, surumler, etag };
 }
 
 function formuDogrula(govde) {
@@ -87,7 +90,7 @@ export default async function handler(req, res) {
             } else {
                 res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=30');
             }
-            return res.status(200).json({ form });
+            return res.status(200).json({ form, captchaSiteKey: process.env.TURNSTILE_SITE_KEY || null });
         }
 
         onbellekYok(res);
@@ -99,8 +102,10 @@ export default async function handler(req, res) {
         if (!depoKuruluMu()) throw new IstekHatasi(503, DEPO_YOK_MESAJI);
 
         const yeni = formuDogrula(typeof req.body === 'object' && req.body !== null ? req.body : {});
-        const { surumler } = await formuOku();
-        await surumYaz(ONEK, yeni, surumler);
+        const { form, etag } = await formuOku();
+        if (req.body.surum !== form.surum) throw new IstekHatasi(409, 'Form değişti. Sayfayı yenileyip değişikliklerinizi yeniden uygulayın.');
+        yeni.surum = rastgele(16);
+        await surumYaz(ONEK, yeni, etag);
         return res.status(200).json({ form: yeni });
     } catch (hata) {
         return hataYaniti(res, hata, 'Form');

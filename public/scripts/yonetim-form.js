@@ -50,6 +50,7 @@
     const formDurum = $('formDurum');
     let sorular = [];
     let degisti = false;
+    let formSurumu;
 
     function degisiklik() {
         degisti = true;
@@ -179,6 +180,7 @@
     }
 
     function formuDoldur(form) {
+        formSurumu = form.surum;
         $('formUstBaslikGir').value = form.ustBaslik || '';
         $('formBaslikGir').value = form.baslik || '';
         $('formUyariGir').value = form.uyari || '';
@@ -236,6 +238,7 @@
                     maddeler: $('formMaddelerGir').value.split('\n'),
                     acik: $('formAcik').checked,
                     sorular,
+                    surum: formSurumu,
                 }),
             });
             formuDoldur(form);
@@ -339,8 +342,14 @@
     async function yanitlariYukle() {
         mesaj($('yanitDurum'), 'Yanıtlar yükleniyor…');
         try {
-            const veri = await istek(`/api/yanitlar?t=${Date.now()}`);
-            yanitlar = veri.yanitlar || [];
+            const tumu = [];
+            let cursor;
+            do {
+                const veri = await istek(`/api/yanitlar?t=${Date.now()}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ''}`);
+                tumu.push(...(veri.yanitlar || []));
+                cursor = veri.cursor;
+            } while (cursor);
+            yanitlar = tumu.sort((a, b) => String(b.zaman).localeCompare(String(a.zaman)));
             sutunlariBelirle();
             yanitlariCiz();
             mesaj($('yanitDurum'), '');

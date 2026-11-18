@@ -1,6 +1,6 @@
 // Vercel Blob üzerinde sürümlü JSON saklama ve ortak istek yardımcıları.
 import { randomBytes } from 'node:crypto';
-import { del, list, put } from '@vercel/blob';
+import { BlobError, BlobPreconditionFailedError, get, list, put } from '@vercel/blob';
 import { oturumOku } from './_ortak.js';
 
 export class IstekHatasi extends Error {
@@ -10,8 +10,14 @@ export class IstekHatasi extends Error {
     }
 }
 
-export const depoKuruluMu = () => Boolean(process.env.BLOB_READ_WRITE_TOKEN);
-export const DEPO_YOK_MESAJI = 'Depo kurulmamış (Vercel Blob). Kurulum için GALERI_KURULUM.md dosyasına bakın.';
+export const depoKuruluMu = () => Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim()
+    || (process.env.BLOB_STORE_ID && process.env.VERCEL_OIDC_TOKEN));
+export const DEPO_YOK_MESAJI = 'Vercel Blob bağlantısı eksik. Private Blob deposunu projeye bağlayın, ortam değişkenlerini etkinleştirin ve Redeploy yapın. Bkz. KAYIT_FORMU_KURULUM.md.';
+
+export async function jsonGetir(url) {
+    const access = String(url).includes('://') && !String(url).includes('.private.blob.') ? 'public' : 'private';
+    return get(url, { access, useCache: false });
+}
 
 export const rastgele = (bayt = 8) => randomBytes(bayt).toString('hex');
 
@@ -28,30 +34,47 @@ export async function hepsiniListele(onek) {
 }
 
 export async function jsonOku(url) {
-    const yanit = await fetch(url, { cache: 'no-store' });
-    if (!yanit.ok) throw new Error(`Okunamadı (${yanit.status}): ${url}`);
-    return yanit.json();
+    const yanit = await jsonGetir(url);
+    if (!yanit || yanit.statusCode !== 200) throw new IstekHatasi(503, 'Depodaki bir kayıt okunamadı. Lütfen tekrar deneyin.');
+    return new Response(yanit.stream).json();
 }
 
 /** Önekteki en yeni sürümü okur; hiç yoksa null döner. */
 export async function sonSurumuOku(onek) {
-    const { blobs } = await list({ prefix: onek, limit: 100 });
-    if (!blobs.length) return { veri: null, surumler: [] };
+    const guncel = await jsonGetir(`${onek}guncel.json`);
+    if (guncel) {
+        return { veri: await new Response(guncel.stream).json(), surumler: [], etag: guncel.blob.etag };
+    }
+    const blobs = (await hepsiniListele(onek)).filter((b) => !b.pathname.endsWith('guncel.json'));
+    if (!blobs.length) return { veri: null, surumler: [], etag: null };
     blobs.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
-    return { veri: await jsonOku(blobs[0].url), surumler: blobs };
+    return { veri: await jsonOku(blobs[0].url), surumler: blobs, etag: null };
 }
 
-/** Yeni bir sürüm yazar ve en eski sürümleri siler (yanlışlıkla değişikliğe karşı son N sürüm tutulur). */
-export async function surumYaz(onek, veri, eskiSurumler, saklanacak = 10) {
-    await put(`${onek}${Date.now()}-${rastgele(4)}.json`, JSON.stringify(veri), {
-        access: 'public',
+/** Geçmişi korur, aktif formu ETag kontrolüyle atomik günceller. */
+export async function surumYaz(onek, veri, etag) {
+    // Geçmiş önce yazılır; başarısız CAS durumunda bu dosya aktif form olarak okunmaz.
+    // Geçmiş otomatik silinmez: eski başvuruların sürümleri korunur.
+    await put(`form/gecmis-${Date.now()}-${rastgele(4)}.json`, JSON.stringify(veri), {
+        access: 'private',
         contentType: 'application/json',
         addRandomSuffix: false,
     });
-    const silinecek = eskiSurumler.slice(saklanacak - 1).map((b) => b.url);
-    if (silinecek.length) {
-        await del(silinecek).catch((hata) => console.error('Eski sürümler silinemedi:', hata));
+    try {
+        await put(`${onek}guncel.json`, JSON.stringify(veri), {
+            access: 'private', contentType: 'application/json', addRandomSuffix: false,
+            ...(etag ? { ifMatch: etag } : { allowOverwrite: false }),
+        });
+    } catch (hata) {
+        if (hata instanceof BlobPreconditionFailedError || blobZatenVar(hata)) {
+            throw new IstekHatasi(409, 'Form başka bir yönetici tarafından değiştirildi. Sayfayı yenileyin.');
+        }
+        throw hata;
     }
+}
+
+export function blobZatenVar(hata) {
+    return hata instanceof BlobError && /already exists/i.test(hata.message);
 }
 
 /** Değişiklik istekleri: aynı siteden gelmeli ve yönetici giriş yapmış olmalı. */
@@ -73,6 +96,12 @@ export function hataYaniti(res, hata, baglam) {
         return res.status(hata.kod).json({ mesaj: hata.message });
     }
     console.error(`${baglam} hatası:`, hata);
+    if (/access.*(private|public)|(private|public).*access/i.test(hata.message || '')) {
+        return res.status(503).json({ mesaj: 'Blob erişim türü uyumsuz. Kişisel veriler için Private depo gereklidir. Public depodaki verileri taşımadan silmeyin. Bkz. KAYIT_FORMU_KURULUM.md.' });
+    }
+    if (hata instanceof BlobError) {
+        return res.status(503).json({ mesaj: 'Vercel Blob işlem yapamadı. Depo bağlantısını, ortam izinlerini, token süresini ve kotayı kontrol edip Redeploy yapın.' });
+    }
     return res.status(500).json({ mesaj: 'Sunucu hatası. Lütfen tekrar deneyin.' });
 }
 
