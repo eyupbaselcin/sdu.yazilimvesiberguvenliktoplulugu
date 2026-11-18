@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --open /pages/iletisim.html",
-    "build": "vite build"
+    "build": "vite build",
+    "test": "node --experimental-test-module-mocks --test tests/*.test.js",
+    "blob:migrate": "node --env-file=.env.local scripts/blob-tasi.js"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -16,5 +18,10 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.4.1",
     "vite": "^6.3.5"
+  },
+  "overrides": {
+    "@vercel/cli-config": {
+      "zod": "^4.6.7"
+    }
   }
 }

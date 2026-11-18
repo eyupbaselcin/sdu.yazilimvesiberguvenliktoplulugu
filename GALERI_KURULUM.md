@@ -33,7 +33,7 @@ Giriş ve galeri, `api/` klasöründeki JavaScript sunucu fonksiyonlarıyla çal
 
 Şifreler Firebase'de durur; ne bu depoda ne Vercel'de saklanır. Şifre değiştirmek, kullanıcı silmek veya
 devre dışı bırakmak Firebase → Authentication → Users ekranından yapılır. Firebase'de hesabı olsa bile e-postası
-`YONETICI_EPOSTALAR` listesinde olmayan kişi panele giremez. Eski `GIRIS_KULLANICILAR` ayarı artık kullanılmıyor; Vercel'den silinebilir.
+`YONETICI_EPOSTALAR` listesinde olmayan kişi panele giremez. Mevcut oturumları da kesmek için kişiyi bu listeden çıkarıp Redeploy yapın. Firebase'de devre dışı bırakma mevcut uygulama çerezini tek başına iptal etmez. Acil durumda `OTURUM_SIRRI` değiştirip Redeploy tüm oturumları kapatır. Eski `GIRIS_KULLANICILAR` ayarı artık kullanılmıyor; Vercel'den silinebilir.
 
 ## 2. Etkinlik ve afiş kaydı: GitHub (bir kez)
 
@@ -53,8 +53,10 @@ Panelden bir değişiklik yaptıktan sonra bilgisayarda çalışmaya devam etmed
 ## Kayıt formu ve yanıtlar
 
 Kayıt formu tanımı ve yanıtlar kişisel veri içerdiği için GitHub'a yazılmaz; **Vercel Blob** deposunda saklanır.
-Vercel → **Storage** → **Create Database** → **Blob** → bu projeye bağlayın (**Connect**) ve **Redeploy** yapın.
-Blob kurulana kadar kayıtlar yalnızca EmailJS üzerinden e-postayla gelir.
+Vercel → **Storage** → **Blob** → **Private** erişimle oluşturun, bu projeye bağlayın (**Connect**) ve **Redeploy** yapın.
+OIDC veya `BLOB_READ_WRITE_TOKEN` bağlantısı gerekir. Public depo kişisel veriler için kullanılmaz.
+Blob kurulana kadar kayıt gönderilemez; e-posta tek başına kayıt yerine geçmez.
+Ayrıntılı kurulum, eski public verileri taşıma ve teşhis: `KAYIT_FORMU_KURULUM.md`.
 
 ## Fotoğraf eklemek
 

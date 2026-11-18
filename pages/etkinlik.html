@@ -472,9 +472,8 @@
 
         async function takvimVerisiniYukle() {
             try {
-                const yanit = await fetch('../data/takvim.json', { cache: 'no-cache' });
-                if (!yanit.ok) throw new Error(`takvim.json yüklenemedi: ${yanit.status}`);
-                const veri = await yanit.json();
+                const { takvimVerisi } = await import(/* @vite-ignore */ '/scripts/takvim-veri.js');
+                const veri = await takvimVerisi();
                 const iki = (n) => String(n).padStart(2, '0');
 
                 (veri.aylar || []).forEach((ay) => {
@@ -488,6 +487,8 @@
                             const anahtar = `${veri.yil}-${iki(ay.Ayn_no)}-${iki(eslesme[1])}`;
                             if (!takvimEtkinlikleri[anahtar]) {
                                 takvimEtkinlikleri[anahtar] = { metin: eslesme[2], tur: etkinlikTuru(eslesme[2]) };
+                            } else if (!takvimEtkinlikleri[anahtar].metin.split(' • ').includes(eslesme[2])) {
+                                takvimEtkinlikleri[anahtar].metin += ` • ${eslesme[2]}`;
                             }
                         });
                 });

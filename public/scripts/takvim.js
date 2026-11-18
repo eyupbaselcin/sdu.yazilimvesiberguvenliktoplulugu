@@ -84,9 +84,8 @@
 
     async function yukle() {
         try {
-            const yanit = await fetch('../data/takvim.json', { cache: 'no-cache' });
-            if (!yanit.ok) throw new Error(`takvim.json yüklenemedi: ${yanit.status}`);
-            const veri = await yanit.json();
+            const { takvimVerisi } = await import('./takvim-veri.js');
+            const veri = await takvimVerisi();
             kutular.forEach((kutu) => kutuyuCiz(kutu, veri));
         } catch (hata) {
             console.error(hata);

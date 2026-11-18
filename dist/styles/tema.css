@@ -1,0 +1,455 @@
+/*
+ * SDÜ Yazılım ve Siber Güvenlik Topluluğu – ortak renk teması
+ * Tüm sayfalarda en son yüklenir; eski sayfa stillerindeki dağınık renkleri tek bir palete toplar.
+ * Renk değiştirmek için yalnızca aşağıdaki --t-* değerlerini düzenleyin.
+ */
+
+:root {
+    --t-zemin: #f3f2ee;        /* sayfa zemini (kâğıt) */
+    --t-zemin-2: #ebe9e3;      /* ikincil zemin: kod kutuları, tablo başlıkları */
+    --t-yuzey: #fbfbf9;        /* kartlar, paneller */
+    --t-cizgi: #dcd9d0;        /* ince çerçeveler */
+    --t-yazi: #191b1f;
+    --t-soluk: #5c6066;
+    --t-vurgu: #0f5c63;        /* tek vurgu rengi: koyu petrol */
+    --t-vurgu-koyu: #0a454b;
+    --t-vurgu-tint: #e1ecea;
+    --t-vurgu-yazi: #ffffff;   /* vurgu zemin üstündeki yazı */
+    --t-sinav: #a84a2f;        /* sınav / stant günleri: kiremit */
+    --t-sinav-tint: #f5e4dd;
+    --t-logo: #17191c;
+    --t-radius: 10px;
+}
+
+html.dark,
+body.dark,
+.community-body.dark {
+    --t-zemin: #121315;
+    --t-zemin-2: #191b1e;
+    --t-yuzey: #1b1d20;
+    --t-cizgi: #2d3035;
+    --t-yazi: #e8e6e1;
+    --t-soluk: #9b9fa6;
+    --t-vurgu: #74c0b5;
+    --t-vurgu-koyu: #9ad3ca;
+    --t-vurgu-tint: rgba(116, 192, 181, 0.12);
+    --t-vurgu-yazi: #101113;
+    --t-sinav: #e08e72;
+    --t-sinav-tint: rgba(224, 142, 114, 0.13);
+    --t-logo: #0c0d0e;
+}
+
+/* ---------- Eski stil dosyalarının renk değişkenlerini ortak temaya bağla ----------
+ * Böylece eski sayfalarda da koyu temada yazılar okunur kalır (açık renk yazı kullanılır). */
+:root,
+html.dark,
+body.dark,
+.community-body.dark {
+    /* ana sayfa (home-*.css) */
+    --bg: var(--t-zemin);
+    --card: var(--t-yuzey);
+    --primary: var(--t-vurgu);
+    --primary-soft: var(--t-vurgu);
+    --text: var(--t-yazi);
+    --muted: var(--t-soluk);
+    --border: var(--t-cizgi);
+    --shadow: none;
+    /* siber güvenlik (security-*.css) */
+    --background: var(--t-zemin);
+    --surface: var(--t-yuzey);
+    --surface-raised: var(--t-zemin-2);
+    --accent: var(--t-vurgu);
+    --accent-soft: var(--t-vurgu-tint);
+    --code: var(--t-yazi);
+    /* etkinlikler (events-*.css) ve iletişim (contact-*.css) */
+    --page: var(--t-zemin);
+    --ink: var(--t-yazi);
+    --ink-soft: var(--t-soluk);
+    --line: var(--t-cizgi);
+    --cream: var(--t-zemin);
+    --emerald: var(--t-vurgu);
+    --emerald-d: var(--t-vurgu-koyu);
+    --gold: var(--t-vurgu);
+    --pink: var(--t-sinav);
+    --pink-soft: var(--t-sinav-tint);
+    --green: var(--t-vurgu);
+    --green-soft: var(--t-vurgu-tint);
+}
+
+/* Düz metinler: koyu temada da okunur */
+:root:is(*, .dark) .panel p,
+:root:is(*, .dark) .about-panel p,
+:root:is(*, .dark) .news-card p,
+:root:is(*, .dark) .section-subtitle,
+:root:is(*, .dark) .feature span,
+:root:is(*, .dark) .about-list li,
+:root:is(*, .dark) .social-list li,
+:root:is(*, .dark) .contact-card p {
+    color: var(--t-soluk) !important;
+}
+
+:root:is(*, .dark) .about-panel p {
+    color: var(--t-yazi) !important;
+}
+
+:root:is(*, .dark) .about-list li,
+:root:is(*, .dark) .social-list li {
+    background: var(--t-zemin-2) !important;
+    border-color: var(--t-cizgi) !important;
+    color: var(--t-yazi) !important;
+}
+
+/* ---------- Zemin ve yazı ---------- */
+:root:is(*, .dark),
+:root:is(*, .dark) body,
+:root:is(*, .dark) body.dark,
+:root:is(*, .dark) body.page,
+:root:is(*, .dark) .community-body,
+:root:is(*, .dark) .community-body.dark {
+    background: var(--t-zemin) !important;
+    color: var(--t-yazi) !important;
+}
+
+/* ---------- Üst bilgi ---------- */
+:root:is(*, .dark) header.sticky,
+:root:is(*, .dark) .site-header,
+:root:is(*, .dark) .brand-header,
+:root:is(*, .dark) .topbar,
+:root:is(*, .dark) body > header,
+:root:is(*, .dark) .site-page > header,
+:root:is(*, .dark) .page > header {
+    background: color-mix(in srgb, var(--t-zemin) 92%, transparent) !important;
+    border-color: var(--t-cizgi) !important;
+    box-shadow: none !important;
+}
+
+/* Logo kutusu: logo siyah-beyaz, gradyan yerine düz koyu zemin */
+:root:is(*, .dark) header .bg-gradient-to-tr,
+:root:is(*, .dark) .brand__logo,
+:root:is(*, .dark) .site-brand__logo {
+    background: var(--t-logo) !important;
+    box-shadow: none !important;
+}
+
+:root:is(*, .dark) header .text-\[\#0a6670\],
+:root:is(*, .dark) header .dark\:text-\[\#3bb9ab\],
+:root:is(*, .dark) .brand__title span:last-child {
+    color: var(--t-soluk) !important;
+}
+
+/* ---------- Menü: hap düğmeler yerine sade, alt çizgili bağlantılar ---------- */
+:root:is(*, .dark) .nav-pill,
+:root:is(*, .dark) .nav-link,
+:root:is(*, .dark) .site-nav__link,
+:root:is(*, .dark) #main-nav a {
+    background: transparent !important;
+    color: var(--t-yazi) !important;
+    border: 0 !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    margin: 0 10px;
+    font-weight: 500 !important;
+}
+
+:root:is(*, .dark) .nav-pill:hover,
+:root:is(*, .dark) .nav-link:hover,
+:root:is(*, .dark) .site-nav__link:hover,
+:root:is(*, .dark) #main-nav a:hover {
+    color: var(--t-vurgu) !important;
+    background: transparent !important;
+}
+
+:root:is(*, .dark) .nav-pill.active,
+:root:is(*, .dark) .nav-link.active,
+:root:is(*, .dark) .site-nav__link.active,
+:root:is(*, .dark) #main-nav a.active,
+:root:is(*, .dark) [aria-current="page"].nav-pill {
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--t-yazi) !important;
+    border-bottom-color: var(--t-vurgu) !important;
+    font-weight: 700 !important;
+}
+
+:root:is(*, .dark) #mobileMenu .nav-pill,
+:root:is(*, .dark) #mobileMenu a {
+    margin: 0 !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+    padding: 10px 2px !important;
+}
+
+/* Tema ve menü düğmeleri */
+:root:is(*, .dark) .theme-toggle-btn,
+:root:is(*, .dark) .theme-toggle,
+:root:is(*, .dark) #themeToggle,
+:root:is(*, .dark) #mobileMenuBtn {
+    background: transparent !important;
+    border: 1px solid var(--t-cizgi) !important;
+    color: var(--t-yazi) !important;
+    box-shadow: none !important;
+}
+
+/* ---------- Kartlar ve paneller ---------- */
+:root:is(*, .dark) .panel,
+:root:is(*, .dark) .news-card,
+:root:is(*, .dark) .news-panel,
+:root:is(*, .dark) .event-card,
+:root:is(*, .dark) .calendar-card,
+:root:is(*, .dark) .contact-card,
+:root:is(*, .dark) .login-form,
+:root:is(*, .dark) .past-event,
+:root:is(*, .dark) .community-body .panel,
+:root:is(*, .dark) .community-body .calendar-card,
+:root:is(*, .dark) .community-body .news-panel,
+:root:is(*, .dark) .community-body .event-card,
+:root:is(*, .dark) #komut-listesi section {
+    background: var(--t-yuzey) !important;
+    border: 1px solid var(--t-cizgi) !important;
+    border-radius: var(--t-radius) !important;
+    box-shadow: none !important;
+}
+
+:root:is(*, .dark) .hero-image {
+    background: var(--t-logo) !important;
+    border-color: var(--t-logo) !important;
+    box-shadow: none !important;
+}
+
+/* Başlıklar ve küçük üst yazılar */
+:root:is(*, .dark) .section-title,
+:root:is(*, .dark) .event-month__title,
+:root:is(*, .dark) .news-title,
+:root:is(*, .dark) .card-title,
+:root:is(*, .dark) .form-header h1,
+:root:is(*, .dark) .game-heading {
+    color: var(--t-yazi) !important;
+}
+
+:root:is(*, .dark) .eyebrow,
+:root:is(*, .dark) .back-link,
+:root:is(*, .dark) .news-header,
+:root:is(*, .dark) .section-subtitle,
+:root:is(*, .dark) .calendar-month {
+    color: var(--t-soluk) !important;
+}
+
+:root:is(*, .dark) .back-link:hover {
+    color: var(--t-vurgu) !important;
+}
+
+/* ---------- Ana sayfa takvimi ---------- */
+:root:is(*, .dark) .calendar-event,
+:root:is(*, .dark) .calendar-events__empty {
+    background: var(--t-yuzey) !important;
+    border: 1px solid var(--t-cizgi) !important;
+    border-radius: 8px !important;
+    color: var(--t-yazi) !important;
+}
+
+:root:is(*, .dark) .calendar-event[data-day-type="green"] {
+    background: var(--t-vurgu-tint) !important;
+    border-color: transparent !important;
+    border-left: 3px solid var(--t-vurgu) !important;
+}
+
+:root:is(*, .dark) .calendar-event[data-day-type="pink"] {
+    background: var(--t-sinav-tint) !important;
+    border-color: transparent !important;
+    border-left: 3px solid var(--t-sinav) !important;
+}
+
+:root:is(*, .dark) .calendar-event__date {
+    color: var(--t-soluk) !important;
+}
+
+:root:is(*, .dark) .calendar-event[data-day-type="pink"] .calendar-event__date {
+    color: var(--t-sinav) !important;
+}
+
+:root:is(*, .dark) .calendar-event.today {
+    box-shadow: inset 0 0 0 2px var(--t-vurgu) !important;
+}
+
+/* ---------- Etkinlikler sayfası takvimi ---------- */
+:root:is(*, .dark) .calendar thead th,
+:root:is(*, .dark) .calendar th {
+    background: transparent !important;
+    color: var(--t-soluk) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+:root:is(*, .dark) .calendar tbody td,
+:root:is(*, .dark) .calendar td {
+    background: var(--t-yuzey) !important;
+    border: 1px solid var(--t-cizgi) !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    color: var(--t-yazi) !important;
+}
+
+:root:is(*, .dark) .calendar tbody td span {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+:root:is(*, .dark) .calendar tbody td.day[data-day-type="green"],
+:root:is(*, .dark) .calendar tbody td.day[data-day-type="green"] span {
+    background: var(--t-vurgu-tint) !important;
+    color: var(--t-vurgu-koyu) !important;
+}
+
+:root:is(*, .dark) .calendar tbody td.day[data-day-type="pink"],
+:root:is(*, .dark) .calendar tbody td.day[data-day-type="pink"] span {
+    background: var(--t-sinav-tint) !important;
+    color: var(--t-sinav) !important;
+}
+
+:root:is(*, .dark) .calendar tbody td.muted,
+:root:is(*, .dark) .calendar td.muted {
+    background: transparent !important;
+    opacity: 0.45 !important;
+}
+
+:root:is(*, .dark) .calendar tbody td.bugun {
+    box-shadow: inset 0 0 0 2px var(--t-vurgu) !important;
+}
+
+/* Etkinlik kartları */
+:root:is(*, .dark) .event-card__tag {
+    background: transparent !important;
+    color: var(--t-vurgu) !important;
+    border: 1px solid currentColor !important;
+    border-radius: 4px !important;
+}
+
+:root:is(*, .dark) .event-card__title {
+    color: var(--t-yazi) !important;
+}
+
+:root:is(*, .dark) .event-card__date,
+:root:is(*, .dark) .event-card__desc {
+    color: var(--t-soluk) !important;
+}
+
+:root:is(*, .dark) .event-card__image {
+    background: var(--t-zemin-2) !important;
+    border-color: var(--t-cizgi) !important;
+}
+
+/* ---------- Siber Güvenlik: terminal komutları ---------- */
+:root:is(*, .dark) #komut-listesi .card-title {
+    color: var(--t-yazi) !important;
+    font-weight: 700 !important;
+}
+
+:root:is(*, .dark) #komut-listesi .news-list li {
+    background: var(--t-zemin-2) !important;
+    border-left: 3px solid var(--t-vurgu) !important;
+    border-radius: 0 6px 6px 0 !important;
+}
+
+:root:is(*, .dark) #komut-listesi .news-list strong {
+    color: var(--t-yazi) !important;
+}
+
+:root:is(*, .dark) #komut-listesi .news-list span {
+    color: var(--t-soluk) !important;
+}
+
+/* ---------- Düğmeler ---------- */
+:root:is(*, .dark) .kayit-gonder,
+:root:is(*, .dark) #form button,
+:root:is(*, .dark) .login-form button,
+:root:is(*, .dark) #loginBtn,
+:root:is(*, .dark) .btn-submit-event {
+    background: var(--t-vurgu) !important;
+    color: var(--t-vurgu-yazi) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+:root:is(*, .dark) .kayit-gonder:hover:not(:disabled),
+:root:is(*, .dark) #form button:hover,
+:root:is(*, .dark) .login-form button:hover,
+:root:is(*, .dark) #loginBtn:hover {
+    background: var(--t-vurgu-koyu) !important;
+}
+
+/* Form alanları */
+:root:is(*, .dark) .field input,
+:root:is(*, .dark) .satir input,
+:root:is(*, .dark) .satir textarea,
+:root:is(*, .dark) .login-form input {
+    background: var(--t-yuzey) !important;
+    border-color: var(--t-cizgi) !important;
+    color: var(--t-yazi) !important;
+}
+
+:root:is(*, .dark) .field label i,
+:root:is(*, .dark) .login-form button i {
+    color: inherit !important;
+}
+
+:root:is(*, .dark) .field label i {
+    color: var(--t-soluk) !important;
+}
+
+/* İletişim sayfası sosyal medya ikonları */
+:root:is(*, .dark) .social-links__icon {
+    background: var(--t-zemin-2) !important;
+    color: var(--t-yazi) !important;
+    box-shadow: none !important;
+}
+
+/* ---------- Eğitim kayıt formu ---------- */
+:root:is(*, .dark) .kayit-panel {
+    --k-ana: var(--t-vurgu) !important;
+    --k-yazi: var(--t-yazi) !important;
+    --k-soluk: var(--t-soluk) !important;
+    --k-kart: var(--t-yuzey) !important;
+    --k-cizgi: var(--t-cizgi) !important;
+    --k-zemin: var(--t-zemin) !important;
+}
+
+:root:is(*, .dark) .kayit-serit {
+    background: var(--t-vurgu) !important;
+    height: 4px !important;
+}
+
+/* ---------- Yönetim paneli ---------- */
+:root:is(*, .dark) .yonetim {
+    --y-zemin: var(--t-zemin) !important;
+    --y-kart: var(--t-yuzey) !important;
+    --y-koyu: var(--t-vurgu) !important;
+    --y-koyu-hover: var(--t-vurgu-koyu) !important;
+    --y-yazi: var(--t-yazi) !important;
+    --y-soluk: var(--t-soluk) !important;
+    --y-cizgi: var(--t-cizgi) !important;
+    --y-turuncu: var(--t-sinav) !important;
+    --y-yesil-acik: var(--t-vurgu-tint) !important;
+    --y-kirmizi-acik: var(--t-sinav-tint) !important;
+    --y-kirmizi: var(--t-sinav) !important;
+}
+
+:root:is(*, .dark) .yonetim .y-btn-ana,
+:root:is(*, .dark) .yonetim-tablo thead th {
+    color: var(--t-vurgu-yazi) !important;
+}
+
+/* ---------- Özel galeri ---------- */
+:root,
+html.dark {
+    --ana: var(--t-vurgu);
+    --zemin: var(--t-zemin);
+    --kart: var(--t-yuzey);
+    --yazi: var(--t-yazi);
+    --soluk: var(--t-soluk);
+    --cizgi: var(--t-cizgi);
+}

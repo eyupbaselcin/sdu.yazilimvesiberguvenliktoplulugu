@@ -243,6 +243,7 @@
             color: #60757d;
         }
     </style>
+    <link rel="stylesheet" href="../styles/tema.css">
 </head>
 
 <body class="community-body">
@@ -260,11 +261,11 @@
             <nav class="site-nav" aria-label="Ana navigasyon">
                 <a class="site-nav__link" href="index.html">Ana Sayfa</a>
                 <a class="site-nav__link active" href="etkinlik.html">Etkinlikler</a>
-                <a class="site-nav__link" href="ToplulukHakkinda.html">Yönetim Ekbimiz</a>
+                <a class="site-nav__link" href="ToplulukHakkinda.html">Yönetim Ekibimiz</a>
                 <a class="site-nav__link" href="iletisim.html">İletişim</a>
-                <a class="site-nav__link" href="giris.html">Giriş</a>
                 <a class="site-nav__link" href="egitim-kayit.html">Eğitim Kaydı</a>
                 <a class="site-nav__link" href="syber.html">Siber Güvenlik</a>
+                <a class="site-nav__link" href="giris.html">Giriş</a>
             </nav>
         </header>
         <main class="page-shell">
@@ -334,6 +335,7 @@
         }
 
         // --- ETKİNLİK LİSTESİ: yönetim panelinden eklenen/düzenlenen etkinlikler ---
+        let hamAdres = ''; // yeni yüklenen afiş yayına girene kadar GitHub'dan gösterilir
         async function etkinlikleriGetir() {
             // Önce sunucu (panelde yapılan değişiklikler), olmazsa (ör. localde npm run dev) başlangıç verisi.
             for (const adres of ['/api/etkinlikler', '../data/etkinlikler.json']) {
@@ -342,6 +344,7 @@
                     if (!yanit.ok) continue;
                     const veri = await yanit.json();
                     const liste = Array.isArray(veri) ? veri : veri.etkinlikler;
+                    if (typeof veri.hamAdres === 'string' && veri.hamAdres.startsWith('https://raw.githubusercontent.com/')) hamAdres = veri.hamAdres;
                     if (Array.isArray(liste)) return liste;
                 } catch (hata) {
                     // sıradaki kaynağı dene
@@ -371,6 +374,14 @@
             baglanti.title = 'Afişi tam boyutta aç';
             baglanti.appendChild(img);
             resimKutusu.appendChild(baglanti);
+            img.addEventListener('error', () => {
+                if (!hamAdres || !String(e.afis).startsWith('/assets/images/etkinlikler/')) return;
+                const yedek = hamAdres + e.afis;
+                if (img.src === yedek) return;
+                img.src = yedek;
+                baglanti.href = yedek;
+                resimKutusu.style.setProperty('--afis', `url(${JSON.stringify(yedek)})`);
+            });
 
             const govde = document.createElement('div');
             govde.className = 'event-card__body';
@@ -461,9 +472,8 @@
 
         async function takvimVerisiniYukle() {
             try {
-                const yanit = await fetch('../data/takvim.json', { cache: 'no-cache' });
-                if (!yanit.ok) throw new Error(`takvim.json yüklenemedi: ${yanit.status}`);
-                const veri = await yanit.json();
+                const { takvimVerisi } = await import(/* @vite-ignore */ '/scripts/takvim-veri.js');
+                const veri = await takvimVerisi();
                 const iki = (n) => String(n).padStart(2, '0');
 
                 (veri.aylar || []).forEach((ay) => {
@@ -477,6 +487,8 @@
                             const anahtar = `${veri.yil}-${iki(ay.Ayn_no)}-${iki(eslesme[1])}`;
                             if (!takvimEtkinlikleri[anahtar]) {
                                 takvimEtkinlikleri[anahtar] = { metin: eslesme[2], tur: etkinlikTuru(eslesme[2]) };
+                            } else if (!takvimEtkinlikleri[anahtar].metin.split(' • ').includes(eslesme[2])) {
+                                takvimEtkinlikleri[anahtar].metin += ` • ${eslesme[2]}`;
                             }
                         });
                 });

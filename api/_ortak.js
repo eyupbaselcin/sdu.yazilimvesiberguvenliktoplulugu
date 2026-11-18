@@ -90,7 +90,7 @@ export async function kullaniciDogrula(eposta, sifre) {
         throw new GirisHatasi(403, 'Bu hesabın yönetim paneline erişim izni yok.');
     }
     const isim = String(veri.displayName || '').trim() || dogrulanan.split('@')[0];
-    return { isim: isim.slice(0, 60) };
+    return { isim: isim.slice(0, 60), eposta: dogrulanan };
 }
 
 function esitMi(a, b) {
@@ -111,8 +111,8 @@ function cerezAyarla(res, deger, saniye) {
     ]);
 }
 
-export function oturumAc(res, isim) {
-    const yuk = Buffer.from(JSON.stringify({ isim, bitis: Date.now() + OTURUM_SURESI_SN * 1000 })).toString('base64url');
+export function oturumAc(res, isim, eposta) {
+    const yuk = Buffer.from(JSON.stringify({ isim, eposta, bitis: Date.now() + OTURUM_SURESI_SN * 1000 })).toString('base64url');
     cerezAyarla(res, `${yuk}.${imzala(yuk)}`, OTURUM_SURESI_SN);
 }
 
@@ -140,6 +140,8 @@ export function oturumOku(req) {
         if (typeof veri.bitis !== 'number' || veri.bitis < Date.now()) {
             return null;
         }
+        // Eski, kimlik içermeyen çerezler de yeniden giriş gerektirir.
+        if (!veri.eposta || !yoneticiEpostalari().includes(veri.eposta)) return null;
         return { isim: String(veri.isim) };
     } catch {
         return null;

@@ -9,21 +9,6 @@
     const EMAILJS_SERVIS = 'service_ew05ydl';
     const EMAILJS_SABLON = 'template_ky163wl';
 
-    // Sunucuya ulaşılamazsa (ör. bağlantı sorunu) gösterilecek form. Asıl form yönetim panelinden düzenlenir.
-    const YEDEK_FORM = {
-        ustBaslik: 'Süleyman Demirel Üniversitesi Yazılım ve Siber Güvenlik Topluluğu',
-        baslik: 'Algoritma ve Programlama Eğitimleri',
-        uyari: 'LÜTFEN VS CODE VE ANTIGRAVITY KURULUMUNU YAPARAK GELİNİZ',
-        maddeler: ['Temel seviyede C dili eğitimi', 'Yapay Zeka Destekli / Ezbersel değil mantıksal'],
-        acik: true,
-        sorular: [
-            { id: 'ad_soyad', baslik: 'Ad Soyad', tur: 'kisa', zorunlu: true },
-            { id: 'sinif', baslik: 'Kaçıncı sınıfsınız?', tur: 'secim', zorunlu: true, secenekler: ['Hazırlık', '1. Sınıf', '2. Sınıf', '3. Sınıf', '4. Sınıf', 'Yüksek Lisans / Diğer'] },
-            { id: 'telefon', baslik: 'İletişim numarası', tur: 'telefon', zorunlu: true },
-            { id: 'eposta', baslik: 'E-posta adresi', tur: 'eposta', zorunlu: true },
-        ],
-    };
-
     if (window.emailjs) {
         window.emailjs.init({ publicKey: EMAILJS_ANAHTAR });
     }
@@ -34,6 +19,9 @@
     const MADDE_IKONLARI = ['fa-code', 'fa-brain', 'fa-laptop-code', 'fa-lightbulb', 'fa-users', 'fa-calendar-check'];
 
     let tanim = null;
+    const istekId = crypto.randomUUID().replaceAll('-', '');
+    let captchaWidget;
+    let captchaGerekli = false;
 
     const mesajYaz = (metin, tur) => {
         durum.textContent = metin;
@@ -123,9 +111,25 @@
             const veri = yanit.ok ? await yanit.json() : null;
             if (!veri || !veri.form || !Array.isArray(veri.form.sorular)) throw new Error('Form tanımı alınamadı');
             formuCiz(veri.form);
+            if (veri.captchaSiteKey && veri.form.acik !== false) {
+                captchaGerekli = true;
+                gonderButonu.disabled = true;
+                const kutu = document.createElement('div');
+                sorularKutusu.append(kutu);
+                const betik = document.createElement('script');
+                betik.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+                betik.onload = () => {
+                    captchaWidget = window.turnstile.render(kutu, { sitekey: veri.captchaSiteKey });
+                    gonderButonu.disabled = false;
+                };
+                betik.onerror = () => mesajYaz('Güvenlik doğrulaması yüklenemedi. Sayfayı yenileyin.', 'hata');
+                document.head.append(betik);
+            }
         } catch (hata) {
-            console.warn('Form sunucudan alınamadı, yedek form gösteriliyor.', hata);
-            formuCiz(YEDEK_FORM);
+            console.error('Form sunucudan alınamadı.', hata);
+            sorularKutusu.removeAttribute('aria-busy');
+            gonderButonu.disabled = true;
+            mesajYaz('Kayıt sistemi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.', 'hata');
         }
     }
 
@@ -207,6 +211,11 @@
 
         const cevaplar = cevaplariTopla();
         if (!cevaplar) return;
+        const captcha = captchaGerekli ? window.turnstile?.getResponse(captchaWidget) : undefined;
+        if (captchaGerekli && !captcha) {
+            mesajYaz('Lütfen güvenlik doğrulamasını tamamlayın.', 'hata');
+            return;
+        }
 
         gonderButonu.disabled = true;
         gonderButonu.textContent = 'Gönderiliyor…';
@@ -216,42 +225,23 @@
             const tuzak = form.elements.web_sitesi.value;
             const tarih = new Date().toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' });
 
-            // Kayıt iki yere birden gider; biri başarısız olsa bile diğeri kaydı tutar.
-            const gonderimler = [
-                fetch('/api/yanitlar', {
+            // Başarı yalnızca sunucunun kalıcı kaydı onaylamasından sonra gösterilir.
+            const yanit = await fetch('/api/yanitlar', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ cevaplar, web_sitesi: tuzak }),
-                }).then(async (yanit) => {
-                    const sonuc = await yanit.json().catch(() => ({}));
-                    if (!yanit.ok) {
-                        const hata = new Error(sonuc.mesaj || `Sunucu kaydı alamadı (${yanit.status}).`);
-                        hata.dogrulama = yanit.status === 422 || yanit.status === 403;
-                        throw hata;
-                    }
-                }),
-            ];
+                    body: JSON.stringify({ cevaplar, web_sitesi: tuzak, surum: tanim.surum, istekId, captcha }),
+                });
+            const sonuc = await yanit.json().catch(() => ({}));
+            if (!yanit.ok || sonuc.basarili !== true) {
+                throw new Error(sonuc.mesaj || `Sunucu kaydı alamadı (${yanit.status}).`);
+            }
 
             if (window.emailjs && !tuzak) {
-                gonderimler.push(window.emailjs.send(EMAILJS_SERVIS, EMAILJS_SABLON, {
+                Promise.resolve().then(() => window.emailjs.send(EMAILJS_SERVIS, EMAILJS_SABLON, {
                     from_name: ilkCevap(cevaplar, ['kisa']) || 'Eğitim kaydı',
                     from_email: ilkCevap(cevaplar, ['eposta']),
                     message: epostaMetni(cevaplar, tarih),
-                }));
-            }
-
-            const sonuclar = await Promise.allSettled(gonderimler);
-            sonuclar
-                .filter((s) => s.status === 'rejected')
-                .forEach((s) => console.error('Kayıt kanallarından biri başarısız:', s.reason));
-
-            const sunucu = sonuclar[0];
-            // Sunucu cevabı reddettiyse (eksik/yanlış bilgi, form kapalı) kişiye bunu göster.
-            if (sunucu.status === 'rejected' && sunucu.reason.dogrulama) {
-                throw sunucu.reason;
-            }
-            if (!sonuclar.some((s) => s.status === 'fulfilled')) {
-                throw new Error('Form gönderilemedi. Lütfen biraz sonra tekrar deneyin.');
+                })).catch((hata) => console.warn('Kayıt saklandı, e-posta bildirimi gönderilemedi.', hata));
             }
 
             const tesekkur = el('div', { className: 'kayit-tesekkur', role: 'status' },
@@ -260,6 +250,7 @@
                 el('p', { className: 'mt-2', text: 'Kaydınız alındı. Eğitimde görüşmek üzere!' }));
             form.replaceWith(tesekkur);
         } catch (hata) {
+            if (captchaGerekli && captchaWidget !== undefined) window.turnstile.reset(captchaWidget);
             mesajYaz(hata instanceof Error ? hata.message : 'Form gönderilemedi. Lütfen biraz sonra tekrar deneyin.', 'hata');
             gonderButonu.disabled = false;
             gonderButonu.textContent = 'Gönder';
