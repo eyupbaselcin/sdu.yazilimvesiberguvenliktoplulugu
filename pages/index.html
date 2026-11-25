@@ -409,10 +409,22 @@
                 <h1>ZIRH ETKİNLİĞİMİZ YAKLAŞIYOR</h1>
                 <h2>Zafiyet İzleme ve Risk Öngörü Hamlesi</h2>
               </div>
-              <a class="nav-pill" href="../zirh/index.html" style="border-radius: 10px; border: 1px solid currentColor; padding: 10px 16px; font-weight: 600; white-space: nowrap; align-self: center">
-                ZIRH '26 Sayfasına Git &rarr;
-              </a>
             </div>
+
+            <!-- ZIRH '26 sayfası (public/zirh/) burada gömülü gösterilir; yüksekliği içeriğe göre otomatik ayarlanır -->
+            <iframe
+              id="zirhCerceve"
+              src="../zirh/index.html?gomulu=1"
+              title="ZIRH '26 Siber Güvenlik Zirvesi ve CTF Yarışması"
+              scrolling="no"
+              style="display: block; width: 100%; height: 1200px; border: 0; border-radius: 16px; margin: 8px 0 32px; background: #060B19"
+            ></iframe>
+            <script>
+              window.addEventListener("message", function (e) {
+                if (e.origin !== location.origin || !e.data || e.data.tur !== "zirh-yukseklik") return;
+                document.getElementById("zirhCerceve").style.height = Math.ceil(e.data.yukseklik) + "px";
+              });
+            </script>
 
             <!-- data-takvim-ay: "bugun" = içinde bulunulan ay, ya da "YYYY-AA". Veriler: public/data/takvim.json -->
             <div class="calendar-wrap" data-takvim-ay="2026-12" data-takvim-vurgu="14">
