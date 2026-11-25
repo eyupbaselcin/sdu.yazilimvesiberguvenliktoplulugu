@@ -1,5 +1,28 @@
 // ZIRH '26 — sade JavaScript (React gerektirmez)
 
+// Tema: sitenin açık/karanlık mod ayarıyla senkron
+(function () {
+  var kok = document.documentElement;
+  var ebeveyn = null;
+  try { if (window.parent !== window && parent.document) ebeveyn = parent.document.documentElement; } catch (e) {}
+  var uygula = function (koyu) { kok.classList.toggle('acik', !koyu); };
+  if (ebeveyn) {
+    // Ana sayfaya gömülü: ana sayfanın temasını izle
+    new MutationObserver(function () { uygula(ebeveyn.classList.contains('dark')); })
+      .observe(ebeveyn, { attributes: true, attributeFilter: ['class'] });
+  }
+  // Başka sekmede tema değişirse
+  window.addEventListener('storage', function (e) {
+    if (e.key === 'theme' && !ebeveyn) uygula(e.newValue === 'dark');
+  });
+  var btn = document.getElementById('temaBtn');
+  if (btn) btn.addEventListener('click', function () {
+    var koyu = kok.classList.contains('acik'); // açıktaysa koyuya geç
+    uygula(koyu);
+    try { localStorage.setItem('theme', koyu ? 'dark' : 'light'); } catch (e) {}
+  });
+})();
+
 // 0. Ana sayfaya gömülü mod (?gomulu=1): menü/footer gizlenir, yükseklik üst sayfaya bildirilir
 (function () {
   var gomulu = window.parent !== window && /[?&]gomulu=1/.test(location.search);
@@ -62,7 +85,8 @@
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 240, 255, 0.55)';
+        var acik = document.documentElement.classList.contains('acik');
+        ctx.fillStyle = acik ? 'rgba(8, 145, 178, 0.45)' : 'rgba(0, 240, 255, 0.55)';
         ctx.fill();
 
         for (var j = i + 1; j < particles.length; j++) {
@@ -71,7 +95,7 @@
           var dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 140) {
             ctx.beginPath();
-            ctx.strokeStyle = 'rgba(0, 240, 255, ' + 0.14 * (1 - dist / 140) + ')';
+            ctx.strokeStyle = (acik ? 'rgba(8, 145, 178, ' : 'rgba(0, 240, 255, ') + 0.14 * (1 - dist / 140) + ')';
             ctx.lineWidth = 0.8;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);

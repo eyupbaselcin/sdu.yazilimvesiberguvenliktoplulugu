@@ -4,3 +4,53 @@ html.gomulu,html.gomulu body{overflow:hidden;background:#060B19}
 html.gomulu #navbar,html.gomulu #iletisim{display:none}
 html.gomulu .min-h-screen{min-height:0}
 html.gomulu main>section:first-child{padding-top:3rem}
+
+/* ===== Açık tema (sitenin açık/karanlık mod ayarına bağlı: html.acik) ===== */
+html.acik{color-scheme:light}
+html.acik body{background:#F4F7FB;color:#0F172A}
+:where(html.acik) [class~="bg-[#060B19]"]{background-color:#F4F7FB}
+:where(html.acik) [class~="text-[#F8FAFC]"],:where(html.acik) [class~="text-white"]{color:#0F172A}
+:where(html.acik) [class~="text-slate-200"]{color:#1E293B}
+:where(html.acik) [class~="text-slate-300"]{color:#334155}
+:where(html.acik) [class~="text-slate-400"]{color:#475569}
+:where(html.acik) [class~="text-slate-500"]{color:#64748B}
+:where(html.acik) [class~="text-cyber-cyan"],:where(html.acik) [class~="text-cyan-300"],:where(html.acik) [class~="text-cyan-400"]{color:#0E7490}
+:where(html.acik) [class~="text-[#38bdf8]"]{color:#0369A1}
+:where(html.acik) [class~="text-blue-300"],:where(html.acik) [class~="text-blue-400"]{color:#1D4ED8}
+:where(html.acik) [class~="text-purple-300"],:where(html.acik) [class~="text-purple-400"]{color:#7E22CE}
+:where(html.acik) [class~="text-indigo-300"],:where(html.acik) [class~="text-indigo-400"]{color:#4338CA}
+:where(html.acik) [class~="text-emerald-300"],:where(html.acik) [class~="text-emerald-400"]{color:#047857}
+:where(html.acik) [class~="text-amber-300"],:where(html.acik) [class~="text-amber-400"]{color:#B45309}
+:where(html.acik) [class~="bg-[#0A66C2]"]{color:#fff}
+html.acik .text-gradient{background:linear-gradient(135deg,#0F172A 0%,#0891B2 55%,#2563EB 100%);-webkit-background-clip:text;background-clip:text}
+
+:where(html.acik) [class~="bg-[#060B19]/85"]{background-color:rgba(255,255,255,.88)}
+:where(html.acik) [class~="bg-[#080F22]/98"]{background-color:rgba(255,255,255,.98)}
+:where(html.acik) [class~="bg-[#080E20]/75"]{background-color:#EAF0F7}
+:where(html.acik) [class~="bg-[#040813]"]{background-color:#E2E8F0}
+:where(html.acik) [class~="bg-slate-900/90"],:where(html.acik) [class~="bg-slate-900/80"],:where(html.acik) [class~="bg-slate-900/60"],:where(html.acik) [class~="bg-slate-900/50"],:where(html.acik) [class~="bg-slate-950/80"]{background-color:#F1F5F9}
+:where(html.acik) [class~="bg-slate-800"],:where(html.acik) [class~="bg-slate-800/80"]{background-color:#E2E8F0}
+:where(html.acik) [class~="bg-cyan-950/80"]{background-color:#CFFAFE}
+:where(html.acik) [class~="bg-blue-950/80"]{background-color:#DBEAFE}
+:where(html.acik) [class~="bg-purple-950/80"]{background-color:#F3E8FF}
+:where(html.acik) [class~="bg-indigo-950/80"]{background-color:#E0E7FF}
+:where(html.acik) [class~="bg-emerald-950/80"]{background-color:#D1FAE5}
+:where(html.acik) [class~="bg-amber-950/80"]{background-color:#FEF3C7}
+:where(html.acik) [class~="bg-emerald-950/10"]{background-color:rgba(16,185,129,.06)}
+:where(html.acik) [class~="from-[#0B132B]"]{background-image:linear-gradient(135deg,#FFFFFF 0%,#EEF6FB 100%)}
+:where(html.acik) [class~="via-[#17123B]"]{background-image:linear-gradient(135deg,#FFFFFF 0%,#F5F0FF 100%)}
+
+:where(html.acik) [class~="border-slate-800"],:where(html.acik) [class~="border-slate-800/80"],:where(html.acik) [class~="border-slate-800/70"]{border-color:#E2E8F0}
+:where(html.acik) [class~="border-slate-700"],:where(html.acik) [class~="border-slate-700/70"]{border-color:#CBD5E1}
+html.acik [class~="divide-slate-700/60"]>:not([hidden])~:not([hidden]){border-color:#CBD5E1}
+
+html.acik .glass-card{background:rgba(255,255,255,.85);border-color:rgba(14,116,144,.2);box-shadow:0 10px 30px -14px rgba(15,23,42,.18)}
+html.acik .glass-card-hover:hover{border-color:rgba(8,145,178,.5);box-shadow:0 0 24px rgba(8,145,178,.15)}
+html.acik .cyber-grid-bg{background-image:linear-gradient(to right,rgba(8,145,178,.07) 1px,transparent 1px),linear-gradient(to bottom,rgba(8,145,178,.07) 1px,transparent 1px)}
+html.acik ::-webkit-scrollbar-track{background:#F4F7FB}
+html.acik ::-webkit-scrollbar-thumb{background:#CBD5E1}
+html.gomulu.acik,html.gomulu.acik body{background:#F4F7FB}
+
+/* Tema düğmesi (ayrı sayfa menüsü) */
+#temaBtn .fa-sun{display:inline-block}#temaBtn .fa-moon{display:none}
+html.acik #temaBtn .fa-sun{display:none}html.acik #temaBtn .fa-moon{display:inline-block}
