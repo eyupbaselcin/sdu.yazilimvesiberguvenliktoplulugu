@@ -1,4 +1,30 @@
 // ZIRH '26 — sade JavaScript (React gerektirmez)
+
+// 0. Ana sayfaya gömülü mod (?gomulu=1): menü/footer gizlenir, yükseklik üst sayfaya bildirilir
+(function () {
+  var gomulu = window.parent !== window && /[?&]gomulu=1/.test(location.search);
+  if (!gomulu) return;
+  document.documentElement.classList.add('gomulu');
+  var bildir = function () {
+    window.parent.postMessage({ tur: 'zirh-yukseklik', yukseklik: document.body.scrollHeight }, location.origin);
+  };
+  window.addEventListener('load', bildir);
+  document.addEventListener('DOMContentLoaded', function () {
+    bildir();
+    if (window.ResizeObserver) new ResizeObserver(bildir).observe(document.body);
+    // Sayfa içi bağlantılar (#program vb.) ana sayfada doğru yere kaysın
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var hedef = document.querySelector(a.getAttribute('href'));
+        var cerceve = window.frameElement;
+        if (!hedef || !cerceve) return;
+        e.preventDefault();
+        var y = cerceve.getBoundingClientRect().top + hedef.getBoundingClientRect().top + window.parent.scrollY - 20;
+        window.parent.scrollTo({ top: y, behavior: 'smooth' });
+      });
+    });
+  });
+})();
 (function () {
   'use strict';
 
